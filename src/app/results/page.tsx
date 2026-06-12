@@ -21,12 +21,14 @@ import {
   YAxis,
   Tooltip
 } from "recharts";
-import { Download, Share2, Briefcase, BookOpen, Rocket, Lightbulb } from "lucide-react";
+import { Download, Share2, Briefcase, BookOpen, Rocket, Lightbulb, Check } from "lucide-react";
 
 export default function ResultsPage() {
   const [results, setResults] = useState<Record<IntelligenceType, number> | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const saved = localStorage.getItem('quiz-results');
     if (saved) {
       const answers = JSON.parse(saved);
@@ -101,22 +103,26 @@ export default function ResultsPage() {
               <CardDescription>Visualizing your strengths across nine domains.</CardDescription>
             </CardHeader>
             <CardContent className="h-[400px] sm:h-[500px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={analyzedResults}>
-                  <PolarGrid stroke="#e2e8f0" />
-                  <PolarAngleAxis dataKey="type" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }} />
-                  <Radar
-                    name="Student Profile"
-                    dataKey="score"
-                    stroke="hsl(var(--primary))"
-                    fill="hsl(var(--primary))"
-                    fillOpacity={0.6}
-                  />
-                  <Tooltip 
-                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
-                  />
-                </RadarChart>
-              </ResponsiveContainer>
+              {mounted ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart cx="50%" cy="50%" outerRadius="80%" data={analyzedResults}>
+                    <PolarGrid stroke="#e2e8f0" />
+                    <PolarAngleAxis dataKey="type" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }} />
+                    <Radar
+                      name="Student Profile"
+                      dataKey="score"
+                      stroke="hsl(var(--primary))"
+                      fill="hsl(var(--primary))"
+                      fillOpacity={0.6}
+                    />
+                    <Tooltip 
+                      contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                    />
+                  </RadarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="w-full h-full bg-muted/20 animate-pulse rounded-lg" />
+              )}
             </CardContent>
           </Card>
 
