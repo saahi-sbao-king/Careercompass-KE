@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import placeholderData from "@/app/lib/placeholder-images.json";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
 
 export function NavHeader() {
@@ -26,6 +26,8 @@ export function NavHeader() {
   const router = useRouter();
   const logo = placeholderData.placeholderImages.find(img => img.id === 'app-logo');
   const headerBg = placeholderData.placeholderImages.find(img => img.id === 'header-bg');
+  
+  const supabase = useMemo(() => createClient(), []);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -42,7 +44,7 @@ export function NavHeader() {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [supabase]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
