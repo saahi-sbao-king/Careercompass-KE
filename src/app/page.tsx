@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -83,9 +82,21 @@ const UNIVERSITIES = [
 ];
 
 const SCHOLARSHIPS = [
-  { name: "Mastercard Foundation", tag: "Partial", url: "https://mastercardfdn.org/en/what-we-do/our-programs/mastercard-foundation-scholars-program/" },
-  { name: "Equity Wings To Fly", tag: "Fully Funded", url: "https://equitygroupfoundation.com/wings-to-fly/" },
-  { name: "Government Bursaries", tag: "Open", url: "https://www.hef.co.ke/" },
+  { 
+    name: "Mastercard Foundation", 
+    tag: "Partial", 
+    url: "https://mastercardfdn.org/en/what-we-do/our-programs/mastercard-foundation-scholars-program/" 
+  },
+  { 
+    name: "Equity Wings To Fly", 
+    tag: "Fully Funded", 
+    url: "https://equitygroupfoundation.com/wings-to-fly/" 
+  },
+  { 
+    name: "Government Bursaries", 
+    tag: "Open", 
+    url: "https://www.hef.co.ke/" 
+  },
 ];
 
 export default function Home() {
@@ -113,7 +124,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
                   <Button size="lg" className="h-14 px-10 text-lg font-bold bg-white text-primary hover:bg-white/90 gap-2 rounded-full shadow-lg transition-all hover:-translate-y-1" asChild>
                     <Link href="/quiz?type=PIA">
-                      Take Career Assessment
+                      Take PIA Assessment
                     </Link>
                   </Button>
                   <Button size="lg" variant="outline" className="h-14 px-10 text-lg font-bold border-white text-white hover:bg-white/20 rounded-full backdrop-blur-sm" asChild>
@@ -387,8 +398,8 @@ export default function Home() {
 
             {/* Resources Column */}
             <div className="space-y-8">
-              <h4 className="text-xl font-bold font-headline text-foreground tracking-tight underline decoration-secondary decoration-4 underline-offset-8">Resources</h4>
-              <nav className="flex flex-col gap-5 text-base font-semibold text-foreground">
+              <h4 className="text-xl font-bold font-headline text-foreground dark:text-white tracking-tight underline decoration-secondary decoration-4 underline-offset-8">Resources</h4>
+              <nav className="flex flex-col gap-5 text-base font-semibold text-foreground dark:text-white">
                 <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Career Guides</Link>
                 <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Mentorship Hub</Link>
                 <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">KUCCPS Portal</Link>
@@ -398,8 +409,8 @@ export default function Home() {
 
             {/* Follow Us Column */}
             <div className="space-y-8">
-              <h4 className="text-xl font-bold font-headline text-foreground tracking-tight underline decoration-accent decoration-4 underline-offset-8">Follow Us</h4>
-              <p className="text-foreground font-medium">Join our community of students and mentors.</p>
+              <h4 className="text-xl font-bold font-headline text-foreground dark:text-white tracking-tight underline decoration-accent decoration-4 underline-offset-8">Follow Us</h4>
+              <p className="text-foreground dark:text-white font-medium">Join our community of students and mentors.</p>
               <div className="flex flex-wrap gap-4">
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="h-12 w-12 rounded-2xl bg-muted/20 flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-all hover:-translate-y-1 shadow-sm" aria-label="Facebook">
                   <Facebook className="h-6 w-6" />
@@ -424,9 +435,10 @@ export default function Home() {
             <p className="text-xs text-muted-foreground font-bold text-center md:text-left">
               © 2026 CareerCompass Kenya. All rights reserved. Precision career guidance for the next generation.
             </p>
-            <div className="flex gap-8 text-xs font-black text-muted-foreground uppercase tracking-widest">
+            <div className="flex flex-wrap justify-center md:justify-end gap-6 md:gap-8 text-xs font-black text-muted-foreground uppercase tracking-widest">
               <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
               <Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link>
+              <Link href="#" className="hover:text-primary transition-colors">Terms and Conditions</Link>
               <Link href="#" className="hover:text-primary transition-colors">Contact</Link>
             </div>
           </div>

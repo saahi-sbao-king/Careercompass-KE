@@ -94,6 +94,9 @@ export function NavHeader() {
                 <Link href="/hub">Careers</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
+                <Link href="/hub">Universities</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
                 <Link href="/quiz?type=PIA">PIA Test</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
