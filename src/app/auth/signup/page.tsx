@@ -21,7 +21,6 @@ export default function SignUpPage() {
             }
           }}
           signInUrl="/auth/login"
-          forceRedirectUrl="/dashboard"
         />
       </main>
     </div>
