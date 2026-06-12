@@ -5,8 +5,9 @@ import { SidebarProvider, Sidebar, SidebarContent, SidebarHeader, SidebarMenu, S
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { LayoutDashboard, Compass, GraduationCap, BookOpen, Award, TrendingUp, Calendar, Heart, FileText, Settings, ArrowRight, Wallet } from "lucide-react";
+import { LayoutDashboard, Compass, GraduationCap, BookOpen, Award, TrendingUp, Calendar, Heart, FileText, Settings, ArrowRight, Wallet, Briefcase } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function StudentDashboard() {
   return (
