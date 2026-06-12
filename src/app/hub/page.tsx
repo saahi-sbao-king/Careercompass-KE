@@ -88,33 +88,60 @@ export default function HubPage() {
                 <CardTitle className="font-headline flex items-center gap-2">
                   <MessageSquare className="h-5 w-5 text-accent" /> Mentorship Directory
                 </CardTitle>
-                <CardDescription>Connect with professionals in your field of interest.</CardDescription>
+                <CardDescription>Connect with professionals and scholarship opportunities.</CardDescription>
               </CardHeader>
               <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex items-center justify-between p-4 bg-background rounded-lg border shadow-sm">
+                <a 
+                  href="https://equitygroupfoundation.com/wings-to-fly/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 bg-background rounded-lg border shadow-sm hover:border-primary/50 transition-all group"
+                >
                   <div className="flex flex-col">
-                    <span className="font-bold text-sm">Equity Wings to Fly</span>
+                    <span className="font-bold text-sm group-hover:text-primary transition-colors">Equity Wings to Fly</span>
                     <span className="text-xs text-muted-foreground">Leadership & Scholarship</span>
                   </div>
-                  <Badge variant="secondary">Active</Badge>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-background rounded-lg border shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="secondary">Active</Badge>
+                    <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </a>
+                
+                <a 
+                  href="https://akadeducationafrica.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 bg-background rounded-lg border shadow-sm hover:border-primary/50 transition-all group"
+                >
                   <div className="flex flex-col">
-                    <span className="font-bold text-sm">AKAD Education</span>
+                    <span className="font-bold text-sm group-hover:text-primary transition-colors">AKAD Education</span>
                     <span className="text-xs text-muted-foreground">Career Mentorship</span>
                   </div>
-                  <Badge variant="secondary">Active</Badge>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-background rounded-lg border shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="secondary">Active</Badge>
+                    <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </a>
+
+                <a 
+                  href="https://foundation.kcbgroup.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 bg-background rounded-lg border shadow-sm hover:border-primary/50 transition-all group"
+                >
                   <div className="flex flex-col">
-                    <span className="font-bold text-sm">KCB Foundation</span>
+                    <span className="font-bold text-sm group-hover:text-primary transition-colors">KCB Foundation</span>
                     <span className="text-xs text-muted-foreground">Skills Development</span>
                   </div>
-                  <Badge variant="secondary">Active</Badge>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-background rounded-lg border shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="secondary">Active</Badge>
+                    <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </a>
+
+                <div className="flex items-center justify-between p-4 bg-background/50 rounded-lg border border-dashed shadow-none">
                   <div className="flex flex-col">
-                    <span className="font-bold text-sm">Frere Town Alumni</span>
+                    <span className="font-bold text-sm text-muted-foreground">Frere Town Alumni</span>
                     <span className="text-xs text-muted-foreground">Local School Network</span>
                   </div>
                   <Badge variant="outline">Coming Soon</Badge>
