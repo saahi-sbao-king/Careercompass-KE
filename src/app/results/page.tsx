@@ -63,7 +63,7 @@ export default function ResultsPage() {
         scale: 2,
         useCORS: true,
         logging: false,
-        backgroundColor: "#f8fafc",
+        backgroundColor: "hsl(var(--background))",
       });
       
       const imgData = canvas.toDataURL("image/png");
@@ -79,6 +79,12 @@ export default function ResultsPage() {
     } finally {
       setIsDownloading(false);
     }
+  };
+
+  const getMatchColor = (score: number) => {
+    if (score >= 20) return "text-success"; // Green
+    if (score >= 15) return "text-primary"; // Blue
+    return "text-accent"; // Orange
   };
 
   if (!results) {
@@ -126,7 +132,7 @@ export default function ResultsPage() {
       <main className="container px-4 mx-auto -mt-20 space-y-16" ref={reportRef}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Main Visualizer */}
-          <Card className="lg:col-span-2 shadow-card border-none bg-white rounded-[40px] overflow-hidden">
+          <Card className="lg:col-span-2 shadow-card border-none bg-card rounded-[40px] overflow-hidden">
             <CardHeader className="p-12 pb-0">
               <CardTitle className="font-headline text-3xl flex items-center gap-4 text-primary">
                 <Compass className="h-8 w-8" /> Strength Map
@@ -137,18 +143,18 @@ export default function ResultsPage() {
               {mounted ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart cx="50%" cy="50%" outerRadius="80%" data={analyzedResults}>
-                    <PolarGrid stroke="#e2e8f0" strokeWidth={2} />
+                    <PolarGrid stroke="hsl(var(--muted))" strokeWidth={2} />
                     <PolarAngleAxis dataKey="type" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 14, fontWeight: 700 }} />
                     <Radar
                       name="Your Profile"
                       dataKey="score"
-                      stroke="#2563EB"
-                      fill="#2563EB"
+                      stroke="hsl(var(--primary))"
+                      fill="hsl(var(--primary))"
                       fillOpacity={0.6}
                       strokeWidth={4}
                     />
                     <Tooltip 
-                      contentStyle={{ borderRadius: '24px', border: 'none', boxShadow: '0 10px 40px rgba(0,0,0,0.15)', padding: '16px' }}
+                      contentStyle={{ borderRadius: '24px', border: 'none', backgroundColor: 'hsl(var(--card))', boxShadow: '0 10px 40px rgba(0,0,0,0.4)', padding: '16px' }}
                     />
                   </RadarChart>
                 </ResponsiveContainer>
@@ -160,7 +166,7 @@ export default function ResultsPage() {
 
           {/* Top Intelligences */}
           <div className="space-y-10">
-            <Card className="border-none shadow-card bg-white rounded-[32px] overflow-hidden transform hover:scale-102 transition-transform">
+            <Card className="border-none shadow-card bg-card rounded-[32px] overflow-hidden transform hover:scale-102 transition-transform">
               <div className="h-4 bg-primary w-full" />
               <CardHeader className="p-10">
                 <Badge className="bg-primary/10 text-primary hover:bg-primary/10 border-none font-bold px-4 py-1 rounded-full mb-4">Dominant Power</Badge>
@@ -171,7 +177,7 @@ export default function ResultsPage() {
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-card bg-white rounded-[32px] overflow-hidden transform hover:scale-102 transition-transform">
+            <Card className="border-none shadow-card bg-card rounded-[32px] overflow-hidden transform hover:scale-102 transition-transform">
               <div className="h-4 bg-secondary w-full" />
               <CardHeader className="p-10">
                 <Badge className="bg-secondary/10 text-secondary hover:bg-secondary/10 border-none font-bold px-4 py-1 rounded-full mb-4">Supporting Power</Badge>
@@ -189,7 +195,7 @@ export default function ResultsPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="px-6 pb-6 space-y-6">
-                <div className="flex items-center justify-between p-6 bg-white rounded-3xl shadow-xl border-2 border-accent/20">
+                <div className="flex items-center justify-between p-6 bg-card rounded-3xl shadow-xl border-2 border-accent/20">
                   <span className="font-black text-2xl text-primary">{recommendedPathway}</span>
                   <Badge className="bg-success text-white font-bold px-4 py-1 rounded-full">85% Match</Badge>
                 </div>
@@ -207,7 +213,7 @@ export default function ResultsPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {careers.map((career, idx) => (
-              <Card key={idx} className="border-none shadow-card rounded-[40px] bg-white group hover:translate-y-[-12px] transition-all duration-500 overflow-hidden">
+              <Card key={idx} className="border-none shadow-card rounded-[40px] bg-card group hover:translate-y-[-12px] transition-all duration-500 overflow-hidden">
                 <div className="p-12 space-y-8">
                   <div className="flex justify-between items-start">
                     <div className="h-20 w-20 rounded-[32px] bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-inner">
@@ -219,7 +225,7 @@ export default function ResultsPage() {
                     <CardTitle className="font-headline text-3xl group-hover:text-primary transition-colors">{career.title}</CardTitle>
                     <CardDescription className="text-lg leading-relaxed line-clamp-2">{career.description}</CardDescription>
                   </div>
-                  <div className="grid grid-cols-2 gap-8 border-y py-8">
+                  <div className="grid grid-cols-2 gap-8 border-y py-8 border-border/50">
                     <div className="space-y-2">
                       <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Est. Salary</p>
                       <p className="text-lg font-bold text-primary">{career.avgSalary}</p>
@@ -245,7 +251,7 @@ export default function ResultsPage() {
 
         {/* Subjects & Planning */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <Card className="border-none shadow-card rounded-[40px] bg-white overflow-hidden">
+          <Card className="border-none shadow-card rounded-[40px] bg-card overflow-hidden">
             <CardHeader className="bg-primary/5 p-12">
               <CardTitle className="font-headline text-3xl text-primary flex items-center gap-4">
                 <BookOpen className="h-8 w-8" /> Recommended Subjects
@@ -279,7 +285,7 @@ export default function ResultsPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-card rounded-[40px] bg-white overflow-hidden">
+          <Card className="border-none shadow-card rounded-[40px] bg-card overflow-hidden">
             <CardHeader className="bg-success/5 p-12">
               <CardTitle className="font-headline text-3xl text-success flex items-center gap-4">
                 <Target className="h-8 w-8" /> Your Career Roadmap
@@ -289,17 +295,17 @@ export default function ResultsPage() {
             <CardContent className="p-12">
               <div className="relative pl-12 border-l-4 border-success/10 space-y-16 py-4">
                 <div className="relative">
-                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-success border-8 border-white shadow-xl ring-4 ring-success/5" />
+                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-success border-8 border-background shadow-xl ring-4 ring-success/5" />
                   <h4 className="font-bold font-headline text-2xl text-primary">High School Phase</h4>
                   <p className="text-lg text-muted-foreground mt-4 leading-relaxed font-medium">Excel in your core subjects and join clubs that match your <strong>{dominant.type}</strong> strengths.</p>
                 </div>
                 <div className="relative">
-                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-primary border-8 border-white shadow-xl ring-4 ring-primary/5" />
+                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-primary border-8 border-background shadow-xl ring-4 ring-primary/5" />
                   <h4 className="font-bold font-headline text-2xl text-primary">Higher Education</h4>
                   <p className="text-lg text-muted-foreground mt-4 leading-relaxed font-medium">Target university courses like <strong>{careers[0].title}</strong>. Apply for scholarships via the CareerCompass Hub.</p>
                 </div>
                 <div className="relative">
-                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-accent border-8 border-white shadow-xl ring-4 ring-accent/5" />
+                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-accent border-8 border-background shadow-xl ring-4 ring-accent/5" />
                   <h4 className="font-bold font-headline text-2xl text-primary">Career Kickoff</h4>
                   <p className="text-lg text-muted-foreground mt-4 leading-relaxed font-medium">Start with an internship at a top Kenyan firm. Your {coDominant.type} skills will help you lead!</p>
                 </div>

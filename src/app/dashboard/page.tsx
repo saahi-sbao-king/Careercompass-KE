@@ -15,10 +15,10 @@ export default function StudentDashboard() {
       <NavHeader />
       <div className="flex-1 flex overflow-hidden">
         <SidebarProvider>
-          <Sidebar className="hidden md:flex border-r bg-[#2563EB] text-white">
+          <Sidebar className="hidden md:flex border-r bg-[#020617] text-white">
             <SidebarHeader className="p-6">
               <div className="flex items-center gap-3">
-                <div className="h-12 w-12 rounded-2xl bg-white/20 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                <div className="h-12 w-12 rounded-2xl bg-white/10 flex items-center justify-center text-white font-bold text-lg shadow-lg">
                   JD
                 </div>
                 <div>
@@ -38,7 +38,7 @@ export default function StudentDashboard() {
                   { icon: <TrendingUp />, label: "Progress", href: "/dashboard" },
                 ].map((item, i) => (
                   <SidebarMenuItem key={i}>
-                    <SidebarMenuButton asChild isActive={item.active} className="rounded-xl h-11 data-[active=true]:bg-white data-[active=true]:text-primary mb-1">
+                    <SidebarMenuButton asChild isActive={item.active} className="rounded-xl h-11 data-[active=true]:bg-primary/15 data-[active=true]:text-primary data-[active=true]:border-l-4 data-[active=true]:border-primary mb-1">
                       <Link href={item.href}>
                         <div className="mr-3">{item.icon}</div>
                         <span className="font-bold">{item.label}</span>
@@ -78,19 +78,19 @@ export default function StudentDashboard() {
               {/* Statistics Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                  { label: "Career Matches", value: "12", icon: <Compass className="text-primary" />, color: "bg-blue-50" },
-                  { label: "Scholarships Saved", value: "8", icon: <Wallet className="text-secondary" />, color: "bg-teal-50" },
-                  { label: "Universities Viewed", value: "24", icon: <GraduationCap className="text-accent" />, color: "bg-orange-50" },
-                  { label: "Assessment Progress", value: "80%", icon: <TrendingUp className="text-success" />, color: "bg-emerald-50" },
+                  { label: "Career Matches", value: "12", icon: <Compass className="text-white" />, gradient: "stat-card-blue" },
+                  { label: "Scholarships Saved", value: "8", icon: <Wallet className="text-white" />, gradient: "stat-card-orange" },
+                  { label: "Universities Viewed", value: "24", icon: <GraduationCap className="text-white" />, gradient: "stat-card-teal" },
+                  { label: "Assessment Progress", value: "80%", icon: <TrendingUp className="text-white" />, gradient: "stat-card-green" },
                 ].map((stat, i) => (
-                  <Card key={i} className="border-none shadow-card rounded-[24px]">
+                  <Card key={i} className={`border-none shadow-card rounded-[24px] ${stat.gradient} text-white`}>
                     <CardContent className="p-6 flex items-center gap-4">
-                      <div className={`h-12 w-12 rounded-2xl ${stat.color} flex items-center justify-center`}>
+                      <div className="h-12 w-12 rounded-2xl bg-white/20 flex items-center justify-center">
                         {stat.icon}
                       </div>
                       <div>
-                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{stat.label}</p>
-                        <p className="text-2xl font-black text-foreground">{stat.value}</p>
+                        <p className="text-xs font-bold text-white/70 uppercase tracking-wider">{stat.label}</p>
+                        <p className="text-2xl font-black text-white">{stat.value}</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -109,7 +109,7 @@ export default function StudentDashboard() {
                       { name: "University of Nairobi", location: "Nairobi", programs: "240+ Programs" },
                       { name: "Strathmore University", location: "Nairobi", programs: "60+ Programs" }
                     ].map((uni, i) => (
-                      <Card key={i} className="border-none shadow-card rounded-[24px] overflow-hidden hover:-translate-y-1 transition-transform">
+                      <Card key={i} className="border-none shadow-card rounded-[24px] overflow-hidden hover:-translate-y-1 transition-transform bg-card">
                         <div className="h-32 bg-muted relative">
                            <Image src={`https://picsum.photos/seed/uni-${i}/400/200`} alt={uni.name} fill className="object-cover" />
                         </div>
@@ -137,7 +137,7 @@ export default function StudentDashboard() {
                       { name: "Equity Wings to Fly", deadline: "June 15, 2024", funding: "Fully Funded" },
                       { name: "KCB Foundation", deadline: "July 20, 2024", funding: "Partial" }
                     ].map((sch, i) => (
-                      <Card key={i} className="border-none shadow-card rounded-[24px]">
+                      <Card key={i} className="border-none shadow-card rounded-[24px] bg-card">
                         <CardContent className="p-6 space-y-4">
                           <div className="flex justify-between items-start">
                             <h3 className="font-bold text-foreground">{sch.name}</h3>
@@ -159,7 +159,7 @@ export default function StudentDashboard() {
               </div>
 
               {/* Career Roadmap Section */}
-              <Card className="border-none shadow-card rounded-[32px] overflow-hidden">
+              <Card className="border-none shadow-card rounded-[32px] overflow-hidden bg-card">
                 <CardHeader className="p-10 pb-6">
                   <CardTitle className="text-2xl font-headline flex items-center gap-3">
                     <TrendingUp className="text-primary h-6 w-6" /> Your Software Engineer Roadmap
@@ -174,7 +174,7 @@ export default function StudentDashboard() {
                       { step: "Junior Developer", desc: "First professional role in Nairobi tech hub", icon: <TrendingUp /> }
                     ].map((path, i) => (
                       <div key={i} className="relative">
-                        <div className="absolute -left-[54px] top-0 h-10 w-10 rounded-full bg-white border-4 border-primary flex items-center justify-center text-primary shadow-lg">
+                        <div className="absolute -left-[54px] top-0 h-10 w-10 rounded-full bg-card border-4 border-primary flex items-center justify-center text-primary shadow-lg">
                           {path.icon}
                         </div>
                         <h4 className="font-bold text-lg text-foreground">{path.step}</h4>
