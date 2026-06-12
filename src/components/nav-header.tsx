@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -11,13 +10,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { 
-  SignInButton, 
-  SignUpButton, 
-  SignedIn, 
-  SignedOut, 
-  UserButton 
-} from "@clerk/nextjs";
 import placeholderData from "@/app/lib/placeholder-images.json";
 
 export function NavHeader() {
@@ -49,34 +41,15 @@ export function NavHeader() {
           <Link href="/hub" className="hover:text-primary transition-all text-foreground">Universities</Link>
           <Link href="/quiz?type=PIA" className="hover:text-primary transition-all text-foreground">PIA Test</Link>
           <Link href="/quiz?type=MI" className="hover:text-primary transition-all text-foreground">MI Test</Link>
+          <Link href="/dashboard" className="hover:text-primary transition-all text-foreground">Dashboard</Link>
+          <Link href="/admin" className="hover:text-primary transition-all text-foreground">Analytics</Link>
           <Link href="/faqs" className="hover:text-primary transition-all text-foreground">FAQs</Link>
-          <SignedIn>
-            <Link href="/dashboard" className="hover:text-primary transition-all text-foreground">Dashboard</Link>
-          </SignedIn>
         </nav>
 
         <div className="flex items-center gap-4">
-          <SignedOut>
-            <SignInButton mode="modal">
-              <Button variant="ghost" className="hidden sm:flex font-bold hover:bg-muted">
-                Sign In
-              </Button>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <Button className="hidden sm:flex bg-primary hover:bg-primary/90 rounded-full px-8 h-12 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 text-white">
-                Sign Up
-              </Button>
-            </SignUpButton>
-          </SignedOut>
-          <SignedIn>
-            <UserButton 
-              appearance={{
-                elements: {
-                  avatarBox: "h-10 w-10 rounded-xl"
-                }
-              }}
-            />
-          </SignedIn>
+          <Button className="hidden sm:flex bg-primary hover:bg-primary/90 rounded-full px-8 h-12 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 text-white" asChild>
+            <Link href="/quiz?type=PIA">Get Started</Link>
+          </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -98,18 +71,14 @@ export function NavHeader() {
                 <Link href="/quiz?type=MI">MI Test</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
-                <Link href="/faqs">FAQs</Link>
+                <Link href="/dashboard">Dashboard</Link>
               </DropdownMenuItem>
-              <SignedOut>
-                <DropdownMenuItem asChild className="rounded-xl h-10 font-bold bg-primary text-white mt-2 justify-center">
-                  <SignUpButton mode="modal">Join Now</SignUpButton>
-                </DropdownMenuItem>
-              </SignedOut>
-              <SignedIn>
-                <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
-                  <Link href="/dashboard">Dashboard</Link>
-                </DropdownMenuItem>
-              </SignedIn>
+              <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
+                <Link href="/admin">Analytics</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="rounded-xl h-10 font-bold bg-primary text-white mt-2 justify-center">
+                <Link href="/quiz?type=PIA">Get Started</Link>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

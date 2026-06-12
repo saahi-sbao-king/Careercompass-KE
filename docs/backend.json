@@ -32,7 +32,7 @@
     }
   },
   "auth": {
-    "providers": ["google.com", "password"]
+    "providers": []
   },
   "firestore": {
     "/universities/{universityId}": {

@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import { ClerkProvider } from '@clerk/nextjs';
-import { dark } from '@clerk/themes';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
@@ -30,16 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ClerkProvider 
-          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
-          appearance={{ baseTheme: dark }}
-        >
-          <FirebaseClientProvider>
-            <FirebaseErrorListener />
-            {children}
-            <Toaster />
-          </FirebaseClientProvider>
-        </ClerkProvider>
+        <FirebaseClientProvider>
+          <FirebaseErrorListener />
+          {children}
+          <Toaster />
+        </FirebaseClientProvider>
       </body>
     </html>
   );
