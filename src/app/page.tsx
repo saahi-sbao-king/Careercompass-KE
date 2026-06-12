@@ -340,7 +340,7 @@ export default function Home() {
             </div>
           </div>
           <div className="text-sm text-muted-foreground font-medium pt-8 border-t text-center">
-            © 2024 CareerCompass Kenya. All rights reserved. Precision career guidance for the next generation.
+            © 2026 CareerCompass Kenya. All rights reserved. Precision career guidance for the next generation.
           </div>
         </div>
       </footer>

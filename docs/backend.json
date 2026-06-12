@@ -1,0 +1,47 @@
+{
+  "entities": {
+    "University": {
+      "title": "University",
+      "description": "Details of a University or TVET institution in Kenya.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Official name of the institution" },
+        "location": { "type": "string", "description": "City or Region in Kenya" },
+        "website": { "type": "string", "format": "uri" },
+        "type": { "type": "string", "enum": ["Public", "Private", "TVET"] },
+        "programsCount": { "type": "number", "description": "Number of available courses" },
+        "requirements": { "type": "string", "description": "General admission requirements" },
+        "imageUrl": { "type": "string", "format": "uri" }
+      },
+      "required": ["name", "location"]
+    },
+    "Scholarship": {
+      "title": "Scholarship",
+      "description": "Financial aid opportunity for Kenyan students.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "provider": { "type": "string" },
+        "deadline": { "type": "string", "format": "date" },
+        "fundingType": { "type": "string", "enum": ["Full", "Partial"] },
+        "description": { "type": "string" },
+        "applicationUrl": { "type": "string", "format": "uri" },
+        "status": { "type": "string", "enum": ["Open", "Closed"] }
+      },
+      "required": ["name", "provider", "deadline"]
+    }
+  },
+  "auth": {
+    "providers": ["google.com", "password"]
+  },
+  "firestore": {
+    "/universities/{universityId}": {
+      "schema": "University",
+      "description": "Directory of Kenyan higher education institutions."
+    },
+    "/scholarships/{scholarshipId}": {
+      "schema": "Scholarship",
+      "description": "Database of active scholarship opportunities."
+    }
+  }
+}
