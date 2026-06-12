@@ -6,7 +6,6 @@ import { NavHeader } from "@/components/nav-header";
 export default function SignUpPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <NavHeader />
       <main className="flex-1 flex flex-col items-center justify-center p-4 space-y-8">
         <div className="text-center space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <h1 className="text-3xl md:text-5xl font-black font-headline text-primary tracking-tight">
