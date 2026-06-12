@@ -1,9 +1,10 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Sun, Moon } from "lucide-react";
+import { Menu, Sun, Moon, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -72,10 +73,10 @@ export function NavHeader() {
           </Button>
 
           <Button variant="ghost" className="hidden sm:flex font-bold hover:bg-muted" asChild>
-            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/auth/login">Sign In</Link>
           </Button>
           <Button className="hidden sm:flex bg-primary hover:bg-primary/90 rounded-full px-8 h-12 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 text-white" asChild>
-            <Link href="/quiz?type=PIA">Get Started</Link>
+            <Link href="/auth/signup">Sign Up</Link>
           </Button>
 
           <DropdownMenu>
@@ -101,7 +102,7 @@ export function NavHeader() {
                 <Link href="/faqs">FAQs</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-xl h-10 font-bold bg-primary text-white mt-2 justify-center">
-                <Link href="/quiz?type=PIA">Start Now</Link>
+                <Link href="/auth/signup">Join Now</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
