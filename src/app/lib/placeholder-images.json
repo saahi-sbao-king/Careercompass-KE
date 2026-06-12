@@ -14,9 +14,9 @@
     },
     {
       "id": "career-discovery",
-      "description": "Student using a laptop to explore different career paths",
-      "imageUrl": "https://picsum.photos/seed/career-discovery/800/600",
-      "imageHint": "student laptop"
+      "description": "Kenyan students exploring career options together",
+      "imageUrl": "https://res.cloudinary.com/dripd0ze7/image/upload/q_auto/f_auto/v1781281243/e3511579-7071-472e-be66-b7e6caed980e.png",
+      "imageHint": "kenyan students"
     },
     {
       "id": "assessment-ui",

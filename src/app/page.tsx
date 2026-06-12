@@ -105,6 +105,7 @@ export default function Home() {
   const [showAllCategories, setShowAllCategories] = useState(false);
   const visibleCategories = showAllCategories ? CATEGORIES : CATEGORIES.slice(0, 6);
   const logo = placeholderData.placeholderImages.find(img => img.id === 'app-logo');
+  const discoveryImage = placeholderData.placeholderImages.find(img => img.id === 'career-discovery');
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -161,7 +162,15 @@ export default function Home() {
                 </p>
               </div>
               <div className="relative rounded-[32px] overflow-hidden shadow-2xl h-[400px]">
-                <Image src="https://picsum.photos/seed/discovery-img/800/600" alt="Discovery" fill className="object-cover" />
+                {discoveryImage && (
+                  <Image 
+                    src={discoveryImage.imageUrl} 
+                    alt="Discovery" 
+                    fill 
+                    className="object-cover" 
+                    data-ai-hint={discoveryImage.imageHint}
+                  />
+                )}
               </div>
               <Button size="lg" className="rounded-full px-10 font-bold" asChild>
                 <Link href="/quiz?type=PIA">Start Assessment</Link>
