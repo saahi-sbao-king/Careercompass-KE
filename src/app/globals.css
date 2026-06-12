@@ -4,33 +4,6 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 221 83% 53%; /* #2563EB */
-    --primary-foreground: 210 40% 98%;
-    --secondary: 173 80% 40%; /* #14B8A6 */
-    --secondary-foreground: 210 40% 98%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 24 94% 53%; /* #F97316 */
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 221 83% 53%;
-    --radius: 1.5rem; /* Friendly 24px radius */
-    
-    --success: 142 71% 45%; /* #22C55E */
-    --warning: 24 94% 53%;
-    --gold: 45 87% 62%;
-  }
-
-  .dark {
     --background: 222 47% 11%; /* #0F172A - Deep Navy */
     --foreground: 210 40% 98%; /* #F8FAFC */
     --card: 217 33% 17%; /* #1E293B - Surface */
@@ -50,8 +23,11 @@
     --border: 215 25% 27%; /* #334155 */
     --input: 215 25% 27%;
     --ring: 217 91% 60%;
+    --radius: 1.5rem; /* Friendly 24px radius */
     
     --success: 142 71% 45%; /* #22C55E */
+    --warning: 24 94% 53%;
+    --gold: 45 87% 62%;
   }
 }
 
@@ -66,18 +42,10 @@
 }
 
 .hero-gradient {
-  @apply bg-gradient-to-br from-[#2563EB] to-[#14B8A6];
-}
-
-.dark .hero-gradient {
   background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #2563EB 100%);
 }
 
 .shadow-card {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-}
-
-.dark .shadow-card {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
