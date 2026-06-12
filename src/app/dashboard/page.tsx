@@ -18,10 +18,10 @@ export default function StudentDashboard() {
             <SidebarHeader className="p-6">
               <div className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-2xl bg-white/10 flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                  JD
+                  SA
                 </div>
                 <div>
-                  <p className="font-bold truncate">John Doe</p>
+                  <p className="font-bold truncate">Saddiq Ali</p>
                   <p className="text-[10px] text-white/70 uppercase tracking-widest font-black">Student</p>
                 </div>
               </div>
@@ -63,7 +63,7 @@ export default function StudentDashboard() {
               {/* Top Welcome Card */}
               <Card className="border-none shadow-card bg-primary text-white rounded-[32px] overflow-hidden relative">
                 <div className="p-10 z-10 relative">
-                  <h1 className="text-4xl font-bold font-headline mb-3">Welcome Back, John 👋</h1>
+                  <h1 className="text-4xl font-bold font-headline mb-3">Welcome Back, Saddiq 👋</h1>
                   <p className="text-white/80 text-lg font-medium mb-8">Continue exploring your future. You're 80% through your assessment!</p>
                   <Button className="bg-white text-primary hover:bg-white/90 rounded-full h-12 px-8 font-bold shadow-xl">
                     Resume Exploration

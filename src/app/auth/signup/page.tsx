@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -52,7 +51,7 @@ export default function SignUpPage() {
                 <Label htmlFor="name" className="font-bold text-xs uppercase tracking-widest text-muted-foreground">Full Name</Label>
                 <div className="relative">
                   <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/50" />
-                  <Input id="name" type="text" placeholder="John Doe" className="pl-12 h-14 rounded-2xl border-2 focus:border-primary bg-muted/30" required />
+                  <Input id="name" type="text" placeholder="Saddiq Ali" className="pl-12 h-14 rounded-2xl border-2 focus:border-primary bg-muted/30" required />
                 </div>
               </div>
               <div className="space-y-2">
