@@ -21,12 +21,15 @@ export default function ResultsPage() {
   const [isDownloading, setIsDownloading] = useState(false);
   const [studentName, setStudentName] = useState("Saddiq Ali");
   const [assessmentId, setAssessmentId] = useState("");
+  const [assessmentDate, setAssessmentDate] = useState("");
   const [subSectionScores, setSubSectionScores] = useState<Record<string, number>>({});
   const reportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
     setAssessmentId(`CCK-${Math.random().toString(36).substr(2, 9).toUpperCase()}`);
+    setAssessmentDate(new Date().toLocaleDateString());
+    
     const saved = localStorage.getItem('quiz-results');
     if (saved) {
       const data = JSON.parse(saved) as QuizResults;
@@ -132,7 +135,7 @@ export default function ResultsPage() {
               onClick={handleDownloadPdf}
               disabled={isDownloading}
             >
-              {isDownloading ? <Loader2 className="h-6 w-6 animate-spin" /> : <Download className="h-6 w-6" />}
+              {isDownloading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
               {isDownloading ? "Generating..." : "Download Report PDF"}
             </Button>
           </div>
@@ -151,7 +154,7 @@ export default function ResultsPage() {
             </div>
             <div className="grid grid-cols-1 gap-1 text-sm text-right">
               <p><strong>Student Name:</strong> {studentName}</p>
-              <p><strong>Assessment Date:</strong> {new Date().toLocaleDateString()}</p>
+              <p><strong>Assessment Date:</strong> {assessmentDate}</p>
               <p><strong>Assessment ID:</strong> {assessmentId}</p>
             </div>
           </div>
@@ -172,7 +175,7 @@ export default function ResultsPage() {
                   </div>
                   <div className="p-6 bg-slate-50 rounded-3xl text-center">
                     <p className="text-[10px] font-black uppercase mb-1">Secondary Cluster</p>
-                    <p className="font-bold text-sm uppercase">{results[1].category}</p>
+                    <p className="font-bold text-sm uppercase">{results[1]?.category}</p>
                   </div>
                 </div>
               </section>
