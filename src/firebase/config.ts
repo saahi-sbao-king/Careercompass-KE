@@ -1,8 +1,6 @@
-
 /**
  * Firebase configuration object.
- * This is a public configuration and is safe to use in client-side code.
- * Ensure these variables are set in your .env.local file.
+ * Fetches values from environment variables set in .env.local.
  */
 export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",

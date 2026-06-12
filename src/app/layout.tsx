@@ -30,7 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ClerkProvider appearance={{ baseTheme: dark }}>
+        <ClerkProvider 
+          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+          appearance={{ baseTheme: dark }}
+        >
           <FirebaseClientProvider>
             <FirebaseErrorListener />
             {children}

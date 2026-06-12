@@ -10,6 +10,7 @@ export function initializeFirebase(): {
   firestore: Firestore;
   auth: Auth;
 } {
+  // Use existing app if already initialized
   const firebaseApp = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
   const firestore = getFirestore(firebaseApp);
   const auth = getAuth(firebaseApp);

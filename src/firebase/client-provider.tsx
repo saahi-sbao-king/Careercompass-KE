@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useMemo } from 'react';
@@ -6,23 +5,21 @@ import { initializeFirebase } from './index';
 import { FirebaseProvider } from './provider';
 
 export function FirebaseClientProvider({ children }: { children: React.ReactNode }) {
-  // Use try-catch to prevent "invalid-api-key" errors from breaking the entire application
   const firebaseData = useMemo(() => {
+    // Strictly do not initialize if the mandatory API Key is missing to prevent app crash
+    if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY || process.env.NEXT_PUBLIC_FIREBASE_API_KEY === "") {
+      console.warn("Firebase configuration is incomplete. Authentication and Database features will be disabled.");
+      return null;
+    }
     try {
-      // Only attempt initialization if an API key is provided
-      if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
-        console.warn("Firebase API Key is missing. Check your environment variables.");
-        return null;
-      }
       return initializeFirebase();
     } catch (error) {
-      console.error("Failed to initialize Firebase:", error);
+      console.error("Firebase initialization failed:", error);
       return null;
     }
   }, []);
 
-  // If Firebase fails to initialize, we still render children so Clerk and other UI parts work.
-  // We wrap in a conditional provider or provide null to the context.
+  // If Firebase is not ready, we render children without the provider to avoid crashing the UI
   if (!firebaseData) {
     return <>{children}</>;
   }
