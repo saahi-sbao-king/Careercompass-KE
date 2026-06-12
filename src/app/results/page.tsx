@@ -1,13 +1,13 @@
 
 "use client";
 
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { NavHeader } from "@/components/nav-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CATEGORY_QUESTION_MAP, CAREER_MAPPING, PATHWAY_MAPPING } from "@/lib/data";
-import { AssessmentCategory, CategoryResult, CareerInfo, QuizResults } from "@/lib/types";
+import { CATEGORY_QUESTION_MAP, CAREER_MAPPING, PATHWAY_MAPPING, MI_INFO_MAP } from "@/lib/data";
+import { AssessmentCategory, CategoryResult, QuizResults } from "@/lib/types";
 import { 
   Radar, 
   RadarChart, 
@@ -16,7 +16,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import { Download, Share2, Briefcase, Rocket, Loader2, Compass, Target, GraduationCap } from "lucide-react";
+import { Download, Share2, Briefcase, Rocket, Loader2, Compass, GraduationCap, Calendar, User, FileText, CheckCircle, MapPin } from "lucide-react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
@@ -51,10 +51,10 @@ export default function ResultsPage() {
         const percentage = Math.round((categoryRawScore / maxScore) * 100);
 
         let matchLevel = "Low Match";
-        if (percentage >= 85) matchLevel = "Exceptional Strength";
-        else if (percentage >= 70) matchLevel = "Strong Strength";
-        else if (percentage >= 55) matchLevel = "Moderate Strength";
-        else if (percentage >= 40) matchLevel = "Potential Area";
+        if (percentage >= 85) matchLevel = quizType === 'PIA' ? "Excellent Match" : "Exceptional Strength";
+        else if (percentage >= 70) matchLevel = quizType === 'PIA' ? "Strong Match" : "Strong Strength";
+        else if (percentage >= 55) matchLevel = quizType === 'PIA' ? "Good Match" : "Moderate Strength";
+        else if (percentage >= 40) matchLevel = quizType === 'PIA' ? "Potential Match" : "Developing Area";
 
         return {
           category,
@@ -67,7 +67,7 @@ export default function ResultsPage() {
 
       setResults(calculatedResults);
     }
-  }, []);
+  }, [quizType]);
 
   const handleDownloadPdf = async () => {
     if (!reportRef.current) return;
@@ -79,7 +79,7 @@ export default function ResultsPage() {
         scale: 2,
         useCORS: true,
         logging: false,
-        backgroundColor: "hsl(var(--background))",
+        backgroundColor: "#ffffff",
       });
       
       const imgData = canvas.toDataURL("image/png");
@@ -88,7 +88,21 @@ export default function ResultsPage() {
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
       
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      // Multi-page logic if content is too long
+      let heightLeft = pdfHeight;
+      let position = 0;
+      const pageHeight = 295;
+
+      pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - pdfHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+        heightLeft -= pageHeight;
+      }
+      
       pdf.save(`CareerCompass_${quizType}_Report_${new Date().toISOString().split('T')[0]}.pdf`);
     } catch (error) {
       console.error("PDF generation failed:", error);
@@ -111,7 +125,6 @@ export default function ResultsPage() {
   }
 
   const dominant = results[0];
-  const coDominant = results[1];
   const careers = CAREER_MAPPING[dominant.category] || [];
   const recommendedPathway = PATHWAY_MAPPING[dominant.category];
 
@@ -122,11 +135,11 @@ export default function ResultsPage() {
       <div className="hero-gradient py-24 text-white">
         <div className="container px-4 mx-auto text-center space-y-8">
           <Badge className="bg-white/20 text-white hover:bg-white/30 border-none px-8 py-2 rounded-full text-base font-bold backdrop-blur-md">
-            {quizType === 'PIA' ? 'PIA Assessment Complete! 🚀' : 'Career Intelligence Mapped! 🧠'}
+            {quizType === 'PIA' ? 'Passions • Interests • Abilities Analysis' : 'Multiple Intelligences Profile'}
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tight">Your Career Compass</h1>
           <p className="text-white/90 max-w-2xl mx-auto text-xl font-medium leading-relaxed">
-            We've mapped your unique {quizType === 'PIA' ? 'passions, interests, and abilities' : 'multiple intelligences'} to these top pathways.
+            Download your professional career report based on your unique profile.
           </p>
           <div className="flex flex-wrap gap-6 justify-center pt-8">
             <Button 
@@ -135,7 +148,7 @@ export default function ResultsPage() {
               disabled={isDownloading}
             >
               {isDownloading ? <Loader2 className="h-6 w-6 animate-spin" /> : <Download className="h-6 w-6" />}
-              {isDownloading ? "Generating..." : "Get PDF Report"}
+              {isDownloading ? "Generating Report..." : "Get PDF Report"}
             </Button>
             <Button variant="outline" className="h-16 gap-3 border-white/40 bg-white/10 text-white hover:bg-white/20 rounded-full px-12 font-bold text-lg backdrop-blur-sm">
               <Share2 className="h-6 w-6" /> Share Result
@@ -144,119 +157,164 @@ export default function ResultsPage() {
         </div>
       </div>
 
-      <main className="container px-4 mx-auto -mt-20 space-y-16" ref={reportRef}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <Card className="lg:col-span-2 shadow-card border-none bg-card rounded-[40px] overflow-hidden">
-            <CardHeader className="p-12 pb-0">
-              <CardTitle className="font-headline text-3xl flex items-center gap-4 text-primary">
-                <Compass className="h-8 w-8" /> {quizType === 'PIA' ? 'Match Profile' : 'Intelligence Profile'}
-              </CardTitle>
-              <CardDescription className="text-lg">Your top strengths and matches.</CardDescription>
-            </CardHeader>
-            <CardContent className="h-[500px] sm:h-[650px] p-12">
-              {mounted ? (
+      <main className="container px-4 mx-auto -mt-20 space-y-16">
+        {/* REPORT CONTENT WRAPPER */}
+        <div ref={reportRef} className="bg-white text-slate-900 rounded-[40px] shadow-2xl overflow-hidden p-8 md:p-16 space-y-16">
+          
+          {/* Report Header */}
+          <div className="border-b-4 border-primary pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-black text-primary font-headline uppercase tracking-tighter">CareerCompass Kenya</h2>
+              <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">Official Assessment Report</p>
+            </div>
+            <div className="text-right space-y-1">
+               <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Generated On</p>
+               <p className="font-bold flex items-center justify-end gap-2"><Calendar className="h-4 w-4" /> {new Date().toLocaleDateString()}</p>
+            </div>
+          </div>
+
+          {/* Profile Summary */}
+          <section className="space-y-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-6">
+                <Badge className="bg-primary/10 text-primary border-none font-black px-4 py-1 rounded-full uppercase text-xs tracking-widest">Profile Summary</Badge>
+                <h3 className="text-4xl font-bold font-headline leading-tight">Your {quizType === 'PIA' ? 'Passions & Interests' : 'Intelligence Profile'}</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Based on your responses, we've identified <strong>{dominant.category}</strong> as your strongest area. This alignment suggests a natural affinity for roles that demand these specific traits.
+                </p>
+                <div className="p-8 bg-primary/5 rounded-[32px] border-2 border-primary/10 space-y-4">
+                  <p className="text-sm font-black text-primary uppercase tracking-widest">Primary Match Score</p>
+                  <div className="flex items-end gap-4">
+                    <span className="text-6xl font-black text-primary leading-none">{dominant.percentage}%</span>
+                    <Badge className="bg-success text-white font-bold h-8 mb-1">{dominant.matchLevel}</Badge>
+                  </div>
+                </div>
+              </div>
+              <div className="h-[450px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart cx="50%" cy="50%" outerRadius="80%" data={results}>
-                    <PolarGrid stroke="hsl(var(--muted))" strokeWidth={2} />
-                    <PolarAngleAxis dataKey="category" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10, fontWeight: 700 }} />
+                    <PolarGrid stroke="#e2e8f0" strokeWidth={2} />
+                    <PolarAngleAxis dataKey="category" tick={{ fill: '#64748b', fontSize: 10, fontWeight: 700 }} />
                     <Radar
                       name="Your Profile"
                       dataKey="percentage"
-                      stroke="hsl(var(--primary))"
-                      fill="hsl(var(--primary))"
-                      fillOpacity={0.6}
+                      stroke="#2563EB"
+                      fill="#2563EB"
+                      fillOpacity={0.5}
                       strokeWidth={4}
                     />
-                    <Tooltip 
-                      contentStyle={{ borderRadius: '24px', border: 'none', backgroundColor: 'hsl(var(--card))', boxShadow: '0 10px 40px rgba(0,0,0,0.4)', padding: '16px' }}
-                    />
+                    <Tooltip />
                   </RadarChart>
                 </ResponsiveContainer>
-              ) : (
-                <div className="w-full h-full bg-muted/20 animate-pulse rounded-[40px]" />
-              )}
-            </CardContent>
-          </Card>
+              </div>
+            </div>
+          </section>
 
-          <div className="space-y-10">
-            <Card className="border-none shadow-card bg-card rounded-[32px] overflow-hidden transform hover:scale-102 transition-transform">
-              <div className="h-4 bg-primary w-full" />
-              <CardHeader className="p-10 pb-4">
-                <Badge className="bg-primary/10 text-primary hover:bg-primary/10 border-none font-bold px-4 py-1 rounded-full mb-4">{dominant.matchLevel}</Badge>
-                <CardTitle className="font-headline text-3xl text-primary">{dominant.category}</CardTitle>
-                <p className="text-4xl font-black mt-2">{dominant.percentage}%</p>
-              </CardHeader>
-              <CardContent className="px-10 pb-10 text-lg text-muted-foreground leading-relaxed">
-                Your primary matching area is <strong>{dominant.category}</strong>. You demonstrate exceptional alignment here.
-              </CardContent>
-            </Card>
+          {/* Specific MI/PIA Details */}
+          {quizType === 'MI' && (
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {results.slice(0, 3).map((res, i) => {
+                const info = MI_INFO_MAP[res.category] || { desc: "", learn: "", strengths: [] };
+                return (
+                  <Card key={i} className="border-2 border-slate-100 shadow-none rounded-[32px] p-6 space-y-4">
+                    <Badge className="bg-secondary/10 text-secondary border-none font-bold">Top Strength {i+1}</Badge>
+                    <h4 className="text-2xl font-bold font-headline text-primary">{res.category}</h4>
+                    <p className="text-sm text-muted-foreground">{info.desc}</p>
+                    <div className="pt-4 space-y-2">
+                       <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">How You Learn Best</p>
+                       <p className="text-sm font-bold">{info.learn}</p>
+                    </div>
+                  </Card>
+                );
+              })}
+            </section>
+          )}
 
-            <Card className="bg-accent/10 border-none rounded-[32px] p-4">
-              <CardHeader className="p-6">
-                <CardTitle className="text-2xl font-headline flex items-center gap-3 text-primary">
-                  <Rocket className="h-7 w-7 text-accent" /> Recommended CBE Pathway
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="px-6 pb-6">
-                <div className="flex items-center justify-between p-6 bg-card rounded-3xl shadow-xl border-2 border-accent/20">
-                  <span className="font-black text-2xl text-primary">{recommendedPathway}</span>
-                  <Badge className="bg-success text-white font-bold px-4 py-1 rounded-full">Optimal</Badge>
+          {/* Recommended Pathway */}
+          <section className="bg-slate-50 rounded-[40px] p-10 flex flex-col md:flex-row items-center justify-between gap-8 border-2 border-slate-100">
+             <div className="space-y-2 text-center md:text-left">
+               <h4 className="text-2xl font-bold font-headline text-primary">Recommended CBE Pathway</h4>
+               <p className="text-muted-foreground font-medium">This is the optimal curriculum path for your strengths in Senior School.</p>
+             </div>
+             <div className="p-8 bg-white rounded-3xl shadow-xl border-2 border-primary/20 flex items-center gap-6">
+                <div className="h-16 w-16 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg">
+                  <Rocket className="h-8 w-8" />
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+                <div>
+                   <span className="text-4xl font-black text-primary">{recommendedPathway}</span>
+                   <p className="text-xs font-bold text-success uppercase tracking-widest mt-1">Highly Compatible</p>
+                </div>
+             </div>
+          </section>
 
-        <div className="space-y-12">
-          <div className="text-center space-y-4">
-            <h2 className="text-5xl font-bold font-headline text-primary tracking-tight">Top Career Matches</h2>
-            <p className="text-muted-foreground text-2xl font-medium">Careers tailored for your unique profile.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {careers.map((career, idx) => (
-              <Card key={idx} className="border-none shadow-card rounded-[40px] bg-card group hover:translate-y-[-12px] transition-all duration-500 overflow-hidden">
-                <div className="p-10 space-y-6">
-                  <div className="flex justify-between items-start">
-                    <div className="h-16 w-16 rounded-[24px] bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-inner">
-                      <Briefcase className="h-8 w-8" />
+          {/* Career Matches */}
+          <section className="space-y-10">
+            <div className="text-center space-y-2">
+               <h3 className="text-3xl font-bold font-headline">Top Career Opportunities</h3>
+               <p className="text-muted-foreground font-medium">Careers tailored for your {quizType === 'PIA' ? 'PIA profile' : 'intelligence type'}.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               {careers.slice(0, 4).map((career, i) => (
+                 <div key={i} className="p-8 border-2 border-slate-100 rounded-[32px] hover:border-primary/20 transition-all space-y-6">
+                    <div className="flex justify-between items-start">
+                      <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                        <Briefcase className="h-7 w-7" />
+                      </div>
+                      <Badge className="bg-primary/5 text-primary border-none font-bold">{dominant.percentage}% Match</Badge>
                     </div>
-                    <Badge className="bg-success/10 text-success border-none font-bold px-4 py-1 rounded-full">{dominant.percentage}% Match</Badge>
-                  </div>
-                  <div className="space-y-3">
-                    <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">{career.title}</CardTitle>
-                    <CardDescription className="text-base leading-relaxed line-clamp-3">{career.description}</CardDescription>
-                  </div>
-                  
-                  <div className="space-y-4 pt-4 border-t border-border/50">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">Est. Salary</span>
-                      <span className="text-lg font-bold text-primary">{career.avgSalary}</span>
+                    <div className="space-y-2">
+                      <h5 className="text-2xl font-bold font-headline">{career.title}</h5>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{career.description}</p>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">Demand</span>
-                      <Badge className={career.demandLevel === 'High' ? "bg-orange-500" : "bg-blue-500" + " text-white border-none font-black px-4 py-1 rounded-full"}>{career.demandLevel}</Badge>
+                    <div className="p-4 bg-slate-50 rounded-2xl text-xs font-bold text-slate-700 italic border-l-4 border-primary">
+                      " {career.whyFit} "
                     </div>
-                  </div>
+                    <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100">
+                       <div className="space-y-1">
+                          <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Required Subjects</p>
+                          <p className="text-xs font-bold text-slate-800">{career.subjects.slice(0, 2).join(", ")}</p>
+                       </div>
+                       <div className="space-y-1">
+                          <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Top Universities</p>
+                          <p className="text-xs font-bold text-slate-800">{career.universities.slice(0, 2).join(", ")}</p>
+                       </div>
+                    </div>
+                 </div>
+               ))}
+            </div>
+          </section>
 
-                  <div className="space-y-3">
-                    <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Recommended Institutions</p>
-                    <div className="flex flex-wrap gap-2">
-                      {[...career.universities, ...career.tvetOptions].slice(0, 3).map(inst => (
-                        <div key={inst} className="flex items-center gap-1 text-[11px] font-bold text-muted-foreground">
-                          <GraduationCap className="h-3 w-3" /> {inst}
+          {/* Roadmap Footer */}
+          <section className="bg-primary p-12 rounded-[40px] text-white space-y-10 relative overflow-hidden">
+             <div className="relative z-10 space-y-6">
+                <h4 className="text-3xl font-bold font-headline">Your Career Journey</h4>
+                <div className="flex flex-col md:flex-row justify-between gap-8">
+                   {[
+                     { step: "Senior School", label: recommendedPathway },
+                     { step: "Tertiary", label: "Uni / TVET" },
+                     { step: "Internship", label: "Practical Prep" },
+                     { step: "Professional", label: dominant.category }
+                   ].map((item, i) => (
+                     <div key={i} className="flex-1 space-y-2 relative">
+                        <div className="flex items-center gap-3">
+                           <div className="h-10 w-10 rounded-full bg-white text-primary flex items-center justify-center font-black text-lg shadow-xl">
+                              {i + 1}
+                           </div>
+                           {i < 3 && <div className="hidden md:block absolute left-10 top-5 w-full h-1 bg-white/20" />}
                         </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <Button className="w-full h-14 bg-primary/5 text-primary hover:bg-primary hover:text-white border-none font-black rounded-[20px] text-base transition-all group-hover:shadow-xl mt-4">
-                    Explore Roadmap
-                  </Button>
+                        <p className="text-xs font-black uppercase tracking-widest opacity-70">{item.step}</p>
+                        <p className="font-bold text-lg">{item.label}</p>
+                     </div>
+                   ))}
                 </div>
-              </Card>
-            ))}
-          </div>
+             </div>
+             {/* Decorative */}
+             <div className="absolute top-[-20%] right-[-10%] w-[300px] h-[300px] bg-white/10 rounded-full blur-3xl" />
+          </section>
+
+          <footer className="text-center pt-8 border-t border-slate-100">
+             <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">© 2026 CareerCompass Kenya • Discover Your Path. Build Your Future.</p>
+          </footer>
         </div>
       </main>
     </div>

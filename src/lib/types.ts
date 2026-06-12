@@ -49,6 +49,7 @@ export interface CareerInfo {
   subjects: string[];
   universities: string[];
   tvetOptions: string[];
+  whyFit: string;
 }
 
 export interface QuizResults {

@@ -158,74 +158,110 @@ export const CATEGORY_QUESTION_MAP: Record<AssessmentCategory, number[]> = {
   'Existential': [113, 114, 115, 116, 117],
 };
 
+export const MI_INFO_MAP: Record<string, { desc: string, learn: string, strengths: string[] }> = {
+  'Linguistic': {
+    desc: "The ability to use language effectively to express yourself and remember information.",
+    learn: "Reading, writing, and word-based explanations.",
+    strengths: ["Storytelling", "Persuasion", "Memorization", "Clear writing"]
+  },
+  'Logical-Mathematical': {
+    desc: "The ability to analyze problems logically, carry out mathematical operations, and investigate issues scientifically.",
+    learn: "Logical sequences, problem-solving, and abstract reasoning.",
+    strengths: ["Pattern recognition", "Scientific investigation", "Critical thinking"]
+  },
+  'Spatial': {
+    desc: "The capacity to think in images and pictures, to visualize accurately and abstractly.",
+    learn: "Visual aids, diagrams, and spatial relationships.",
+    strengths: ["Design", "Visualization", "Graphic representation", "Orientation"]
+  },
+  'Musical': {
+    desc: "Skill in the performance, composition, and appreciation of musical patterns.",
+    learn: "Rhythm, sound, and musical mnemonics.",
+    strengths: ["Rhythmic awareness", "Melody recognition", "Audio sensitivity"]
+  },
+  'Bodily-Kinesthetic': {
+    desc: "The potential of using one's whole body or parts of the body to solve problems.",
+    learn: "Physical activity, hands-on tasks, and movement.",
+    strengths: ["Coordination", "Manual dexterity", "Physical focus", "Object manipulation"]
+  },
+  'Interpersonal': {
+    desc: "The capacity to understand and interact effectively with others.",
+    learn: "Social interaction, group work, and communication.",
+    strengths: ["Empathy", "Leadership", "Mediation", "Teamwork"]
+  },
+  'Intrapersonal': {
+    desc: "The capacity to understand oneself and one's thoughts and feelings.",
+    learn: "Self-reflection, independent study, and goal-setting.",
+    strengths: ["Self-awareness", "Reflection", "Strategic planning", "Independence"]
+  },
+  'Naturalistic': {
+    desc: "The ability to identify and classify patterns in nature.",
+    learn: "Interaction with the natural world and observation.",
+    strengths: ["Environmental awareness", "Observation", "Biological classification"]
+  },
+  'Existential': {
+    desc: "The sensitivity and capacity to tackle deep questions about human existence.",
+    learn: "Philosophical discussion and exploring deep concepts.",
+    strengths: ["Abstract thinking", "Ethical reasoning", "Holistic perspective"]
+  }
+};
+
 export const CAREER_MAPPING: Record<AssessmentCategory, CareerInfo[]> = {
   // PIA & General
   'Technology': [
-    { title: "Software Engineer", description: "Design, develop, and maintain software systems.", avgSalary: "KES 120,000", demandLevel: "High", skills: ["Coding", "System Design"], subjects: ["Math", "Physics", "Computer Studies"], universities: ["University of Nairobi", "JKUAT", "Strathmore"], tvetOptions: ["Technical University of Kenya", "Mombasa Polytechnic"] },
-    { title: "Data Scientist", description: "Analyze and interpret complex data to help organizations make decisions.", avgSalary: "KES 150,000", demandLevel: "High", skills: ["Statistics", "Python"], subjects: ["Math", "Business"], universities: ["Strathmore", "UoN"], tvetOptions: [] },
-    { title: "AI Engineer", description: "Build and deploy artificial intelligence models.", avgSalary: "KES 180,000", demandLevel: "High", skills: ["Machine Learning", "Algorithms"], subjects: ["Math", "Physics"], universities: ["JKUAT", "UoN"], tvetOptions: [] },
-    { title: "Cybersecurity Analyst", description: "Protect organizations from digital threats.", avgSalary: "KES 130,000", demandLevel: "High", skills: ["Networking", "Security Protocols"], subjects: ["Math", "Physics"], universities: ["Kenyatta University", "JKUAT"], tvetOptions: ["TUK"] },
-    { title: "Robotics Engineer", description: "Design and build robotic systems.", avgSalary: "KES 140,000", demandLevel: "High", skills: ["Mechanical Design", "Coding"], subjects: ["Physics", "Math"], universities: ["JKUAT", "Dedan Kimathi"], tvetOptions: ["RVIST"] }
+    { title: "Software Engineer", description: "Design, develop, and maintain software systems.", avgSalary: "KES 120,000", demandLevel: "High", skills: ["Coding", "System Design"], subjects: ["Math", "Physics", "Computer Studies"], universities: ["University of Nairobi", "JKUAT", "Strathmore"], tvetOptions: ["Technical University of Kenya", "Mombasa Polytechnic"], whyFit: "Matches your strong analytical skills and interest in creating digital solutions." },
+    { title: "Data Scientist", description: "Analyze and interpret complex data to help organizations make decisions.", avgSalary: "KES 150,000", demandLevel: "High", skills: ["Statistics", "Python"], subjects: ["Math", "Business"], universities: ["Strathmore", "UoN"], tvetOptions: [], whyFit: "Leverages your ability to find patterns and enjoy logical reasoning." },
+    { title: "AI Engineer", description: "Build and deploy artificial intelligence models.", avgSalary: "KES 180,000", demandLevel: "High", skills: ["Machine Learning", "Algorithms"], subjects: ["Math", "Physics"], universities: ["JKUAT", "UoN"], tvetOptions: [], whyFit: "Perfect for your curiosity in future-tech and high technical ability." }
   ],
   'Medicine & Health': [
-    { title: "Doctor", description: "Diagnose and treat illnesses and injuries.", avgSalary: "KES 200,000", demandLevel: "High", skills: ["Diagnosis", "Compassion"], subjects: ["Biology", "Chemistry", "Physics"], universities: ["UoN", "Kenyatta University", "Moi University"], tvetOptions: [] },
-    { title: "Nurse", description: "Provide care and support to patients.", avgSalary: "KES 80,000", demandLevel: "High", skills: ["Patient Care", "Medical Knowledge"], subjects: ["Biology", "Chemistry"], universities: ["KMTC", "UoN", "KU"], tvetOptions: ["Kenya Medical Training College"] },
-    { title: "Pharmacist", description: "Prepare and dispense medications.", avgSalary: "KES 100,000", demandLevel: "Medium", skills: ["Chemistry", "Accuracy"], subjects: ["Chemistry", "Biology"], universities: ["UoN", "KU"], tvetOptions: ["KMTC"] }
+    { title: "Doctor", description: "Diagnose and treat illnesses and injuries.", avgSalary: "KES 200,000", demandLevel: "High", skills: ["Diagnosis", "Compassion"], subjects: ["Biology", "Chemistry", "Physics"], universities: ["UoN", "Kenyatta University", "Moi University"], tvetOptions: [], whyFit: "Connects your passion for helping people with your science aptitude." },
+    { title: "Nurse", description: "Provide care and support to patients.", avgSalary: "KES 80,000", demandLevel: "High", skills: ["Patient Care", "Medical Knowledge"], subjects: ["Biology", "Chemistry"], universities: ["KMTC", "UoN", "KU"], tvetOptions: ["Kenya Medical Training College"], whyFit: "Utilizes your strong social skills and desire for meaningful community service." }
   ],
   'Engineering': [
-    { title: "Civil Engineer", description: "Design and oversee infrastructure projects.", avgSalary: "KES 110,000", demandLevel: "High", skills: ["Project Management", "Design"], subjects: ["Math", "Physics", "Chemistry"], universities: ["UoN", "JKUAT", "KU"], tvetOptions: ["TUK", "Technical University of Mombasa"] },
-    { title: "Mechanical Engineer", description: "Design and manufacture machinery.", avgSalary: "KES 100,000", demandLevel: "High", skills: ["Thermodynamics", "Design"], subjects: ["Math", "Physics"], universities: ["UoN", "JKUAT"], tvetOptions: ["TUK"] }
+    { title: "Civil Engineer", description: "Design and oversee infrastructure projects.", avgSalary: "KES 110,000", demandLevel: "High", skills: ["Project Management", "Design"], subjects: ["Math", "Physics", "Chemistry"], universities: ["UoN", "JKUAT", "KU"], tvetOptions: ["TUK", "Technical University of Mombasa"], whyFit: "Combines your practical building interest with mathematical precision." }
   ],
   'Business': [
-    { title: "Entrepreneur", description: "Start and manage your own business ventures.", avgSalary: "Variable", demandLevel: "Medium", skills: ["Risk Taking", "Leadership"], subjects: ["Business Studies", "Math"], universities: ["Strathmore", "UoN", "KU"], tvetOptions: [] },
-    { title: "Accountant", description: "Manage financial records and taxes.", avgSalary: "KES 90,000", demandLevel: "High", skills: ["Financial Analysis", "Integrity"], subjects: ["Math", "Business Studies"], universities: ["UoN", "Strathmore", "KCA University"], tvetOptions: ["KASNEB Courses"] }
+    { title: "Entrepreneur", description: "Start and manage your own business ventures.", avgSalary: "Variable", demandLevel: "Medium", skills: ["Risk Taking", "Leadership"], subjects: ["Business Studies", "Math"], universities: ["Strathmore", "UoN", "KU"], tvetOptions: [], whyFit: "Ideal for your leadership traits and passion for inventing solutions." }
   ],
   'Agriculture': [
-    { title: "Agronomist", description: "Expert in soil management and crop production.", avgSalary: "KES 85,000", demandLevel: "High", skills: ["Soil Science", "Crop Protection"], subjects: ["Agriculture", "Biology", "Chemistry"], universities: ["Egerton", "JKUAT", "UoN"], tvetOptions: ["Bukura Agricultural College"] }
+    { title: "Agronomist", description: "Expert in soil management and crop production.", avgSalary: "KES 85,000", demandLevel: "High", skills: ["Soil Science", "Crop Protection"], subjects: ["Agriculture", "Biology", "Chemistry"], universities: ["Egerton", "JKUAT", "UoN"], tvetOptions: ["Bukura Agricultural College"], whyFit: "Syncs with your love for the outdoors and interest in food security." }
   ],
   'Education': [
-    { title: "Teacher", description: "Educate and inspire students in specific subjects.", avgSalary: "KES 50,000", demandLevel: "High", skills: ["Teaching", "Patience"], subjects: ["Subject of choice"], universities: ["KU", "UoN", "CUEA"], tvetOptions: ["Teacher Training Colleges"] }
+    { title: "Teacher", description: "Educate and inspire students in specific subjects.", avgSalary: "KES 50,000", demandLevel: "High", skills: ["Teaching", "Patience"], subjects: ["Subject of choice"], universities: ["KU", "UoN", "CUEA"], tvetOptions: ["Teacher Training Colleges"], whyFit: "Reflects your passion for mentoring and clear communication." }
   ],
   'Law': [
-    { title: "Lawyer", description: "Provide legal advice and representation.", avgSalary: "KES 150,000", demandLevel: "High", skills: ["Advocacy", "Research"], subjects: ["English", "History"], universities: ["UoN", "Strathmore", "KU"], tvetOptions: ["Kenya School of Law"] }
+    { title: "Lawyer", description: "Provide legal advice and representation.", avgSalary: "KES 150,000", demandLevel: "High", skills: ["Advocacy", "Research"], subjects: ["English", "History"], universities: ["UoN", "Strathmore", "KU"], tvetOptions: ["Kenya School of Law"], whyFit: "Matches your value for justice and skill in logical debate." }
   ],
   'Arts & Media': [
-    { title: "Graphic Designer", description: "Create visual concepts to communicate ideas.", avgSalary: "KES 60,000", demandLevel: "High", skills: ["Adobe Suite", "Creativity"], subjects: ["Fine Art", "Computer Studies"], universities: ["UoN", "KU", "Technical University of Kenya"], tvetOptions: ["Nairobi Institute of Technology"] }
+    { title: "Graphic Designer", description: "Create visual concepts to communicate ideas.", avgSalary: "KES 60,000", demandLevel: "High", skills: ["Adobe Suite", "Creativity"], subjects: ["Fine Art", "Computer Studies"], universities: ["UoN", "KU", "Technical University of Kenya"], tvetOptions: ["Nairobi Institute of Technology"], whyFit: "Excellent for your creative expression and visual intelligence." }
   ],
   // MI Specific or mapped
   'Linguistic': [
-    { title: "Journalist", description: "Report news and write articles for various media.", avgSalary: "KES 70,000", demandLevel: "Medium", skills: ["Writing", "Investigation"], subjects: ["English", "History"], universities: ["Daystar", "UoN", "KU"], tvetOptions: ["KIMC"] },
-    { title: "Author", description: "Write books and literary works.", avgSalary: "Variable", demandLevel: "Medium", skills: ["Writing", "Imagination"], subjects: ["Literature", "English"], universities: ["UoN"], tvetOptions: [] }
+    { title: "Journalist", description: "Report news and write articles for various media.", avgSalary: "KES 70,000", demandLevel: "Medium", skills: ["Writing", "Investigation"], subjects: ["English", "History"], universities: ["Daystar", "UoN", "KU"], tvetOptions: ["KIMC"], whyFit: "Uses your linguistic strength to tell important stories." }
   ],
   'Logical-Mathematical': [
-    { title: "Actuary", description: "Evaluate financial risks using math and statistics.", avgSalary: "KES 160,000", demandLevel: "High", skills: ["Math", "Risk Assessment"], subjects: ["Math"], universities: ["JKUAT", "UoN"], tvetOptions: [] }
+    { title: "Actuary", description: "Evaluate financial risks using math and statistics.", avgSalary: "KES 160,000", demandLevel: "High", skills: ["Math", "Risk Assessment"], subjects: ["Math"], universities: ["JKUAT", "UoN"], tvetOptions: [], whyFit: "Demands the high-level logical reasoning you possess." }
   ],
   'Spatial': [
-    { title: "Architect", description: "Design buildings and structures.", avgSalary: "KES 110,000", demandLevel: "High", skills: ["Design", "Visualization"], subjects: ["Math", "Physics", "Fine Art"], universities: ["UoN", "JKUAT"], tvetOptions: ["TUK"] },
-    { title: "Animator", description: "Create animated sequences for movies and games.", avgSalary: "KES 80,000", demandLevel: "High", skills: ["Drawing", "3D Modeling"], subjects: ["Fine Art", "Math"], universities: ["NIT", "UoN"], tvetOptions: [] }
+    { title: "Architect", description: "Design buildings and structures.", avgSalary: "KES 110,000", demandLevel: "High", skills: ["Design", "Visualization"], subjects: ["Math", "Physics", "Fine Art"], universities: ["UoN", "JKUAT"], tvetOptions: ["TUK"], whyFit: "Your spatial visualization makes you a natural designer." }
   ],
   'Musical': [
-    { title: "Sound Engineer", description: "Record and mix audio for various media.", avgSalary: "KES 75,000", demandLevel: "Medium", skills: ["Audio Mixing", "Acoustics"], subjects: ["Physics"], universities: ["Kenyatta University"], tvetOptions: ["KIMC"] },
-    { title: "Producer", description: "Oversee the creation of music and media.", avgSalary: "Variable", demandLevel: "Medium", skills: ["Leadership", "Musicality"], subjects: ["Music"], universities: ["KU"], tvetOptions: [] }
+    { title: "Sound Engineer", description: "Record and mix audio for various media.", avgSalary: "KES 75,000", demandLevel: "Medium", skills: ["Audio Mixing", "Acoustics"], subjects: ["Physics"], universities: ["Kenyatta University"], tvetOptions: ["KIMC"], whyFit: "Leverages your acute audio sensitivity." }
   ],
   'Bodily-Kinesthetic': [
-    { title: "Pilot", description: "Operate aircraft for commercial or private use.", avgSalary: "KES 250,000", demandLevel: "High", skills: ["Coordination", "Decision Making"], subjects: ["Physics", "Math", "English"], universities: ["Kenya School of Flying"], tvetOptions: [] },
-    { title: "Surgeon", description: "Perform operations on patients.", avgSalary: "KES 250,000", demandLevel: "High", skills: ["Hand-eye coordination", "Focus"], subjects: ["Biology", "Chemistry"], universities: ["UoN", "KU"], tvetOptions: [] }
+    { title: "Pilot", description: "Operate aircraft for commercial or private use.", avgSalary: "KES 250,000", demandLevel: "High", skills: ["Coordination", "Decision Making"], subjects: ["Physics", "Math", "English"], universities: ["Kenya School of Flying"], tvetOptions: [], whyFit: "Requires the coordination and physical focus you've shown." }
   ],
   'Interpersonal': [
-    { title: "Counselor", description: "Provide emotional and mental support.", avgSalary: "KES 65,000", demandLevel: "High", skills: ["Empathy", "Listening"], subjects: ["English", "Religious Education"], universities: ["CUEA", "KU"], tvetOptions: [] },
-    { title: "Human Resource Manager", description: "Manage organization personnel.", avgSalary: "KES 110,000", demandLevel: "High", skills: ["Mediation", "Strategy"], subjects: ["Business", "English"], universities: ["UoN", "Strathmore"], tvetOptions: [] }
+    { title: "Counselor", description: "Provide emotional and mental support.", avgSalary: "KES 65,000", demandLevel: "High", skills: ["Empathy", "Listening"], subjects: ["English", "Religious Education"], universities: ["CUEA", "KU"], tvetOptions: [], whyFit: "Perfect for your high empathy and interpersonal skills." }
   ],
   'Intrapersonal': [
-    { title: "Psychologist", description: "Study human mind and behavior.", avgSalary: "KES 90,000", demandLevel: "High", skills: ["Analysis", "Patience"], subjects: ["Biology", "English"], universities: ["USIU", "KU"], tvetOptions: [] }
+    { title: "Psychologist", description: "Study human mind and behavior.", avgSalary: "KES 90,000", demandLevel: "High", skills: ["Analysis", "Patience"], subjects: ["Biology", "English"], universities: ["USIU", "KU"], tvetOptions: [], whyFit: "Suits your reflective and self-aware nature." }
   ],
   'Naturalistic': [
-    { title: "Wildlife Biologist", description: "Study animals and their ecosystems.", avgSalary: "KES 85,000", demandLevel: "Medium", skills: ["Observation", "Research"], subjects: ["Biology", "Geography"], universities: ["KU", "Moi University"], tvetOptions: [] },
-    { title: "Environmental Officer", description: "Ensure environmental safety and compliance.", avgSalary: "KES 80,000", demandLevel: "High", skills: ["Policy", "Ecology"], subjects: ["Geography", "Biology"], universities: ["KU", "UoN"], tvetOptions: [] }
+    { title: "Wildlife Biologist", description: "Study animals and their ecosystems.", avgSalary: "KES 85,000", demandLevel: "Medium", skills: ["Observation", "Research"], subjects: ["Biology", "Geography"], universities: ["KU", "Moi University"], tvetOptions: [], whyFit: "Your connection to nature is key to this role." }
   ],
   'Existential': [
-    { title: "Diplomat", description: "Represent the country in international relations.", avgSalary: "KES 180,000", demandLevel: "Medium", skills: ["Negotiation", "Cultural Intelligence"], subjects: ["International Relations", "History"], universities: ["USIU", "UoN"], tvetOptions: [] },
-    { title: "Policy Analyst", description: "Analyze and develop public policies.", avgSalary: "KES 110,000", demandLevel: "High", skills: ["Critical Thinking", "Analysis"], subjects: ["History", "Economics"], universities: ["UoN", "KU", "Strathmore"], tvetOptions: [] }
+    { title: "Diplomat", description: "Represent the country in international relations.", avgSalary: "KES 180,000", demandLevel: "Medium", skills: ["Negotiation", "Cultural Intelligence"], subjects: ["International Relations", "History"], universities: ["USIU", "UoN"], tvetOptions: [], whyFit: "Leverages your deep understanding of global ethics." }
   ],
 };
 
