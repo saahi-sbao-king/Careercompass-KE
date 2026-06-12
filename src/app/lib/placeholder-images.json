@@ -1,6 +1,11 @@
-
 {
   "placeholderImages": [
+    {
+      "id": "app-logo",
+      "description": "CareerCompass Kenya Official Logo",
+      "imageUrl": "https://res.cloudinary.com/dripd0ze7/image/upload/q_auto/f_auto/v1781264782/aeadf09c-7118-45d5-867b-3e3faf1d797b.png",
+      "imageHint": "company logo"
+    },
     {
       "id": "hero-student",
       "description": "A focused Kenyan student studying with a digital tablet",

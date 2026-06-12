@@ -1,12 +1,14 @@
-
 import Image from "next/image";
 import Link from "next/link";
-import { GraduationCap, ArrowRight, CheckCircle2, Award, Zap, Users } from "lucide-react";
+import { ArrowRight, CheckCircle2, Award, Zap, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavHeader } from "@/components/nav-header";
 import { Card, CardContent } from "@/components/ui/card";
+import placeholderData from "@/app/lib/placeholder-images.json";
 
 export default function Home() {
+  const logo = placeholderData.placeholderImages.find(img => img.id === 'app-logo');
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <NavHeader />
@@ -116,7 +118,17 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex flex-col items-center md:items-start gap-2">
               <div className="flex items-center gap-2">
-                <GraduationCap className="h-6 w-6 text-primary" />
+                <div className="relative h-8 w-8 overflow-hidden">
+                  {logo && (
+                    <Image 
+                      src={logo.imageUrl} 
+                      alt="CareerCompass Kenya Logo" 
+                      fill 
+                      className="object-contain"
+                      data-ai-hint="company logo"
+                    />
+                  )}
+                </div>
                 <span className="text-xl font-bold font-headline text-primary">CareerCompass Kenya</span>
               </div>
               <p className="text-sm text-muted-foreground">Empowering Kenyan students for the global stage.</p>
