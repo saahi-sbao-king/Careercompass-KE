@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -82,8 +83,8 @@ const UNIVERSITIES = [
 ];
 
 const SCHOLARSHIPS = [
-  { name: "Equity Wings To Fly", tag: "Fully Funded", url: "https://equitygroupfoundation.com/wings-to-fly/" },
   { name: "Mastercard Foundation", tag: "Partial", url: "https://mastercardfdn.org/en/what-we-do/our-programs/mastercard-foundation-scholars-program/" },
+  { name: "Equity Wings To Fly", tag: "Fully Funded", url: "https://equitygroupfoundation.com/wings-to-fly/" },
   { name: "Government Bursaries", tag: "Open", url: "https://www.hef.co.ke/" },
 ];
 
@@ -115,7 +116,7 @@ export default function Home() {
                       Take Career Assessment
                     </Link>
                   </Button>
-                  <Button size="lg" variant="outline" className="h-14 px-10 text-lg font-bold border-white/40 text-white hover:bg-white/10 rounded-full backdrop-blur-sm" asChild>
+                  <Button size="lg" variant="outline" className="h-14 px-10 text-lg font-bold border-white text-white hover:bg-white/20 rounded-full backdrop-blur-sm" asChild>
                     <Link href="/hub">Explore Careers</Link>
                   </Button>
                 </div>
@@ -306,20 +307,20 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {SCHOLARSHIPS.map((sch, i) => (
-              <Card key={i} className="border-none shadow-card rounded-[24px] bg-card group hover:-translate-y-2 transition-all">
+              <Card key={i} className={`border-none shadow-card rounded-[24px] ${i === 0 ? 'bg-gradient-to-br from-accent to-[#FB923C] text-white' : 'bg-card'} group hover:-translate-y-2 transition-all`}>
                 <CardContent className="p-8 space-y-6">
-                  <div className="h-14 w-14 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white transition-all">
+                  <div className={`h-14 w-14 rounded-2xl flex items-center justify-center transition-all ${i === 0 ? 'bg-white/20 text-white' : 'bg-secondary/10 text-secondary group-hover:bg-secondary group-hover:text-white'}`}>
                     <Award className="h-8 w-8" />
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-xl font-bold font-headline">{sch.name}</h3>
                     <div className="flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-success" />
-                      <span className="text-sm font-black text-success uppercase tracking-widest">{sch.tag}</span>
+                      <span className={`h-2 w-2 rounded-full ${i === 0 ? 'bg-white' : 'bg-success'}`} />
+                      <span className={`text-sm font-black uppercase tracking-widest ${i === 0 ? 'text-white/90' : 'text-success'}`}>{sch.tag}</span>
                     </div>
                   </div>
-                  <div className="pt-4 border-t flex justify-end items-center">
-                    <Button variant="ghost" className="font-bold text-primary p-0 h-auto" asChild>
+                  <div className={`pt-4 border-t flex justify-end items-center ${i === 0 ? 'border-white/20' : ''}`}>
+                    <Button variant="ghost" className={`font-bold p-0 h-auto ${i === 0 ? 'text-white hover:text-white/80' : 'text-primary'}`} asChild>
                       <a href={sch.url} target="_blank" rel="noopener noreferrer">Apply Now</a>
                     </Button>
                   </div>
