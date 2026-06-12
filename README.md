@@ -1,3 +1,4 @@
+
 # CareerCompass Kenya 🇰🇪
 
 **Navigate Your Future with Precision.**
@@ -34,3 +35,5 @@ Open [http://localhost:9002](http://localhost:9002) with your browser to see the
 ## 📄 License
 
 Internal use only. © 2026 CareerCompass Kenya.
+# Careercompass-KE
+# Careercompass-KE
