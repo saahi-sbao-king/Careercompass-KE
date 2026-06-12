@@ -1,3 +1,7 @@
+
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { 
@@ -16,7 +20,12 @@ import {
   Compass, 
   Award,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Plane,
+  Palette,
+  ChefHat,
+  Mic,
+  Trophy
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavHeader } from "@/components/nav-header";
@@ -36,6 +45,12 @@ const CATEGORIES = [
   { icon: <HardHat className="h-8 w-8" />, title: "Engineering", color: "bg-blue-500 text-white" },
   { icon: <Sprout className="h-8 w-8" />, title: "Agriculture", color: "bg-blue-500 text-white" },
   { icon: <BookOpen className="h-8 w-8" />, title: "Education", color: "bg-blue-500 text-white" },
+  { icon: <Palette className="h-8 w-8" />, title: "Arts & Design", color: "bg-blue-500 text-white" },
+  { icon: <ChefHat className="h-8 w-8" />, title: "Hospitality", color: "bg-blue-500 text-white" },
+  { icon: <Plane className="h-8 w-8" />, title: "Aviation", color: "bg-blue-500 text-white" },
+  { icon: <Mic className="h-8 w-8" />, title: "Media & Comms", color: "bg-blue-500 text-white" },
+  { icon: <Trophy className="h-8 w-8" />, title: "Sports", color: "bg-blue-500 text-white" },
+  { icon: <Users className="h-8 w-8" />, title: "Social Sciences", color: "bg-blue-500 text-white" },
 ];
 
 const STATS = [
@@ -73,6 +88,9 @@ const SCHOLARSHIPS = [
 ];
 
 export default function Home() {
+  const [showAllCategories, setShowAllCategories] = useState(false);
+  const visibleCategories = showAllCategories ? CATEGORIES : CATEGORIES.slice(0, 6);
+
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
       <NavHeader />
@@ -159,8 +177,8 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-bold font-headline text-primary">Explore Career Categories</h2>
               <p className="text-muted-foreground text-lg italic">"Chart your path to success in any field."</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {CATEGORIES.map((cat, i) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-500">
+              {visibleCategories.map((cat, i) => (
                 <Card key={i} className="border-none bg-primary shadow-card rounded-[20px] hover:-translate-y-2 transition-all duration-300 group cursor-pointer text-white">
                   <CardContent className="p-10 flex flex-col items-center text-center gap-6">
                     <div className="h-16 w-16 rounded-2xl bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -173,7 +191,13 @@ export default function Home() {
               ))}
             </div>
             <div className="mt-12 text-center">
-              <Button size="lg" className="rounded-full px-10 font-bold">View All Categories</Button>
+              <Button 
+                size="lg" 
+                className="rounded-full px-10 font-bold h-12"
+                onClick={() => setShowAllCategories(!showAllCategories)}
+              >
+                {showAllCategories ? "Show Less" : "View All Categories"}
+              </Button>
             </div>
           </div>
         </section>
@@ -253,7 +277,9 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-bold font-headline text-primary">Scholarships & Opportunities</h2>
               <p className="text-muted-foreground text-lg">Find financial support to fuel your educational journey.</p>
             </div>
-            <Button variant="link" className="font-bold text-primary text-lg">View All <ArrowRight className="h-5 w-5 ml-2" /></Button>
+            <Button variant="link" className="font-bold text-primary text-lg" asChild>
+              <Link href="/hub">View All <ArrowRight className="h-5 w-5 ml-2" /></Link>
+            </Button>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
