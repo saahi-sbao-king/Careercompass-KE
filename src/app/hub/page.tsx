@@ -9,21 +9,34 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GraduationCap, ExternalLink, Calculator, BookOpen, Search, MapPin, Globe, BookMarked, MessageSquare } from "lucide-react";
-import Image from "next/image";
 
 const UNIVERSITIES = [
-  { name: "University of Nairobi", type: "Public", location: "Nairobi", website: "https://www.uonbi.ac.ke", logo: "uni-uon", programs: "240+ Programs", description: "The oldest and largest university in Kenya, offering a wide range of competitive programs." },
-  { name: "Kenyatta University", type: "Public", location: "Nairobi", website: "https://www.ku.ac.ke", logo: "uni-tuk", programs: "180+ Programs", description: "Renowned for Education, Medicine, and Arts programs with modern facilities." },
-  { name: "Strathmore University", type: "Private", location: "Nairobi", website: "https://www.strathmore.edu", logo: "uni-uon", programs: "60+ Programs", description: "A leading non-profit private university specializing in Business, Law, and IT." },
-  { name: "JKUAT", type: "Public", location: "Juja", website: "https://www.jkuat.ac.ke", logo: "uni-tuk", programs: "150+ Programs", description: "The premier institution for Agriculture, Technology, and Engineering." },
-  { name: "Moi University", type: "Public", location: "Eldoret", website: "https://www.mu.ac.ke", logo: "uni-uon", programs: "140+ Programs", description: "Strong focus on Medicine, Engineering, and Textile Technology." },
-  { name: "Egerton University", type: "Public", location: "Njoro", website: "https://www.egerton.ac.ke", logo: "uni-tuk", programs: "120+ Programs", description: "Kenya's premier agricultural university with a rich history in research." },
-  { name: "Technical University of Kenya", type: "Public", location: "Nairobi", website: "https://www.tukenya.ac.ke", logo: "uni-tuk", programs: "100+ Programs", description: "Specializes in technical and vocational education and training at the degree level." },
-  { name: "United States International University Africa", type: "Private", location: "Nairobi", website: "https://www.usiu.ac.ke", logo: "uni-uon", programs: "40+ Programs", description: "Global perspective education with diverse international student body." },
-  { name: "Mount Kenya University", type: "Private", location: "Thika", website: "https://www.mku.ac.ke", logo: "uni-tuk", programs: "130+ Programs", description: "Rapidly growing private university with strong Health Sciences department." },
-  { name: "Maseno University", type: "Public", location: "Kisumu", website: "https://www.maseno.ac.ke", logo: "uni-uon", programs: "90+ Programs", description: "The only university in the world situated on the Equator." },
-  { name: "Dedan Kimathi University of Technology", type: "Public", location: "Nyeri", website: "https://www.dkut.ac.ke", logo: "uni-tuk", programs: "70+ Programs", description: "Leading in technology, coffee technology, and food science." },
-  { name: "Masinde Muliro University", type: "Public", location: "Kakamega", website: "https://www.mmust.ac.ke", logo: "uni-uon", programs: "80+ Programs", description: "Strong focus on disaster management and science technology." }
+  { name: "University of Nairobi", type: "Public", location: "Nairobi", website: "https://www.uonbi.ac.ke", programs: "240+ Programs", description: "The oldest and largest university in Kenya, offering a wide range of competitive programs." },
+  { name: "Kenyatta University", type: "Public", location: "Nairobi", website: "https://www.ku.ac.ke", programs: "180+ Programs", description: "Renowned for Education, Medicine, and Arts programs with modern facilities." },
+  { name: "Strathmore University", type: "Private", location: "Nairobi", website: "https://www.strathmore.edu", programs: "60+ Programs", description: "A leading non-profit private university specializing in Business, Law, and IT." },
+  { name: "JKUAT", type: "Public", location: "Juja", website: "https://www.jkuat.ac.ke", programs: "150+ Programs", description: "The premier institution for Agriculture, Technology, and Engineering." },
+  { name: "Moi University", type: "Public", location: "Eldoret", website: "https://www.mu.ac.ke", programs: "140+ Programs", description: "Strong focus on Medicine, Engineering, and Textile Technology." },
+  { name: "Egerton University", type: "Public", location: "Njoro", website: "https://www.egerton.ac.ke", programs: "120+ Programs", description: "Kenya's premier agricultural university with a rich history in research." },
+  { name: "Technical University of Kenya", type: "Public", location: "Nairobi", website: "https://www.tukenya.ac.ke", programs: "100+ Programs", description: "Specializes in technical and vocational education and training at the degree level." },
+  { name: "United States International University Africa", type: "Private", location: "Nairobi", website: "https://www.usiu.ac.ke", programs: "40+ Programs", description: "Global perspective education with diverse international student body." },
+  { name: "Mount Kenya University", type: "Private", location: "Thika", website: "https://www.mku.ac.ke", programs: "130+ Programs", description: "Rapidly growing private university with strong Health Sciences department." },
+  { name: "Maseno University", type: "Public", location: "Kisumu", website: "https://www.maseno.ac.ke", programs: "90+ Programs", description: "The only university in the world situated on the Equator." },
+  { name: "Dedan Kimathi University of Technology", type: "Public", location: "Nyeri", website: "https://www.dkut.ac.ke", programs: "70+ Programs", description: "Leading in technology, coffee technology, and food science." },
+  { name: "Masinde Muliro University", type: "Public", location: "Kakamega", website: "https://www.mmust.ac.ke", programs: "80+ Programs", description: "Strong focus on disaster management and science technology." },
+  { name: "Pwani University", type: "Public", location: "Kilifi", website: "https://www.pu.ac.ke", programs: "60+ Programs", description: "Focuses on Marine Sciences and Tropical Agriculture." },
+  { name: "Kisii University", type: "Public", location: "Kisii", website: "https://www.kisiiuniversity.ac.ke", programs: "75+ Programs", description: "A world-class university in the heart of Kisii." },
+  { name: "Chuka University", type: "Public", location: "Chuka", website: "https://www.chuka.ac.ke", programs: "65+ Programs", description: "Center of excellence in environmental and sustainable development." },
+  { name: "Technical University of Mombasa", type: "Public", location: "Mombasa", website: "https://www.tum.ac.ke", programs: "85+ Programs", description: "A premier university in Engineering, Science, and Technology at the Coast." },
+  { name: "Karatina University", type: "Public", location: "Karatina", website: "https://www.karu.ac.ke", programs: "50+ Programs", description: "Excellence in Environmental and Agricultural Sciences." },
+  { name: "Meru University of Science and Technology", type: "Public", location: "Meru", website: "https://www.must.ac.ke", programs: "55+ Programs", description: "Focus on Innovation and Science." },
+  { name: "South Eastern Kenya University", type: "Public", location: "Kitui", website: "https://www.seku.ac.ke", programs: "45+ Programs", description: "Specialized in Arid and Semi-Arid Land management." },
+  { name: "Multimedia University of Kenya", type: "Public", location: "Nairobi", website: "https://www.mmu.ac.ke", programs: "40+ Programs", description: "A premier university in IT, Media, and Communication." },
+  { name: "KCA University", type: "Private", location: "Nairobi", website: "https://www.kca.ac.ke", programs: "50+ Programs", description: "A leader in Business and IT education in Kenya." },
+  { name: "Daystar University", type: "Private", location: "Nairobi", website: "https://www.daystar.ac.ke", programs: "45+ Programs", description: "Excellence in Communication and Leadership." },
+  { name: "Kabarak University", type: "Private", location: "Nakuru", website: "https://www.kabarak.ac.ke", programs: "55+ Programs", description: "Christian institution providing holistic education." },
+  { name: "Zetech University", type: "Private", location: "Ruiru", website: "https://www.zetech.ac.ke", programs: "35+ Programs", description: "Technologically driven private university." },
+  { name: "Pan Africa Christian University", type: "Private", location: "Nairobi", website: "https://www.pacuniversity.ac.ke", programs: "30+ Programs", description: "Training leaders for church and society." },
+  { name: "Scott Christian University", type: "Private", location: "Machakos", website: "https://www.scott.ac.ke", programs: "25+ Programs", description: "A pioneer in Christian higher education in Kenya." }
 ];
 
 export default function HubPage() {
@@ -66,10 +79,10 @@ export default function HubPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredUnis.map((uni, i) => (
-                <Card key={i} className="border-none shadow-card rounded-[32px] overflow-hidden group hover:-translate-y-2 transition-all duration-300 bg-card">
-                  <div className="h-40 bg-muted relative overflow-hidden">
-                    <Image src={`https://picsum.photos/seed/uni-${i}/600/300`} alt={uni.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
-                    <Badge className="absolute top-4 right-4 bg-white/90 text-primary border-none font-bold backdrop-blur-md">{uni.type}</Badge>
+                <Card key={i} className="border-none shadow-card rounded-[32px] overflow-hidden group hover:-translate-y-2 transition-all duration-300 bg-card flex flex-col">
+                  <div className="p-8 bg-primary/5 border-b flex justify-between items-center">
+                    <GraduationCap className="h-8 w-8 text-primary" />
+                    <Badge className="bg-white/90 text-primary border-none font-bold shadow-sm">{uni.type}</Badge>
                   </div>
                   <CardHeader className="p-8 pb-4">
                     <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors">{uni.name}</CardTitle>
@@ -78,12 +91,12 @@ export default function HubPage() {
                        <span className="flex items-center gap-1.5 text-xs font-bold text-muted-foreground"><BookMarked className="h-3 w-3" /> {uni.programs}</span>
                     </div>
                   </CardHeader>
-                  <CardContent className="px-8 pb-6">
+                  <CardContent className="px-8 pb-6 flex-grow">
                     <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
                       {uni.description}
                     </p>
                   </CardContent>
-                  <CardFooter className="px-8 pb-8 pt-0 flex gap-3">
+                  <CardFooter className="px-8 pb-8 pt-0 flex gap-3 mt-auto">
                     <Button className="flex-1 rounded-xl font-bold h-11" asChild>
                       <a href={uni.website} target="_blank" rel="noopener noreferrer">Website <Globe className="ml-2 h-4 w-4" /></a>
                     </Button>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { NavHeader } from "@/components/nav-header";
@@ -7,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LayoutDashboard, Compass, GraduationCap, BookOpen, Award, TrendingUp, Calendar, Heart, FileText, Settings, ArrowRight, Wallet, Briefcase } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function StudentDashboard() {
   return (
@@ -102,24 +102,28 @@ export default function StudentDashboard() {
                 <div className="lg:col-span-2 space-y-6">
                   <div className="flex justify-between items-center">
                     <h2 className="text-2xl font-bold font-headline text-foreground">Top University Choices</h2>
-                    <Button variant="link" className="font-bold text-primary p-0 h-auto">View All</Button>
+                    <Button variant="link" className="font-bold text-primary p-0 h-auto" asChild>
+                      <Link href="/hub">View All</Link>
+                    </Button>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {[
                       { name: "University of Nairobi", location: "Nairobi", programs: "240+ Programs" },
                       { name: "Strathmore University", location: "Nairobi", programs: "60+ Programs" }
                     ].map((uni, i) => (
-                      <Card key={i} className="border-none shadow-card rounded-[24px] overflow-hidden hover:-translate-y-1 transition-transform bg-card">
-                        <div className="h-32 bg-muted relative">
-                           <Image src={`https://picsum.photos/seed/uni-${i}/400/200`} alt={uni.name} fill className="object-cover" />
+                      <Card key={i} className="border-none shadow-card rounded-[24px] overflow-hidden hover:-translate-y-1 transition-transform bg-card flex flex-col">
+                        <div className="p-6 bg-primary/5 border-b flex justify-between items-center">
+                          <GraduationCap className="h-8 w-8 text-primary" />
                         </div>
                         <CardHeader className="p-6 pb-2">
                           <CardTitle className="text-lg font-headline">{uni.name}</CardTitle>
                           <CardDescription className="flex items-center gap-2"><Compass className="h-3 w-3" /> {uni.location}</CardDescription>
                         </CardHeader>
-                        <CardContent className="p-6 pt-0 space-y-4">
+                        <CardContent className="p-6 pt-0 space-y-4 flex-grow">
                           <Badge variant="secondary" className="bg-primary/5 text-primary font-bold">{uni.programs}</Badge>
-                          <Button className="w-full rounded-xl font-bold">View Programs</Button>
+                          <Button className="w-full rounded-xl font-bold mt-auto" asChild>
+                            <Link href="/hub">View Programs</Link>
+                          </Button>
                         </CardContent>
                       </Card>
                     ))}
@@ -130,7 +134,9 @@ export default function StudentDashboard() {
                 <div className="space-y-6">
                    <div className="flex justify-between items-center">
                     <h2 className="text-2xl font-bold font-headline text-foreground">Scholarships</h2>
-                    <Button variant="link" className="font-bold text-primary p-0 h-auto">See More</Button>
+                    <Button variant="link" className="font-bold text-primary p-0 h-auto" asChild>
+                      <Link href="/hub">See More</Link>
+                    </Button>
                   </div>
                   <div className="space-y-4">
                     {[
@@ -149,7 +155,9 @@ export default function StudentDashboard() {
                           </div>
                           <div className="flex items-center justify-between pt-2">
                             <span className="text-sm font-bold text-primary">{sch.funding}</span>
-                            <Button variant="outline" size="sm" className="rounded-lg font-bold">Apply</Button>
+                            <Button variant="outline" size="sm" className="rounded-lg font-bold" asChild>
+                              <Link href="/hub">Apply</Link>
+                            </Button>
                           </div>
                         </CardContent>
                       </Card>
