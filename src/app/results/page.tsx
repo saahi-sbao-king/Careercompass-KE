@@ -5,7 +5,6 @@ import { NavHeader } from "@/components/nav-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { QUESTIONS, CAREER_MAPPING, PATHWAY_MAPPING } from "@/lib/data";
 import { IntelligenceType } from "@/lib/types";
 import { 
@@ -15,9 +14,6 @@ import {
   PolarAngleAxis, 
   ResponsiveContainer,
   Tooltip,
-  PieChart,
-  Pie,
-  Cell
 } from "recharts";
 import { Download, Share2, Briefcase, BookOpen, Rocket, Lightbulb, Check, Loader2, Compass, Target } from "lucide-react";
 import html2canvas from "html2canvas";
@@ -89,8 +85,8 @@ export default function ResultsPage() {
     if (!mounted) return null;
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-        <h1 className="text-2xl font-bold font-headline mb-4">No results found.</h1>
-        <Button asChild><a href="/quiz">Take the Quiz</a></Button>
+        <h1 className="text-3xl font-bold font-headline mb-6">No results found yet.</h1>
+        <Button size="lg" className="rounded-full h-16 px-10 text-xl font-bold" asChild><a href="/quiz">Take the Test!</a></Button>
       </div>
     );
   }
@@ -99,157 +95,147 @@ export default function ResultsPage() {
   const careers = CAREER_MAPPING[dominant.type];
 
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <div className="min-h-screen bg-background pb-32">
       <NavHeader />
       
-      <div className="hero-gradient py-16 text-white">
-        <div className="container px-4 mx-auto text-center space-y-6">
-          <Badge variant="outline" className="border-white/30 text-white bg-white/10 px-6 py-1.5 rounded-full text-sm font-semibold">
-            Assessment Complete
+      <div className="hero-gradient py-24 text-white">
+        <div className="container px-4 mx-auto text-center space-y-8">
+          <Badge className="bg-white/20 text-white hover:bg-white/30 border-none px-8 py-2 rounded-full text-base font-bold backdrop-blur-md">
+            Journey Assessment Complete! 🚀
           </Badge>
-          <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">Your Career Compass Profile</h1>
-          <p className="text-white/80 max-w-2xl mx-auto text-lg">
-            We've mapped your unique strengths to the best-fit Kenyan career pathways and university courses.
+          <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tight">Your Career Compass</h1>
+          <p className="text-white/90 max-w-2xl mx-auto text-xl font-medium leading-relaxed">
+            We've mapped your unique strengths to paths where you'll shine. Discover the future you were built for!
           </p>
-          <div className="flex flex-wrap gap-4 justify-center pt-6">
+          <div className="flex flex-wrap gap-6 justify-center pt-8">
             <Button 
-              className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl px-8 font-bold shadow-lg" 
+              className="h-16 gap-3 bg-accent text-white hover:bg-accent/90 rounded-full px-12 font-bold text-lg shadow-2xl transition-all hover:scale-105 active:scale-95" 
               onClick={handleDownloadPdf}
               disabled={isDownloading}
             >
-              {isDownloading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-5 w-5" />}
-              {isDownloading ? "Exporting..." : "Download Report (PDF)"}
+              {isDownloading ? <Loader2 className="h-6 w-6 animate-spin" /> : <Download className="h-6 w-6" />}
+              {isDownloading ? "Generating..." : "Get PDF Report"}
             </Button>
-            <Button variant="outline" className="gap-2 border-white/30 bg-white/10 text-white hover:bg-white/20 rounded-xl px-8 font-bold">
-              <Share2 className="h-5 w-5" /> Share with Parent
+            <Button variant="outline" className="h-16 gap-3 border-white/40 bg-white/10 text-white hover:bg-white/20 rounded-full px-12 font-bold text-lg backdrop-blur-sm">
+              <Share2 className="h-6 w-6" /> Share with Family
             </Button>
           </div>
         </div>
       </div>
 
-      <main className="container px-4 mx-auto -mt-12 space-y-12" ref={reportRef}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <main className="container px-4 mx-auto -mt-20 space-y-16" ref={reportRef}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Main Visualizer */}
-          <Card className="lg:col-span-2 shadow-card border-none bg-white rounded-2xl">
-            <CardHeader className="border-b">
-              <CardTitle className="font-headline flex items-center gap-3 text-primary">
-                <Compass className="h-6 w-6" /> MI Profile Visualizer
+          <Card className="lg:col-span-2 shadow-card border-none bg-white rounded-[40px] overflow-hidden">
+            <CardHeader className="p-12 pb-0">
+              <CardTitle className="font-headline text-3xl flex items-center gap-4 text-primary">
+                <Compass className="h-8 w-8" /> Strength Map
               </CardTitle>
-              <CardDescription>Mapping your 9 multiple intelligences.</CardDescription>
+              <CardDescription className="text-lg">A visual breakdown of your Multiple Intelligences.</CardDescription>
             </CardHeader>
-            <CardContent className="h-[450px] sm:h-[550px] pt-8">
+            <CardContent className="h-[500px] sm:h-[650px] p-12">
               {mounted ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart cx="50%" cy="50%" outerRadius="80%" data={analyzedResults}>
-                    <PolarGrid stroke="#e2e8f0" />
-                    <PolarAngleAxis dataKey="type" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 13, fontWeight: 500 }} />
+                    <PolarGrid stroke="#e2e8f0" strokeWidth={2} />
+                    <PolarAngleAxis dataKey="type" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 14, fontWeight: 700 }} />
                     <Radar
-                      name="Student Profile"
+                      name="Your Profile"
                       dataKey="score"
-                      stroke="#0F4C81"
-                      fill="#0F4C81"
+                      stroke="#2563EB"
+                      fill="#2563EB"
                       fillOpacity={0.6}
+                      strokeWidth={4}
                     />
                     <Tooltip 
-                      contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}
+                      contentStyle={{ borderRadius: '24px', border: 'none', boxShadow: '0 10px 40px rgba(0,0,0,0.15)', padding: '16px' }}
                     />
                   </RadarChart>
                 </ResponsiveContainer>
               ) : (
-                <div className="w-full h-full bg-muted/20 animate-pulse rounded-2xl" />
+                <div className="w-full h-full bg-muted/20 animate-pulse rounded-[40px]" />
               )}
             </CardContent>
           </Card>
 
           {/* Top Intelligences */}
-          <div className="space-y-6">
-            <Card className="border-none shadow-card bg-white rounded-2xl overflow-hidden">
-              <div className="h-2 bg-primary w-full" />
-              <CardHeader className="pb-4">
-                <Badge className="bg-primary/10 text-primary hover:bg-primary/10 border-none w-fit mb-2">Dominant Strength</Badge>
-                <CardTitle className="font-headline text-2xl text-primary">{dominant.type}</CardTitle>
+          <div className="space-y-10">
+            <Card className="border-none shadow-card bg-white rounded-[32px] overflow-hidden transform hover:scale-102 transition-transform">
+              <div className="h-4 bg-primary w-full" />
+              <CardHeader className="p-10">
+                <Badge className="bg-primary/10 text-primary hover:bg-primary/10 border-none font-bold px-4 py-1 rounded-full mb-4">Dominant Power</Badge>
+                <CardTitle className="font-headline text-3xl text-primary">{dominant.type}</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed">
-                  You have an exceptional aptitude for {dominant.type.toLowerCase()} reasoning. This is your primary "superpower" in learning and problem-solving.
-                </p>
+              <CardContent className="px-10 pb-10 text-lg text-muted-foreground leading-relaxed">
+                Your brain naturally excels at <strong>{dominant.type.toLowerCase()}</strong> tasks. This is your core advantage in school and your future career.
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-card bg-white rounded-2xl overflow-hidden">
-              <div className="h-2 bg-secondary w-full" />
-              <CardHeader className="pb-4">
-                <Badge className="bg-secondary/10 text-secondary hover:bg-secondary/10 border-none w-fit mb-2">Support Strength</Badge>
-                <CardTitle className="font-headline text-2xl text-secondary">{coDominant.type}</CardTitle>
+            <Card className="border-none shadow-card bg-white rounded-[32px] overflow-hidden transform hover:scale-102 transition-transform">
+              <div className="h-4 bg-secondary w-full" />
+              <CardHeader className="p-10">
+                <Badge className="bg-secondary/10 text-secondary hover:bg-secondary/10 border-none font-bold px-4 py-1 rounded-full mb-4">Supporting Power</Badge>
+                <CardTitle className="font-headline text-3xl text-secondary">{coDominant.type}</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed">
-                  Your {coDominant.type.toLowerCase()} intelligence provides a powerful secondary lens through which you analyze the world.
-                </p>
+              <CardContent className="px-10 pb-10 text-lg text-muted-foreground leading-relaxed">
+                Your <strong>{coDominant.type.toLowerCase()}</strong> abilities complement your main strengths, giving you a unique edge.
               </CardContent>
             </Card>
 
-            <Card className="bg-accent/10 border-none rounded-2xl">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-headline flex items-center gap-2 text-primary">
-                  <Rocket className="h-5 w-5" /> Recommended Pathway
+            <Card className="bg-accent/10 border-none rounded-[32px] p-4">
+              <CardHeader className="p-6">
+                <CardTitle className="text-2xl font-headline flex items-center gap-3 text-primary">
+                  <Rocket className="h-7 w-7 text-accent" /> CBE Pathway
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border">
-                  <span className="font-bold text-primary">{recommendedPathway}</span>
-                  <Badge className="bg-success text-white">94% Match</Badge>
+              <CardContent className="px-6 pb-6 space-y-6">
+                <div className="flex items-center justify-between p-6 bg-white rounded-3xl shadow-xl border-2 border-accent/20">
+                  <span className="font-black text-2xl text-primary">{recommendedPathway}</span>
+                  <Badge className="bg-success text-white font-bold px-4 py-1 rounded-full">85% Match</Badge>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  This CBE Senior School pathway perfectly matches your cognitive profile.
-                </p>
               </CardContent>
             </Card>
           </div>
         </div>
 
         {/* Career Section */}
-        <div className="space-y-8">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-4 border-b pb-6">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold font-headline text-primary">Recommended Careers</h2>
-              <p className="text-muted-foreground">Tailored for your {dominant.type} profile in Kenya.</p>
-            </div>
+        <div className="space-y-12">
+          <div className="text-center space-y-4">
+            <h2 className="text-5xl font-bold font-headline text-primary tracking-tight">Top Career Matches</h2>
+            <p className="text-muted-foreground text-2xl font-medium">Careers where you'll thrive in Kenya.</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {careers.map((career, idx) => (
-              <Card key={idx} className="border-none shadow-card rounded-2xl bg-white group hover:translate-y-[-6px] transition-all duration-300">
-                <CardHeader className="space-y-4">
+              <Card key={idx} className="border-none shadow-card rounded-[40px] bg-white group hover:translate-y-[-12px] transition-all duration-500 overflow-hidden">
+                <div className="p-12 space-y-8">
                   <div className="flex justify-between items-start">
-                    <div className="h-14 w-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                      <Briefcase className="h-7 w-7" />
+                    <div className="h-20 w-20 rounded-[32px] bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-inner">
+                      <Briefcase className="h-10 w-10" />
                     </div>
-                    <Badge variant="outline" className="border-success text-success font-bold px-3">Top Match</Badge>
+                    <Badge className="bg-success/10 text-success border-none font-bold px-4 py-1 rounded-full">Top Choice</Badge>
                   </div>
-                  <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">{career.title}</CardTitle>
-                  <CardDescription className="text-sm line-clamp-2 leading-relaxed">{career.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Avg. Salary</p>
-                      <p className="text-sm font-bold text-primary">{career.avgSalary}</p>
+                  <div className="space-y-4">
+                    <CardTitle className="font-headline text-3xl group-hover:text-primary transition-colors">{career.title}</CardTitle>
+                    <CardDescription className="text-lg leading-relaxed line-clamp-2">{career.description}</CardDescription>
+                  </div>
+                  <div className="grid grid-cols-2 gap-8 border-y py-8">
+                    <div className="space-y-2">
+                      <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Est. Salary</p>
+                      <p className="text-lg font-bold text-primary">{career.avgSalary}</p>
                     </div>
-                    <div className="space-y-1 text-right">
-                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Demand Level</p>
-                      <Badge className="bg-success/10 text-success border-none hover:bg-success/20">High</Badge>
+                    <div className="space-y-2 text-right">
+                      <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Demand</p>
+                      <Badge className="bg-orange-500 text-white border-none font-black px-4 py-1 rounded-full">HIGH</Badge>
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-3">
                     {career.skills.map(s => (
-                      <Badge key={s} variant="secondary" className="text-[10px] rounded-md px-2 py-0.5">{s}</Badge>
+                      <Badge key={s} variant="secondary" className="text-sm font-bold rounded-xl px-4 py-1.5 bg-muted/50">{s}</Badge>
                     ))}
                   </div>
-                </CardContent>
-                <div className="p-6 pt-0">
-                  <Button className="w-full bg-primary/5 text-primary hover:bg-primary hover:text-white border-none font-bold rounded-xl transition-all">
-                    Learn More
+                  <Button className="w-full h-16 bg-primary/5 text-primary hover:bg-primary hover:text-white border-none font-black rounded-[24px] text-lg transition-all group-hover:shadow-2xl">
+                    View Details
                   </Button>
                 </div>
               </Card>
@@ -258,34 +244,34 @@ export default function ResultsPage() {
         </div>
 
         {/* Subjects & Planning */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card className="border-none shadow-card rounded-2xl bg-white">
-            <CardHeader className="bg-primary/5 rounded-t-2xl">
-              <CardTitle className="font-headline text-xl text-primary flex items-center gap-2">
-                <BookOpen className="h-5 w-5" /> Optimized Subject Combination
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <Card className="border-none shadow-card rounded-[40px] bg-white overflow-hidden">
+            <CardHeader className="bg-primary/5 p-12">
+              <CardTitle className="font-headline text-3xl text-primary flex items-center gap-4">
+                <BookOpen className="h-8 w-8" /> Recommended Subjects
               </CardTitle>
-              <CardDescription>CBE 11-Subject Rule Compliance</CardDescription>
+              <CardDescription className="text-lg font-bold">CBE Phase 4: Senior School</CardDescription>
             </CardHeader>
-            <CardContent className="pt-8 space-y-6">
-              <div className="space-y-4">
-                <h4 className="text-sm font-bold text-primary uppercase tracking-widest">Compulsory Core (4)</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <CardContent className="p-12 space-y-10">
+              <div className="space-y-6">
+                <h4 className="text-base font-black text-primary uppercase tracking-[0.2em]">Compulsory Core</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {['English', 'Kiswahili', 'Mathematics', 'Religious Ed.'].map(s => (
-                    <div key={s} className="flex items-center gap-3 p-4 bg-muted/30 rounded-xl text-sm font-medium border border-transparent">
-                      <Check className="h-5 w-5 text-success" /> {s}
+                    <div key={s} className="flex items-center gap-4 p-6 bg-muted/40 rounded-[24px] text-lg font-bold border-2 border-transparent hover:border-primary/20 transition-all">
+                      <Check className="h-6 w-6 text-success" /> {s}
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="space-y-4">
-                <h4 className="text-sm font-bold text-secondary uppercase tracking-widest">Recommended Electives (7)</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-6">
+                <h4 className="text-base font-black text-secondary uppercase tracking-[0.2em]">Your Electives</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {(recommendedPathway === 'STEM' 
-                    ? ['Biology', 'Chemistry', 'Physics', 'History', 'Geography', 'Business', 'Computer']
-                    : ['Literature', 'Geography', 'Home Science', 'Music', 'French', 'History', 'Agriculture']
+                    ? ['Biology', 'Chemistry', 'Physics', 'Computer Studies', 'Geography', 'Business', 'Agriculture']
+                    : ['Literature', 'Geography', 'Home Science', 'Music', 'French', 'History', 'Fine Art']
                   ).map(s => (
-                    <div key={s} className="flex items-center gap-3 p-4 bg-secondary/5 rounded-xl text-sm font-medium border border-secondary/10">
-                      <div className="h-2 w-2 rounded-full bg-secondary" /> {s}
+                    <div key={s} className="flex items-center gap-4 p-6 bg-secondary/5 rounded-[24px] text-lg font-bold border-2 border-secondary/10 hover:border-secondary/40 transition-all">
+                      <div className="h-3 w-3 rounded-full bg-secondary shadow-sm shadow-secondary/50" /> {s}
                     </div>
                   ))}
                 </div>
@@ -293,29 +279,29 @@ export default function ResultsPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-card rounded-2xl bg-white">
-            <CardHeader className="bg-success/5 rounded-t-2xl">
-              <CardTitle className="font-headline text-xl text-success flex items-center gap-2">
-                <Target className="h-5 w-5" /> Academic Growth Roadmap
+          <Card className="border-none shadow-card rounded-[40px] bg-white overflow-hidden">
+            <CardHeader className="bg-success/5 p-12">
+              <CardTitle className="font-headline text-3xl text-success flex items-center gap-4">
+                <Target className="h-8 w-8" /> Your Career Roadmap
               </CardTitle>
-              <CardDescription>Your plan from Form 3 to Career</CardDescription>
+              <CardDescription className="text-lg font-bold">Steps to your future success.</CardDescription>
             </CardHeader>
-            <CardContent className="pt-8 px-8">
-              <div className="relative pl-8 border-l-2 border-success/20 space-y-12 py-4">
+            <CardContent className="p-12">
+              <div className="relative pl-12 border-l-4 border-success/10 space-y-16 py-4">
                 <div className="relative">
-                  <div className="absolute -left-[41px] top-0 h-6 w-6 rounded-full bg-success border-4 border-white shadow-sm" />
-                  <h4 className="font-bold font-headline text-lg text-primary">Senior School Phase</h4>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">Focus on excelling in core {recommendedPathway} electives. Join the specialized subject clubs and start building a portfolio.</p>
+                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-success border-8 border-white shadow-xl ring-4 ring-success/5" />
+                  <h4 className="font-bold font-headline text-2xl text-primary">High School Phase</h4>
+                  <p className="text-lg text-muted-foreground mt-4 leading-relaxed font-medium">Excel in your core subjects and join clubs that match your <strong>{dominant.type}</strong> strengths.</p>
                 </div>
                 <div className="relative">
-                  <div className="absolute -left-[41px] top-0 h-6 w-6 rounded-full bg-secondary border-4 border-white shadow-sm" />
-                  <h4 className="font-bold font-headline text-lg text-primary">Higher Education Phase</h4>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">Target top-tier cluster points for courses like {careers[0].title}. Apply for scholarships through the CareerCompass portal.</p>
+                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-primary border-8 border-white shadow-xl ring-4 ring-primary/5" />
+                  <h4 className="font-bold font-headline text-2xl text-primary">Higher Education</h4>
+                  <p className="text-lg text-muted-foreground mt-4 leading-relaxed font-medium">Target university courses like <strong>{careers[0].title}</strong>. Apply for scholarships via the CareerCompass Hub.</p>
                 </div>
                 <div className="relative">
-                  <div className="absolute -left-[41px] top-0 h-6 w-6 rounded-full bg-accent border-4 border-white shadow-sm" />
-                  <h4 className="font-bold font-headline text-lg text-primary">Career Launch</h4>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">Internship placement at industry leading firms in Kenya. Begin professional certification path.</p>
+                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-accent border-8 border-white shadow-xl ring-4 ring-accent/5" />
+                  <h4 className="font-bold font-headline text-2xl text-primary">Career Kickoff</h4>
+                  <p className="text-lg text-muted-foreground mt-4 leading-relaxed font-medium">Start with an internship at a top Kenyan firm. Your {coDominant.type} skills will help you lead!</p>
                 </div>
               </div>
             </CardContent>

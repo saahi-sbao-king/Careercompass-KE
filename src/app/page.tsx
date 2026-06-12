@@ -15,48 +15,48 @@ export default function Home() {
       
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative overflow-hidden hero-gradient py-20 md:py-32 lg:py-40">
+        <section className="relative overflow-hidden hero-gradient py-24 md:py-36 lg:py-48">
           <div className="container px-4 mx-auto relative z-10">
-            <div className="flex flex-col lg:flex-row items-center gap-12">
-              <div className="flex-1 text-center lg:text-left space-y-8">
-                <div className="inline-flex items-center rounded-full bg-white/10 backdrop-blur-md px-4 py-1.5 text-sm font-medium text-white mb-2">
-                  <span className="flex h-2 w-2 rounded-full bg-accent mr-3 animate-pulse"></span>
-                  CBE Compliant System for Kenyan Students
+            <div className="flex flex-col lg:flex-row items-center gap-16">
+              <div className="flex-1 text-center lg:text-left space-y-10">
+                <div className="inline-flex items-center rounded-full bg-white/20 backdrop-blur-md px-5 py-2 text-sm font-semibold text-white mb-2">
+                  <span className="flex h-2 w-2 rounded-full bg-accent mr-3 animate-bounce"></span>
+                  Discover Your Path. Build Your Future.
                 </div>
-                <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold font-headline tracking-tight text-white leading-[1.1]">
-                  Discover Your Future <span className="text-accent">Career Path.</span>
+                <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold font-headline tracking-tight text-white leading-[1.05]">
+                  Navigate Your <span className="text-white/90 underline decoration-accent/60 underline-offset-8">Future</span> with Confidence.
                 </h1>
-                <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto lg:mx-0 font-medium">
-                  Find careers, courses, universities, scholarships, and opportunities tailored for Kenyan students. Your journey starts here.
+                <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                  The friendly career guidance platform helping Kenyan students find the perfect careers, courses, and universities.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <Button size="lg" className="h-14 px-8 text-lg font-bold bg-white text-primary hover:bg-white/90 gap-2 shadow-lg" asChild>
+                <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
+                  <Button size="lg" className="h-16 px-10 text-xl font-bold bg-white text-primary hover:bg-white/90 gap-3 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95" asChild>
                     <Link href="/quiz">
-                      Take Career Assessment <ArrowRight className="h-5 w-5" />
+                      Start Assessment <ArrowRight className="h-6 w-6" />
                     </Link>
                   </Button>
-                  <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-bold border-white text-white hover:bg-white/10" asChild>
+                  <Button size="lg" variant="outline" className="h-16 px-10 text-xl font-bold border-white/40 text-white hover:bg-white/10 rounded-full backdrop-blur-sm" asChild>
                     <Link href="/hub">Explore Careers</Link>
                   </Button>
                 </div>
               </div>
-              <div className="flex-1 w-full max-w-[600px] relative hidden lg:block">
-                <div className="relative rounded-3xl border-8 border-white/10 shadow-2xl overflow-hidden aspect-[4/3]">
+              <div className="flex-1 w-full max-w-[650px] relative hidden lg:block">
+                <div className="relative rounded-[40px] border-8 border-white/20 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] overflow-hidden aspect-[4/3] transform hover:rotate-1 transition-transform duration-500">
                   <Image 
                     src="https://picsum.photos/seed/career-hero/800/600" 
-                    alt="Career guidance for students" 
+                    alt="Kenyan students exploring careers" 
                     fill 
                     className="object-cover"
-                    data-ai-hint="student learning"
+                    data-ai-hint="students study"
                   />
-                  <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm p-5 rounded-2xl shadow-xl">
+                  <div className="absolute top-10 right-10 bg-white/95 backdrop-blur-sm p-6 rounded-3xl shadow-2xl animate-pulse">
                     <div className="flex items-center gap-4">
-                      <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
-                        98%
+                      <div className="h-14 w-14 rounded-2xl bg-success/10 flex items-center justify-center text-success">
+                        <Target className="h-8 w-8" />
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-foreground">Student Accuracy</p>
-                        <p className="text-xs text-muted-foreground">Based on Frere Town Pilot Program</p>
+                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Growth</p>
+                        <p className="text-lg font-bold text-foreground">+95% Clarity</p>
                       </div>
                     </div>
                   </div>
@@ -64,32 +64,32 @@ export default function Home() {
               </div>
             </div>
           </div>
-          {/* Decorative shapes */}
-          <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-1/4 h-1/2 bg-accent/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+          {/* Playful Decorative elements */}
+          <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-white/10 rounded-full blur-[120px]" />
+          <div className="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-accent/20 rounded-full blur-[100px]" />
         </section>
 
         {/* Features Section */}
-        <section className="py-24 bg-background">
+        <section className="py-32 bg-background">
           <div className="container px-4 mx-auto">
-            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold font-headline text-primary">Everything you need to succeed</h2>
-              <p className="text-muted-foreground text-lg">We provide a comprehensive ecosystem for the modern Kenyan student navigating the CBE landscape.</p>
+            <div className="text-center max-w-3xl mx-auto mb-24 space-y-6">
+              <h2 className="text-4xl md:text-5xl font-bold font-headline text-primary">Everything for your journey</h2>
+              <p className="text-muted-foreground text-xl">We've built a student-first ecosystem to help you navigate the CBE landscape with joy.</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
               {[
-                { icon: <GraduationCap className="h-6 w-6" />, title: "University Hub", desc: "Official KUCCPS data and placement tools." },
-                { icon: <Briefcase className="h-6 w-6" />, title: "Career Discovery", desc: "Map your MI profile to high-demand jobs." },
-                { icon: <Compass className="h-6 w-6" />, title: "TVET Pathways", desc: "Explore technical and vocational opportunities." },
-                { icon: <Globe className="h-6 w-6" />, title: "Scholarships", desc: "Access open scholarship opportunities worldwide." },
+                { icon: <GraduationCap className="h-8 w-8" />, title: "University Hub", desc: "Find the best Kenyan universities for your goals.", color: "bg-blue-50 text-blue-600" },
+                { icon: <Briefcase className="h-8 w-8" />, title: "Career Discovery", desc: "Unlock your potential with MI profile matching.", color: "bg-teal-50 text-teal-600" },
+                { icon: <Compass className="h-8 w-8" />, title: "TVET Pathways", desc: "Practical skills for the modern economy.", color: "bg-orange-50 text-orange-600" },
+                { icon: <Globe className="h-8 w-8" />, title: "Scholarships", desc: "Opportunities that make education affordable.", color: "bg-green-50 text-green-600" },
               ].map((item, i) => (
-                <Card key={i} className="border-none bg-white shadow-card rounded-2xl hover:translate-y-[-4px] transition-transform">
-                  <CardContent className="pt-8 px-8 pb-8 space-y-4 text-center">
-                    <div className="mx-auto h-14 w-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary">
+                <Card key={i} className="border-none bg-white shadow-card rounded-[32px] hover:translate-y-[-10px] transition-all duration-300">
+                  <CardContent className="pt-12 px-10 pb-12 space-y-6 text-center">
+                    <div className={`mx-auto h-20 w-20 rounded-3xl ${item.color} flex items-center justify-center`}>
                       {item.icon}
                     </div>
-                    <h3 className="text-xl font-bold font-headline">{item.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
+                    <h3 className="text-2xl font-bold font-headline">{item.title}</h3>
+                    <p className="text-muted-foreground text-base leading-relaxed">{item.desc}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -98,12 +98,12 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t py-16 bg-white">
+      <footer className="border-t py-24 bg-white">
         <div className="container px-4 mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-            <div className="md:col-span-2 space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="relative h-10 w-10 overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+            <div className="md:col-span-2 space-y-8">
+              <div className="flex items-center gap-4">
+                <div className="relative h-12 w-12 overflow-hidden">
                   {logo && (
                     <Image 
                       src={logo.imageUrl} 
@@ -113,32 +113,32 @@ export default function Home() {
                     />
                   )}
                 </div>
-                <span className="text-2xl font-bold font-headline text-primary">CareerCompass Kenya</span>
+                <span className="text-3xl font-bold font-headline text-primary">CareerCompass</span>
               </div>
-              <p className="text-muted-foreground max-w-sm text-lg leading-relaxed">
-                Empowering the next generation of Kenyan talent with precision career guidance and educational resources.
+              <p className="text-muted-foreground max-w-md text-xl leading-relaxed font-medium">
+                Empowering Kenyan students to build a future they're excited about.
               </p>
             </div>
-            <div className="space-y-4">
-              <h4 className="font-bold font-headline text-primary">Resources</h4>
-              <nav className="flex flex-col gap-2 text-muted-foreground">
+            <div className="space-y-6">
+              <h4 className="font-bold font-headline text-primary text-lg">Resources</h4>
+              <nav className="flex flex-col gap-4 text-muted-foreground font-medium">
                 <Link href="/hub" className="hover:text-primary transition-colors">KUCCPS Hub</Link>
                 <Link href="/quiz" className="hover:text-primary transition-colors">Career Test</Link>
                 <Link href="/scholarships" className="hover:text-primary transition-colors">Scholarships</Link>
               </nav>
             </div>
-            <div className="space-y-4">
-              <h4 className="font-bold font-headline text-primary">Support</h4>
-              <nav className="flex flex-col gap-2 text-muted-foreground">
+            <div className="space-y-6">
+              <h4 className="font-bold font-headline text-primary text-lg">Support</h4>
+              <nav className="flex flex-col gap-4 text-muted-foreground font-medium">
                 <Link href="/help" className="hover:text-primary transition-colors">Help Center</Link>
                 <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
                 <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
               </nav>
             </div>
           </div>
-          <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-            <div>© 2024 CareerCompass Kenya. Navigating Your Future.</div>
-            <div className="flex gap-6">
+          <div className="border-t pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-base text-muted-foreground font-medium">
+            <div>© 2024 CareerCompass Kenya. Discover Your Path.</div>
+            <div className="flex gap-8">
               <Link href="#" className="hover:text-primary transition-colors">Twitter</Link>
               <Link href="#" className="hover:text-primary transition-colors">LinkedIn</Link>
               <Link href="#" className="hover:text-primary transition-colors">Instagram</Link>
