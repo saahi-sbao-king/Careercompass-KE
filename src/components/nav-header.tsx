@@ -50,7 +50,7 @@ export function NavHeader() {
           <Button variant="ghost" className="hidden sm:flex font-bold hover:bg-muted" asChild>
             <Link href="/dashboard">Dashboard</Link>
           </Button>
-          <Button className="hidden sm:flex bg-primary hover:bg-primary/90 rounded-full px-6 h-10 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95" asChild>
+          <Button className="hidden sm:flex bg-primary hover:bg-primary/90 rounded-full px-8 h-12 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95" asChild>
             <Link href="/quiz">Get Started</Link>
           </Button>
 

@@ -7,22 +7,34 @@
       "imageHint": "company logo"
     },
     {
-      "id": "hero-student",
-      "description": "A focused Kenyan student studying with a digital tablet",
-      "imageUrl": "https://picsum.photos/seed/career-hero/1200/800",
-      "imageHint": "student learning"
+      "id": "hero-students",
+      "description": "Diverse Kenyan students smiling and looking towards the future",
+      "imageUrl": "https://picsum.photos/seed/kenya-students/1200/800",
+      "imageHint": "group of students"
     },
     {
-      "id": "mentor-session",
-      "description": "A group of students having a career mentorship session",
-      "imageUrl": "https://picsum.photos/seed/mentorship/800/600",
-      "imageHint": "mentorship education"
+      "id": "career-discovery",
+      "description": "Student using a laptop to explore different career paths",
+      "imageUrl": "https://picsum.photos/seed/career-discovery/800/600",
+      "imageHint": "student laptop"
     },
     {
-      "id": "stem-pathway",
-      "description": "Science laboratory with students working",
-      "imageUrl": "https://picsum.photos/seed/stem/600/400",
-      "imageHint": "science laboratory"
+      "id": "assessment-ui",
+      "description": "User interface for the career assessment tool",
+      "imageUrl": "https://picsum.photos/seed/assessment/800/600",
+      "imageHint": "computer screen"
+    },
+    {
+      "id": "uni-uon",
+      "description": "University of Nairobi iconic architecture",
+      "imageUrl": "https://picsum.photos/seed/uon/800/400",
+      "imageHint": "university building"
+    },
+    {
+      "id": "uni-tuk",
+      "description": "Technical University of Kenya campus",
+      "imageUrl": "https://picsum.photos/seed/tuk/800/400",
+      "imageHint": "college campus"
     }
   ]
 }
