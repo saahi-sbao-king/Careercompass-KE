@@ -54,12 +54,10 @@ export function NavHeader() {
 
         <nav className="hidden xl:flex items-center gap-8 text-sm font-semibold text-muted-foreground">
           <Link href="/" className="hover:text-primary transition-all">Home</Link>
-          <Link href="/hub" className="hover:text-primary transition-all">Careers</Link>
           <Link href="/hub" className="hover:text-primary transition-all">Universities</Link>
-          <Link href="/hub" className="hover:text-primary transition-all">Scholarships</Link>
           <Link href="/quiz?type=PIA" className="hover:text-primary transition-all">PIA Test</Link>
           <Link href="/quiz?type=MI" className="hover:text-primary transition-all">MI Test</Link>
-          <Link href="/hub" className="hover:text-primary transition-all">Resources</Link>
+          <Link href="/faqs" className="hover:text-primary transition-all">FAQs</Link>
         </nav>
 
         <div className="flex items-center gap-4">
@@ -91,9 +89,6 @@ export function NavHeader() {
                 <Link href="/">Home</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
-                <Link href="/hub">Careers</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
                 <Link href="/hub">Universities</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
@@ -101,6 +96,9 @@ export function NavHeader() {
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
                 <Link href="/quiz?type=MI">MI Test</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
+                <Link href="/faqs">FAQs</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-xl h-10 font-bold bg-primary text-white mt-2 justify-center">
                 <Link href="/quiz?type=PIA">Start Now</Link>

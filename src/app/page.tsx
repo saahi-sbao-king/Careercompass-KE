@@ -27,7 +27,9 @@ import {
   Twitter,
   Linkedin,
   Rocket,
-  Brain
+  Brain,
+  Mail,
+  Phone
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavHeader } from "@/components/nav-header";
@@ -128,7 +130,7 @@ export default function Home() {
                     </Link>
                   </Button>
                   <Button size="lg" variant="outline" className="h-14 px-10 text-lg font-bold border-white text-white hover:bg-white/20 rounded-full backdrop-blur-sm" asChild>
-                    <Link href="/hub">Explore Careers</Link>
+                    <Link href="/hub">Explore Universities</Link>
                   </Button>
                 </div>
               </div>
@@ -383,16 +385,24 @@ export default function Home() {
               <p className="text-muted-foreground text-sm leading-relaxed font-medium">
                 Discover careers, courses, universities and opportunities tailored for Kenyan students. Navigate your future with precision.
               </p>
+              <div className="space-y-2">
+                 <div className="flex items-center gap-3 text-sm font-bold text-muted-foreground">
+                    <Mail className="h-4 w-4 text-primary" /> sadiq14526@gmail.com
+                 </div>
+                 <div className="flex items-center gap-3 text-sm font-bold text-muted-foreground">
+                    <Phone className="h-4 w-4 text-primary" /> +254 117 448 455
+                 </div>
+              </div>
             </div>
 
             {/* Explore Column */}
             <div className="space-y-8">
               <h4 className="text-xl font-bold font-headline text-primary tracking-tight underline decoration-primary decoration-4 underline-offset-8">Explore</h4>
               <nav className="flex flex-col gap-5 text-base font-semibold text-muted-foreground">
-                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Careers</Link>
                 <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Universities</Link>
-                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">TVET Pathways</Link>
-                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Scholarships</Link>
+                <Link href="/quiz?type=PIA" className="hover:text-primary transition-all hover:translate-x-1 inline-block">PIA Assessment</Link>
+                <Link href="/quiz?type=MI" className="hover:text-primary transition-all hover:translate-x-1 inline-block">MI Assessment</Link>
+                <Link href="/faqs" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Career FAQs</Link>
               </nav>
             </div>
 
@@ -400,10 +410,10 @@ export default function Home() {
             <div className="space-y-8">
               <h4 className="text-xl font-bold font-headline text-foreground dark:text-white tracking-tight underline decoration-secondary decoration-4 underline-offset-8">Resources</h4>
               <nav className="flex flex-col gap-5 text-base font-semibold text-foreground dark:text-white">
-                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Career Guides</Link>
                 <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Mentorship Hub</Link>
                 <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">KUCCPS Portal</Link>
-                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">FAQs</Link>
+                <Link href="/faqs" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Help Center</Link>
+                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Student Guide</Link>
               </nav>
             </div>
 
@@ -439,7 +449,7 @@ export default function Home() {
               <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
               <Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link>
               <Link href="#" className="hover:text-primary transition-colors">Terms and Conditions</Link>
-              <Link href="#" className="hover:text-primary transition-colors">Contact</Link>
+              <Link href="/faqs" className="hover:text-primary transition-colors">Contact Center</Link>
             </div>
           </div>
         </div>
