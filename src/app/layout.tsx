@@ -1,7 +1,11 @@
+
 import type { Metadata } from 'next';
 import { ClerkProvider, SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { FirebaseClientProvider } from '@/firebase/client-provider';
+import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
+import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 
 const geistSans = Geist({
@@ -15,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'CareerCompass Kenya | Navigate Your Future',
-  description: 'Precision career guidance for Kenyan students. Find careers, courses, and scholarships tailored for you.',
+  title: 'CareerCompass Kenya',
+  description: 'Navigate your future with precision.',
 };
 
 export default function RootLayout({
@@ -25,42 +29,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-        variables: {
-          colorPrimary: '#3B82F6',
-          colorBackground: '#1E293B',
-          colorText: 'white',
-        }
-      }}
-    >
-      <html lang="en" suppressHydrationWarning className="dark">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-primary/20 bg-background text-foreground`} suppressHydrationWarning>
-          <header className="flex justify-end items-center p-4 gap-4 h-16 border-b border-white/5 bg-background/50 backdrop-blur-md sticky top-0 z-[60]">
-            <SignedOut>
-              <SignInButton mode="modal">
-                <button className="text-sm font-bold hover:text-primary transition-colors">Sign In</button>
-              </SignInButton>
-              <SignUpButton mode="modal">
-                <button className="bg-primary text-white rounded-full font-bold text-sm h-10 px-6 cursor-pointer hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
-                  Sign Up
-                </button>
-              </SignUpButton>
-            </SignedOut>
-            <SignedIn>
-              <UserButton 
-                appearance={{
-                  elements: {
-                    avatarBox: "h-9 w-9 rounded-xl"
-                  }
-                }}
-              />
-            </SignedIn>
-          </header>
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ClerkProvider appearance={{ baseTheme: dark }}>
+          <FirebaseClientProvider>
+            <FirebaseErrorListener />
+            <header className="flex justify-end items-center p-4 gap-4 h-16 bg-background border-b border-border">
+              <SignedOut>
+                <SignInButton mode="modal" />
+                <SignUpButton mode="modal">
+                  <button className="bg-primary text-white rounded-full font-medium text-sm h-10 px-5 cursor-pointer hover:bg-primary/90 transition-colors">
+                    Sign Up
+                  </button>
+                </SignUpButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton afterSignOutUrl="/" />
+              </SignedIn>
+            </header>
+            {children}
+            <Toaster />
+          </FirebaseClientProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
