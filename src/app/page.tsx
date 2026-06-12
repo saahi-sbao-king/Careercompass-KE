@@ -1,148 +1,133 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, GraduationCap, Briefcase, Target, Lightbulb, Compass, Globe } from "lucide-react";
+import { ArrowRight, Target, Briefcase, GraduationCap, Laptop, Stethoscope, Scale, HardHat, BookOpen, Plane, Sprout } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavHeader } from "@/components/nav-header";
 import { Card, CardContent } from "@/components/ui/card";
-import placeholderData from "@/app/lib/placeholder-images.json";
+
+const CATEGORIES = [
+  { icon: <Stethoscope className="h-8 w-8" />, title: "Health Sciences", color: "bg-red-50 text-red-600" },
+  { icon: <Laptop className="h-8 w-8" />, title: "Technology", color: "bg-blue-50 text-blue-600" },
+  { icon: <Scale className="h-8 w-8" />, title: "Law", color: "bg-purple-50 text-purple-600" },
+  { icon: <HardHat className="h-8 w-8" />, title: "Engineering", color: "bg-orange-50 text-orange-600" },
+  { icon: <BookOpen className="h-8 w-8" />, title: "Education", color: "bg-green-50 text-green-600" },
+  { icon: <Plane className="h-8 w-8" />, title: "Aviation", color: "bg-cyan-50 text-cyan-600" },
+  { icon: <Sprout className="h-8 w-8" />, title: "Agriculture", color: "bg-emerald-50 text-emerald-600" },
+  { icon: <Briefcase className="h-8 w-8" />, title: "Business", color: "bg-indigo-50 text-indigo-600" },
+];
 
 export default function Home() {
-  const logo = placeholderData.placeholderImages.find(img => img.id === 'app-logo');
-
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <NavHeader />
       
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative overflow-hidden hero-gradient py-24 md:py-36 lg:py-48">
+        <section className="relative overflow-hidden hero-gradient py-20 md:py-32">
           <div className="container px-4 mx-auto relative z-10">
-            <div className="flex flex-col lg:flex-row items-center gap-16">
-              <div className="flex-1 text-center lg:text-left space-y-10">
+            <div className="flex flex-col lg:flex-row items-center gap-12">
+              <div className="flex-1 text-center lg:text-left space-y-8">
                 <div className="inline-flex items-center rounded-full bg-white/20 backdrop-blur-md px-5 py-2 text-sm font-semibold text-white mb-2">
-                  <span className="flex h-2 w-2 rounded-full bg-accent mr-3 animate-bounce"></span>
-                  Discover Your Path. Build Your Future.
+                  👋 Welcome to CareerCompass Kenya
                 </div>
-                <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold font-headline tracking-tight text-white leading-[1.05]">
-                  Navigate Your <span className="text-white/90 underline decoration-accent/60 underline-offset-8">Future</span> with Confidence.
+                <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight text-white leading-tight">
+                  Discover Your Path.<br />
+                  <span className="text-white/90">Build Your Future.</span>
                 </h1>
-                <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
-                  The friendly career guidance platform helping Kenyan students find the perfect careers, courses, and universities.
+                <p className="text-lg md:text-xl text-white/80 max-w-xl mx-auto lg:mx-0 font-medium">
+                  Explore careers, courses, universities, TVET pathways, scholarships and opportunities tailored for you.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
-                  <Button size="lg" className="h-16 px-10 text-xl font-bold bg-white text-primary hover:bg-white/90 gap-3 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95" asChild>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                  <Button size="lg" className="h-14 px-8 text-lg font-bold bg-white text-primary hover:bg-white/90 gap-2 rounded-full shadow-lg transition-all hover:-translate-y-1" asChild>
                     <Link href="/quiz">
-                      Start Assessment <ArrowRight className="h-6 w-6" />
+                      Take Career Assessment <ArrowRight className="h-5 w-5" />
                     </Link>
                   </Button>
-                  <Button size="lg" variant="outline" className="h-16 px-10 text-xl font-bold border-white/40 text-white hover:bg-white/10 rounded-full backdrop-blur-sm" asChild>
+                  <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-bold border-white/40 text-white hover:bg-white/10 rounded-full backdrop-blur-sm" asChild>
                     <Link href="/hub">Explore Careers</Link>
                   </Button>
                 </div>
               </div>
-              <div className="flex-1 w-full max-w-[650px] relative hidden lg:block">
-                <div className="relative rounded-[40px] border-8 border-white/20 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] overflow-hidden aspect-[4/3] transform hover:rotate-1 transition-transform duration-500">
+              <div className="flex-1 w-full max-w-[550px] relative hidden lg:block">
+                <div className="relative rounded-[32px] border-4 border-white/20 shadow-2xl overflow-hidden aspect-[4/3]">
                   <Image 
-                    src="https://picsum.photos/seed/career-hero/800/600" 
+                    src="https://picsum.photos/seed/career-kenya/800/600" 
                     alt="Kenyan students exploring careers" 
                     fill 
                     className="object-cover"
-                    data-ai-hint="students study"
+                    data-ai-hint="student smiling"
                   />
-                  <div className="absolute top-10 right-10 bg-white/95 backdrop-blur-sm p-6 rounded-3xl shadow-2xl animate-pulse">
-                    <div className="flex items-center gap-4">
-                      <div className="h-14 w-14 rounded-2xl bg-success/10 flex items-center justify-center text-success">
-                        <Target className="h-8 w-8" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Growth</p>
-                        <p className="text-lg font-bold text-foreground">+95% Clarity</p>
-                      </div>
+                  <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-xl flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-xl bg-success/10 flex items-center justify-center text-success">
+                      <Target className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Growth</p>
+                      <p className="text-sm font-bold text-foreground">Future Focused</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          {/* Playful Decorative elements */}
-          <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-white/10 rounded-full blur-[120px]" />
-          <div className="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-accent/20 rounded-full blur-[100px]" />
         </section>
 
-        {/* Features Section */}
-        <section className="py-32 bg-background">
-          <div className="container px-4 mx-auto">
-            <div className="text-center max-w-3xl mx-auto mb-24 space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold font-headline text-primary">Everything for your journey</h2>
-              <p className="text-muted-foreground text-xl">We've built a student-first ecosystem to help you navigate the CBE landscape with joy.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-              {[
-                { icon: <GraduationCap className="h-8 w-8" />, title: "University Hub", desc: "Find the best Kenyan universities for your goals.", color: "bg-blue-50 text-blue-600" },
-                { icon: <Briefcase className="h-8 w-8" />, title: "Career Discovery", desc: "Unlock your potential with MI profile matching.", color: "bg-teal-50 text-teal-600" },
-                { icon: <Compass className="h-8 w-8" />, title: "TVET Pathways", desc: "Practical skills for the modern economy.", color: "bg-orange-50 text-orange-600" },
-                { icon: <Globe className="h-8 w-8" />, title: "Scholarships", desc: "Opportunities that make education affordable.", color: "bg-green-50 text-green-600" },
-              ].map((item, i) => (
-                <Card key={i} className="border-none bg-white shadow-card rounded-[32px] hover:translate-y-[-10px] transition-all duration-300">
-                  <CardContent className="pt-12 px-10 pb-12 space-y-6 text-center">
-                    <div className={`mx-auto h-20 w-20 rounded-3xl ${item.color} flex items-center justify-center`}>
-                      {item.icon}
-                    </div>
-                    <h3 className="text-2xl font-bold font-headline">{item.title}</h3>
-                    <p className="text-muted-foreground text-base leading-relaxed">{item.desc}</p>
-                  </CardContent>
-                </Card>
-              ))}
+        {/* Categories Section */}
+        <section className="py-24 container px-4 mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <h2 className="text-3xl md:text-4xl font-bold font-headline text-foreground">Explore Career Categories</h2>
+            <p className="text-muted-foreground text-lg">Find your passion across diverse professional fields in Kenya.</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+            {CATEGORIES.map((cat, i) => (
+              <Card key={i} className="border-none bg-white shadow-card rounded-[24px] hover:-translate-y-2 transition-all duration-300 group cursor-pointer">
+                <CardContent className="pt-8 pb-8 flex flex-col items-center text-center gap-4">
+                  <div className={`h-16 w-16 rounded-2xl ${cat.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                    {cat.icon}
+                  </div>
+                  <h3 className="text-lg font-bold font-headline">{cat.title}</h3>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Motivational Quote Section */}
+        <section className="py-24 bg-muted/30">
+          <div className="container px-4 mx-auto text-center">
+            <div className="max-w-3xl mx-auto space-y-8 bg-white p-12 rounded-[40px] shadow-card">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Target className="h-6 w-6" />
+              </div>
+              <h2 className="text-2xl md:text-4xl font-bold font-headline leading-tight italic">
+                "The best way to predict your future is to create it."
+              </h2>
+              <p className="text-muted-foreground font-medium">Your journey starts with a single step today.</p>
+              <Button size="lg" className="rounded-full h-12 px-8 font-bold" asChild>
+                <Link href="/quiz">Start Your Assessment</Link>
+              </Button>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="border-t py-24 bg-white">
-        <div className="container px-4 mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
-            <div className="md:col-span-2 space-y-8">
-              <div className="flex items-center gap-4">
-                <div className="relative h-12 w-12 overflow-hidden">
-                  {logo && (
-                    <Image 
-                      src={logo.imageUrl} 
-                      alt="CareerCompass Kenya Logo" 
-                      fill 
-                      className="object-contain"
-                    />
-                  )}
-                </div>
-                <span className="text-3xl font-bold font-headline text-primary">CareerCompass</span>
-              </div>
-              <p className="text-muted-foreground max-w-md text-xl leading-relaxed font-medium">
-                Empowering Kenyan students to build a future they're excited about.
-              </p>
-            </div>
-            <div className="space-y-6">
-              <h4 className="font-bold font-headline text-primary text-lg">Resources</h4>
-              <nav className="flex flex-col gap-4 text-muted-foreground font-medium">
-                <Link href="/hub" className="hover:text-primary transition-colors">KUCCPS Hub</Link>
-                <Link href="/quiz" className="hover:text-primary transition-colors">Career Test</Link>
-                <Link href="/scholarships" className="hover:text-primary transition-colors">Scholarships</Link>
-              </nav>
-            </div>
-            <div className="space-y-6">
-              <h4 className="font-bold font-headline text-primary text-lg">Support</h4>
-              <nav className="flex flex-col gap-4 text-muted-foreground font-medium">
-                <Link href="/help" className="hover:text-primary transition-colors">Help Center</Link>
-                <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
-                <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
-              </nav>
-            </div>
+      <footer className="border-t py-16 bg-white">
+        <div className="container px-4 mx-auto text-center space-y-8">
+          <div className="flex flex-col items-center gap-4">
+            <span className="text-2xl font-bold font-headline text-primary">CareerCompass</span>
+            <p className="text-muted-foreground max-w-md font-medium">
+              Empowering the next generation of Kenyan talent. Discover Your Path. Build Your Future.
+            </p>
           </div>
-          <div className="border-t pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-base text-muted-foreground font-medium">
-            <div>© 2024 CareerCompass Kenya. Discover Your Path.</div>
-            <div className="flex gap-8">
-              <Link href="#" className="hover:text-primary transition-colors">Twitter</Link>
-              <Link href="#" className="hover:text-primary transition-colors">LinkedIn</Link>
-              <Link href="#" className="hover:text-primary transition-colors">Instagram</Link>
-            </div>
+          <nav className="flex flex-wrap justify-center gap-6 text-sm font-semibold text-muted-foreground">
+            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+            <Link href="/hub" className="hover:text-primary transition-colors">Careers</Link>
+            <Link href="/hub" className="hover:text-primary transition-colors">Universities</Link>
+            <Link href="/hub" className="hover:text-primary transition-colors">Scholarships</Link>
+            <Link href="/quiz" className="hover:text-primary transition-colors">Career Test</Link>
+          </nav>
+          <div className="text-sm text-muted-foreground font-medium pt-8 border-t">
+            © 2024 CareerCompass Kenya. All rights reserved.
           </div>
         </div>
       </footer>

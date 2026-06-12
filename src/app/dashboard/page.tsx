@@ -5,7 +5,7 @@ import { SidebarProvider, Sidebar, SidebarContent, SidebarHeader, SidebarMenu, S
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { LayoutDashboard, BookOpen, GraduationCap, Settings, User, FileText, Calendar, MessageSquare, Briefcase, Award, TrendingUp, ArrowRight } from "lucide-react";
+import { LayoutDashboard, Compass, GraduationCap, BookOpen, Award, TrendingUp, Calendar, Heart, FileText, Settings, ArrowRight, Wallet } from "lucide-react";
 import Link from "next/link";
 
 export default function StudentDashboard() {
@@ -15,158 +15,174 @@ export default function StudentDashboard() {
       <div className="flex-1 flex overflow-hidden">
         <SidebarProvider>
           <Sidebar className="hidden md:flex border-r bg-[#2563EB] text-white">
-            <SidebarHeader className="p-8">
-              <div className="flex items-center gap-4">
-                <div className="h-14 w-14 rounded-3xl bg-white/20 flex items-center justify-center text-white font-bold text-xl shadow-lg backdrop-blur-md">
+            <SidebarHeader className="p-6">
+              <div className="flex items-center gap-3">
+                <div className="h-12 w-12 rounded-2xl bg-white/20 flex items-center justify-center text-white font-bold text-lg shadow-lg">
                   JD
                 </div>
-                <div className="overflow-hidden">
-                  <p className="text-lg font-bold truncate">John Doe</p>
-                  <p className="text-xs text-white/70 truncate uppercase tracking-widest font-bold">Form 3A Student</p>
+                <div>
+                  <p className="font-bold truncate">John Doe</p>
+                  <p className="text-[10px] text-white/70 uppercase tracking-widest font-black">Student</p>
                 </div>
               </div>
             </SidebarHeader>
-            <SidebarContent className="px-4">
+            <SidebarContent className="px-3 py-4">
               <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild isActive className="rounded-2xl h-12 data-[active=true]:bg-white data-[active=true]:text-primary mb-2 transition-all">
-                    <Link href="/dashboard"><LayoutDashboard className="mr-3 h-6 w-6" /> <span className="font-bold">Dashboard</span></Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild className="rounded-2xl h-12 hover:bg-white/10 mb-2">
-                    <Link href="/results"><FileText className="mr-3 h-6 w-6" /> <span className="font-bold">Career Report</span></Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild className="rounded-2xl h-12 hover:bg-white/10 mb-2">
-                    <Link href="/hub"><GraduationCap className="mr-3 h-6 w-6" /> <span className="font-bold">University Hub</span></Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild className="rounded-2xl h-12 hover:bg-white/10 mb-2">
-                    <Link href="/planner"><Calendar className="mr-3 h-6 w-6" /> <span className="font-bold">Planner</span></Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                {[
+                  { icon: <LayoutDashboard />, label: "Dashboard", href: "/dashboard", active: true },
+                  { icon: <Compass />, label: "Career Matches", href: "/results" },
+                  { icon: <GraduationCap />, label: "Universities", href: "/hub" },
+                  { icon: <BookOpen />, label: "Courses", href: "/hub" },
+                  { icon: <Wallet />, label: "Scholarships", href: "/hub" },
+                  { icon: <TrendingUp />, label: "Progress", href: "/dashboard" },
+                ].map((item, i) => (
+                  <SidebarMenuItem key={i}>
+                    <SidebarMenuButton asChild isActive={item.active} className="rounded-xl h-11 data-[active=true]:bg-white data-[active=true]:text-primary mb-1">
+                      <Link href={item.href}>
+                        <div className="mr-3">{item.icon}</div>
+                        <span className="font-bold">{item.label}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
               </SidebarMenu>
             </SidebarContent>
-            <div className="p-8 border-t border-white/10 mt-auto">
-              <Button variant="outline" className="w-full gap-2 rounded-2xl font-bold border-white/40 text-white hover:bg-white hover:text-primary h-12" asChild>
-                <Link href="/quiz">Retake Assessment</Link>
-              </Button>
+            <div className="p-6 mt-auto">
+              <SidebarMenu>
+                 <SidebarMenuItem>
+                    <SidebarMenuButton asChild className="rounded-xl h-11 hover:bg-white/10">
+                      <Link href="/dashboard"><Settings className="mr-3" /> <span className="font-bold">Settings</span></Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+              </SidebarMenu>
             </div>
           </Sidebar>
 
-          <main className="flex-1 overflow-y-auto p-6 md:p-12">
-            <div className="max-w-6xl mx-auto space-y-12">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-                <div className="space-y-3">
-                  <h1 className="text-5xl font-bold font-headline text-foreground tracking-tight">Hi John! 👋</h1>
-                  <p className="text-muted-foreground text-xl font-medium">You're <span className="text-success font-bold">65% of the way</span> to finding your perfect path!</p>
+          <main className="flex-1 overflow-y-auto p-6 lg:p-10">
+            <div className="max-w-6xl mx-auto space-y-10">
+              {/* Top Welcome Card */}
+              <Card className="border-none shadow-card bg-primary text-white rounded-[32px] overflow-hidden relative">
+                <div className="p-10 z-10 relative">
+                  <h1 className="text-4xl font-bold font-headline mb-3">Welcome Back, John 👋</h1>
+                  <p className="text-white/80 text-lg font-medium mb-8">Continue exploring your future. You're 80% through your assessment!</p>
+                  <Button className="bg-white text-primary hover:bg-white/90 rounded-full h-12 px-8 font-bold shadow-xl">
+                    Resume Exploration
+                  </Button>
                 </div>
-                <Button variant="outline" className="gap-2 rounded-2xl border-border bg-white shadow-sm hover:bg-muted font-bold h-12 px-8">
-                  <Settings className="h-5 w-5" /> Account Settings
-                </Button>
-              </div>
+                {/* Decorative background circles */}
+                <div className="absolute top-[-20%] right-[-10%] w-[300px] h-[300px] bg-white/10 rounded-full blur-3xl" />
+                <div className="absolute bottom-[-10%] left-[20%] w-[200px] h-[200px] bg-secondary/20 rounded-full blur-2xl" />
+              </Card>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <Card className="border-none shadow-card bg-primary text-white rounded-[32px] transform hover:scale-105 transition-transform">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-xs font-bold opacity-80 uppercase tracking-widest flex items-center gap-2">
-                      <Award className="h-4 w-4" /> Top Intelligence
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold font-headline">Logical-Math</div>
-                  </CardContent>
-                </Card>
-                <Card className="border-none shadow-card bg-secondary text-white rounded-[32px] transform hover:scale-105 transition-transform">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-xs font-bold opacity-80 uppercase tracking-widest flex items-center gap-2">
-                      <Briefcase className="h-4 w-4" /> CBE Pathway
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold font-headline">STEM</div>
-                  </CardContent>
-                </Card>
-                <Card className="border-none shadow-card bg-white rounded-[32px] transform hover:scale-105 transition-transform">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-                      <GraduationCap className="h-4 w-4 text-primary" /> Target Course
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold font-headline text-primary">Soft. Engineering</div>
-                  </CardContent>
-                </Card>
-                <Card className="border-none shadow-card bg-white rounded-[32px] transform hover:scale-105 transition-transform">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4 text-primary" /> Match Score
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold font-headline text-primary">85%</div>
-                  </CardContent>
-                </Card>
+              {/* Statistics Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                  { label: "Career Matches", value: "12", icon: <Compass className="text-primary" />, color: "bg-blue-50" },
+                  { label: "Scholarships Saved", value: "8", icon: <Wallet className="text-secondary" />, color: "bg-teal-50" },
+                  { label: "Universities Viewed", value: "24", icon: <GraduationCap className="text-accent" />, color: "bg-orange-50" },
+                  { label: "Assessment Progress", value: "80%", icon: <TrendingUp className="text-success" />, color: "bg-emerald-50" },
+                ].map((stat, i) => (
+                  <Card key={i} className="border-none shadow-card rounded-[24px]">
+                    <CardContent className="p-6 flex items-center gap-4">
+                      <div className={`h-12 w-12 rounded-2xl ${stat.color} flex items-center justify-center`}>
+                        {stat.icon}
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{stat.label}</p>
+                        <p className="text-2xl font-black text-foreground">{stat.value}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                <Card className="lg:col-span-2 border-none shadow-card bg-white rounded-[32px] overflow-hidden">
-                  <CardHeader className="p-10 pb-4">
-                    <CardTitle className="font-headline text-2xl text-primary flex items-center gap-3">
-                      <TrendingUp className="h-7 w-7" /> Your Progress
-                    </CardTitle>
-                    <CardDescription className="text-lg">Track your journey to your dream career.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="h-[350px] flex items-center justify-center bg-muted/20 rounded-[40px] border-4 border-dashed border-border/50 m-10 mt-0">
-                    <div className="text-center space-y-6">
-                      <div className="h-24 w-24 bg-white rounded-full flex items-center justify-center mx-auto shadow-xl ring-8 ring-primary/5">
-                        <Award className="h-12 w-12 text-primary" />
-                      </div>
-                      <p className="text-muted-foreground font-bold text-xl">Detailed insights coming soon!</p>
-                      <Button className="rounded-full h-14 px-8 font-bold text-lg">Update Assessment</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <Card className="border-none shadow-card bg-white rounded-[32px] overflow-hidden flex flex-col">
-                  <CardHeader className="bg-primary/5 p-10 pb-6">
-                    <CardTitle className="font-headline text-2xl text-primary flex items-center gap-3">
-                      <Calendar className="h-7 w-7" /> Daily Plan
-                    </CardTitle>
-                    <CardDescription className="font-bold">Wednesday, June 12</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6 p-10 flex-1">
-                    <div className="flex gap-6 p-6 bg-primary/5 rounded-3xl border-l-[12px] border-l-primary shadow-sm hover:translate-x-2 transition-transform">
-                      <div className="text-sm font-bold text-primary w-20 pt-1">08:00 AM</div>
-                      <div className="flex-1">
-                        <p className="text-lg font-bold text-primary leading-none mb-1">Mathematics</p>
-                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">CBE Core</p>
-                      </div>
-                      <Badge className="bg-primary h-fit text-[10px] font-bold rounded-full">ACTIVE</Badge>
-                    </div>
-                    <div className="flex gap-6 p-6 bg-secondary/5 rounded-3xl border-l-[12px] border-l-secondary shadow-sm hover:translate-x-2 transition-transform">
-                      <div className="text-sm font-bold text-secondary w-20 pt-1">10:00 AM</div>
-                      <div>
-                        <p className="text-lg font-bold text-secondary leading-none mb-1">Physics</p>
-                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Pathway Elective</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-6 p-6 bg-muted/50 rounded-3xl border-l-[12px] border-l-muted-foreground hover:translate-x-2 transition-transform">
-                      <div className="text-sm font-bold text-muted-foreground w-20 pt-1">02:00 PM</div>
-                      <div>
-                        <p className="text-lg font-bold text-foreground/80 leading-none mb-1">Literature</p>
-                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">CBE Core</p>
-                      </div>
-                    </div>
-                    <Button variant="ghost" className="w-full text-lg font-bold h-14 rounded-2xl mt-4 group" asChild>
-                      <Link href="/planner">View Full Schedule <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" /></Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                {/* University Section */}
+                <div className="lg:col-span-2 space-y-6">
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-2xl font-bold font-headline text-foreground">Top University Choices</h2>
+                    <Button variant="link" className="font-bold text-primary p-0 h-auto">View All</Button>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                      { name: "University of Nairobi", location: "Nairobi", programs: "240+ Programs" },
+                      { name: "Strathmore University", location: "Nairobi", programs: "60+ Programs" }
+                    ].map((uni, i) => (
+                      <Card key={i} className="border-none shadow-card rounded-[24px] overflow-hidden hover:-translate-y-1 transition-transform">
+                        <div className="h-32 bg-muted relative">
+                           <Image src={`https://picsum.photos/seed/uni-${i}/400/200`} alt={uni.name} fill className="object-cover" />
+                        </div>
+                        <CardHeader className="p-6 pb-2">
+                          <CardTitle className="text-lg font-headline">{uni.name}</CardTitle>
+                          <CardDescription className="flex items-center gap-2"><Compass className="h-3 w-3" /> {uni.location}</CardDescription>
+                        </CardHeader>
+                        <CardContent className="p-6 pt-0 space-y-4">
+                          <Badge variant="secondary" className="bg-primary/5 text-primary font-bold">{uni.programs}</Badge>
+                          <Button className="w-full rounded-xl font-bold">View Programs</Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Scholarship Section */}
+                <div className="space-y-6">
+                   <div className="flex justify-between items-center">
+                    <h2 className="text-2xl font-bold font-headline text-foreground">Scholarships</h2>
+                    <Button variant="link" className="font-bold text-primary p-0 h-auto">See More</Button>
+                  </div>
+                  <div className="space-y-4">
+                    {[
+                      { name: "Equity Wings to Fly", deadline: "June 15, 2024", funding: "Fully Funded" },
+                      { name: "KCB Foundation", deadline: "July 20, 2024", funding: "Partial" }
+                    ].map((sch, i) => (
+                      <Card key={i} className="border-none shadow-card rounded-[24px]">
+                        <CardContent className="p-6 space-y-4">
+                          <div className="flex justify-between items-start">
+                            <h3 className="font-bold text-foreground">{sch.name}</h3>
+                            <Badge className="bg-success text-white font-bold">OPEN</Badge>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Deadline</p>
+                            <p className="text-sm font-semibold">{sch.deadline}</p>
+                          </div>
+                          <div className="flex items-center justify-between pt-2">
+                            <span className="text-sm font-bold text-primary">{sch.funding}</span>
+                            <Button variant="outline" size="sm" className="rounded-lg font-bold">Apply</Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
               </div>
+
+              {/* Career Roadmap Section */}
+              <Card className="border-none shadow-card rounded-[32px] overflow-hidden">
+                <CardHeader className="p-10 pb-6">
+                  <CardTitle className="text-2xl font-headline flex items-center gap-3">
+                    <TrendingUp className="text-primary h-6 w-6" /> Your Software Engineer Roadmap
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-10 pt-0">
+                  <div className="relative pl-10 border-l-4 border-primary/20 space-y-12">
+                    {[
+                      { step: "KCSE", desc: "Target B+ and above with strong Math/Physics", icon: <Award /> },
+                      { step: "Computer Science", desc: "Enroll in a top tier Kenyan university", icon: <GraduationCap /> },
+                      { step: "Internship", desc: "Gain 3-6 months experience in a tech firm", icon: <Briefcase /> },
+                      { step: "Junior Developer", desc: "First professional role in Nairobi tech hub", icon: <TrendingUp /> }
+                    ].map((path, i) => (
+                      <div key={i} className="relative">
+                        <div className="absolute -left-[54px] top-0 h-10 w-10 rounded-full bg-white border-4 border-primary flex items-center justify-center text-primary shadow-lg">
+                          {path.icon}
+                        </div>
+                        <h4 className="font-bold text-lg text-foreground">{path.step}</h4>
+                        <p className="text-muted-foreground font-medium">{path.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </main>
         </SidebarProvider>

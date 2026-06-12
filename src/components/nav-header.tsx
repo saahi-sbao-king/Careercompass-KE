@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, BookOpen, GraduationCap, Briefcase, Globe, Info, Compass } from "lucide-react";
+import { Menu, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,10 +17,10 @@ export function NavHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-lg border-b border-muted shadow-sm">
-      <div className="container flex h-24 items-center justify-between px-4">
+      <div className="container flex h-20 items-center justify-between px-4">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-4 hover:opacity-90 transition-opacity">
-            <div className="relative h-12 w-12">
+            <div className="relative h-10 w-10">
               {logo && (
                 <Image 
                   src={logo.imageUrl} 
@@ -30,59 +30,51 @@ export function NavHeader() {
                 />
               )}
             </div>
-            <span className="text-2xl font-black tracking-tight font-headline text-primary hidden lg:inline-block">
+            <span className="text-xl font-bold tracking-tight font-headline text-primary hidden lg:inline-block">
               CareerCompass
             </span>
           </Link>
         </div>
 
-        <nav className="hidden xl:flex items-center gap-10 text-base font-bold text-muted-foreground">
-          <Link href="/hub" className="hover:text-primary transition-all hover:scale-105">
-            Courses
-          </Link>
-          <Link href="/hub" className="hover:text-primary transition-all hover:scale-105">
-            Universities
-          </Link>
-          <Link href="/hub" className="hover:text-primary transition-all hover:scale-105">
-            TVET
-          </Link>
-          <Link href="/hub" className="hover:text-primary transition-all hover:scale-105">
-            Scholarships
-          </Link>
-          <Link href="/quiz" className="text-primary bg-primary/5 px-4 py-2 rounded-full hover:bg-primary/10 transition-all flex items-center gap-2">
-            <Compass className="h-5 w-5" /> Career Test
-          </Link>
+        <nav className="hidden xl:flex items-center gap-8 text-sm font-semibold text-muted-foreground">
+          <Link href="/" className="hover:text-primary transition-all">Home</Link>
+          <Link href="/hub" className="hover:text-primary transition-all">Careers</Link>
+          <Link href="/hub" className="hover:text-primary transition-all">Universities</Link>
+          <Link href="/hub" className="hover:text-primary transition-all">TVET</Link>
+          <Link href="/hub" className="hover:text-primary transition-all">Scholarships</Link>
+          <Link href="/quiz" className="hover:text-primary transition-all">Career Test</Link>
+          <Link href="/hub" className="hover:text-primary transition-all">Resources</Link>
         </nav>
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" className="hidden sm:flex font-black text-lg hover:bg-muted" asChild>
+          <Button variant="ghost" className="hidden sm:flex font-bold hover:bg-muted" asChild>
             <Link href="/dashboard">Dashboard</Link>
           </Button>
-          <Button className="hidden sm:flex bg-primary hover:bg-primary/90 rounded-full px-8 h-12 font-black text-lg shadow-xl shadow-primary/20 transition-all hover:scale-105 active:scale-95" asChild>
+          <Button className="hidden sm:flex bg-primary hover:bg-primary/90 rounded-full px-6 h-10 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95" asChild>
             <Link href="/quiz">Get Started</Link>
           </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="xl:hidden h-12 w-12 hover:bg-muted rounded-2xl">
-                <Menu className="h-7 w-7" />
+              <Button variant="ghost" size="icon" className="xl:hidden h-10 w-10 hover:bg-muted rounded-xl">
+                <Menu className="h-6 w-6" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-64 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] mt-4 p-4">
-              <DropdownMenuItem asChild className="rounded-2xl h-12 font-bold focus:bg-primary/5">
-                <Link href="/hub">Courses</Link>
+            <DropdownMenuContent align="end" className="w-56 rounded-2xl shadow-xl mt-4 p-2">
+              <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
+                <Link href="/">Home</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className="rounded-2xl h-12 font-bold focus:bg-primary/5">
+              <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
+                <Link href="/hub">Careers</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
                 <Link href="/hub">Universities</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className="rounded-2xl h-12 font-bold focus:bg-primary/5">
-                <Link href="/hub">Scholarships</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild className="rounded-2xl h-12 font-black text-primary bg-primary/5 mt-2">
+              <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
                 <Link href="/quiz">Career Test</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className="rounded-2xl h-12 font-black bg-primary text-white mt-4 justify-center">
-                <Link href="/quiz">Join Now</Link>
+              <DropdownMenuItem asChild className="rounded-xl h-10 font-bold bg-primary text-white mt-2 justify-center">
+                <Link href="/quiz">Start Now</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
