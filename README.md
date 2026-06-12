@@ -17,7 +17,7 @@ CareerCompass Kenya is a specialized ed-tech platform designed to provide Kenyan
 
 - **Framework**: Next.js 15 (App Router)
 - **Styling**: Tailwind CSS & ShadCN UI
-- **Backend**: Firebase Authentication & Firestore
+- **Backend**: Firebase Firestore (Production Ready)
 - **AI**: Genkit (Google Gemini)
 - **Charts**: Recharts
 - **PDF Generation**: html2canvas & jsPDF
@@ -32,9 +32,22 @@ npm run dev
 
 Open [http://localhost:9002](http://localhost:9002) with your browser to see the result.
 
+## 🚢 Deployment (Vercel)
+
+To deploy this project to Vercel:
+
+1. **Push your code** to a GitHub, GitLab, or Bitbucket repository.
+2. **Import the project** in the [Vercel Dashboard](https://vercel.com/new).
+3. **Environment Variables**: Add the following variables if you are using Firebase features:
+   - `NEXT_PUBLIC_FIREBASE_API_KEY`
+   - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+   - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+   - `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+   - `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+   - `NEXT_PUBLIC_FIREBASE_APP_ID`
+   - `GOOGLE_GENAI_API_KEY` (For AI features)
+4. **Deploy**: Vercel will automatically detect the Next.js framework and build the project.
+
 ## 📄 License
 
 Internal use only. © 2026 CareerCompass Kenya.
-# Careercompass-KE
-# Careercompass-KE
-# Careercompass-KE
