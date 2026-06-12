@@ -25,7 +25,11 @@ import {
   Palette,
   ChefHat,
   Mic,
-  Trophy
+  Trophy,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Twitter
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavHeader } from "@/components/nav-header";
@@ -37,6 +41,7 @@ import {
   CarouselNext, 
   CarouselPrevious 
 } from "@/components/ui/carousel";
+import placeholderData from "@/app/lib/placeholder-images.json";
 
 const CATEGORIES = [
   { icon: <Laptop className="h-8 w-8" />, title: "Technology", color: "bg-blue-500 text-white" },
@@ -90,9 +95,10 @@ const SCHOLARSHIPS = [
 export default function Home() {
   const [showAllCategories, setShowAllCategories] = useState(false);
   const visibleCategories = showAllCategories ? CATEGORIES : CATEGORIES.slice(0, 6);
+  const logo = placeholderData.placeholderImages.find(img => img.id === 'app-logo');
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-background">
       <NavHeader />
       
       <main className="flex-grow">
@@ -120,7 +126,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex-1 w-full max-w-[600px] relative hidden lg:block">
-                <div className="relative rounded-[32px] border-8 border-white/20 shadow-2xl overflow-hidden aspect-[4/3]">
+                <div className="relative rounded-[40px] border-8 border-white/20 shadow-2xl overflow-hidden aspect-[4/3]">
                   <Image 
                     src="https://picsum.photos/seed/kenya-students-hero/800/600" 
                     alt="Kenyan students exploring careers" 
@@ -145,7 +151,7 @@ export default function Home() {
                   Discover careers based on your interests, subjects and strengths. We help you map out your entire journey from KCPE to professional success.
                 </p>
               </div>
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[400px]">
+              <div className="relative rounded-[32px] overflow-hidden shadow-2xl h-[400px]">
                 <Image src="https://picsum.photos/seed/discovery-img/800/600" alt="Discovery" fill className="object-cover" />
               </div>
               <Button size="lg" className="rounded-full px-10 font-bold" asChild>
@@ -154,7 +160,7 @@ export default function Home() {
             </div>
             <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full lg:max-w-md">
               {STATS.map((stat, i) => (
-                <Card key={i} className="border-none shadow-card rounded-[24px] bg-white hover:scale-105 transition-transform">
+                <Card key={i} className="border-none shadow-card rounded-[24px] bg-card hover:scale-105 transition-transform">
                   <CardContent className="p-8 text-center space-y-4">
                     <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mx-auto">
                       {stat.icon}
@@ -179,7 +185,7 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-500">
               {visibleCategories.map((cat, i) => (
-                <Card key={i} className="border-none bg-primary shadow-card rounded-[20px] hover:-translate-y-2 transition-all duration-300 group cursor-pointer text-white">
+                <Card key={i} className="border-none bg-primary shadow-card rounded-[24px] hover:-translate-y-2 transition-all duration-300 group cursor-pointer text-white">
                   <CardContent className="p-10 flex flex-col items-center text-center gap-6">
                     <div className="h-16 w-16 rounded-2xl bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
                       {cat.icon}
@@ -248,7 +254,7 @@ export default function Home() {
               <CarouselContent>
                 {UNIVERSITIES.map((uni, i) => (
                   <CarouselItem key={i} className="md:basis-1/2 lg:basis-1/2 p-4">
-                    <Card className="border-none rounded-[24px] bg-white text-primary overflow-hidden shadow-2xl">
+                    <Card className="border-none rounded-[24px] bg-card text-foreground overflow-hidden shadow-2xl">
                        <div className="relative h-48 w-full">
                           <Image src={uni.image} alt={uni.name} fill className="object-cover" />
                        </div>
@@ -284,7 +290,7 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {SCHOLARSHIPS.map((sch, i) => (
-              <Card key={i} className="border-none shadow-card rounded-[24px] bg-white group hover:-translate-y-2 transition-all">
+              <Card key={i} className="border-none shadow-card rounded-[24px] bg-card group hover:-translate-y-2 transition-all">
                 <CardContent className="p-8 space-y-6">
                   <div className="h-14 w-14 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white transition-all">
                     <Award className="h-8 w-8" />
@@ -325,48 +331,87 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t py-20 bg-white">
+      <footer className="bg-card border-t pt-24 pb-12">
         <div className="container px-4 mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-            <div className="space-y-6">
-              <span className="text-2xl font-bold font-headline text-primary">CareerCompass Kenya</span>
-              <p className="text-muted-foreground font-medium">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-20">
+            {/* Branding Column */}
+            <div className="space-y-8">
+              <Link href="/" className="flex items-center gap-4 group">
+                <div className="relative h-12 w-12 group-hover:scale-110 transition-transform">
+                  {logo && (
+                    <Image 
+                      src={logo.imageUrl} 
+                      alt="CareerCompass Logo" 
+                      fill 
+                      className="object-contain"
+                    />
+                  )}
+                </div>
+                <span className="text-2xl font-black tracking-tighter font-headline text-primary">
+                  CareerCompass
+                </span>
+              </Link>
+              <p className="text-muted-foreground text-lg leading-relaxed font-medium">
                 Discover careers, courses, universities and opportunities tailored for Kenyan students. Navigate your future with precision.
               </p>
             </div>
-            <div className="space-y-6">
-              <h4 className="text-lg font-bold font-headline">Explore</h4>
-              <nav className="flex flex-col gap-4 text-sm font-semibold text-muted-foreground">
-                <Link href="/hub" className="hover:text-primary transition-colors">Careers</Link>
-                <Link href="/hub" className="hover:text-primary transition-colors">Universities</Link>
-                <Link href="/hub" className="hover:text-primary transition-colors">TVET Pathways</Link>
-                <Link href="/hub" className="hover:text-primary transition-colors">Scholarships</Link>
-                <Link href="/quiz" className="hover:text-primary transition-colors">Career Assessment</Link>
+
+            {/* Explore Column */}
+            <div className="space-y-8">
+              <h4 className="text-xl font-bold font-headline text-foreground tracking-tight underline decoration-primary decoration-4 underline-offset-8">Explore</h4>
+              <nav className="flex flex-col gap-5 text-base font-semibold text-muted-foreground">
+                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Careers</Link>
+                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Universities</Link>
+                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">TVET Pathways</Link>
+                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Scholarships</Link>
+                <Link href="/quiz" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Career Assessment</Link>
               </nav>
             </div>
-            <div className="space-y-6">
-              <h4 className="text-lg font-bold font-headline">Resources</h4>
-              <nav className="flex flex-col gap-4 text-sm font-semibold text-muted-foreground">
-                <Link href="/hub" className="hover:text-primary transition-colors">Career Guides</Link>
-                <Link href="/hub" className="hover:text-primary transition-colors">Mentorship Hub</Link>
-                <Link href="/hub" className="hover:text-primary transition-colors">KUCCPS Portal</Link>
-                <Link href="/hub" className="hover:text-primary transition-colors">FAQs</Link>
+
+            {/* Resources Column */}
+            <div className="space-y-8">
+              <h4 className="text-xl font-bold font-headline text-foreground tracking-tight underline decoration-secondary decoration-4 underline-offset-8">Resources</h4>
+              <nav className="flex flex-col gap-5 text-base font-semibold text-muted-foreground">
+                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Career Guides</Link>
+                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">Mentorship Hub</Link>
+                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">KUCCPS Portal</Link>
+                <Link href="/hub" className="hover:text-primary transition-all hover:translate-x-1 inline-block">FAQs</Link>
               </nav>
             </div>
-            <div className="space-y-6">
-              <h4 className="text-lg font-bold font-headline">Follow Us</h4>
-              <div className="flex gap-4">
-                {['Facebook', 'Instagram', 'TikTok', 'LinkedIn'].map(p => (
-                   <div key={p} className="h-10 w-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-white transition-all cursor-pointer">
-                      <span className="sr-only">{p}</span>
-                      <Compass className="h-5 w-5" />
-                   </div>
+
+            {/* Follow Us Column */}
+            <div className="space-y-8">
+              <h4 className="text-xl font-bold font-headline text-foreground tracking-tight underline decoration-accent decoration-4 underline-offset-8">Follow Us</h4>
+              <p className="text-muted-foreground font-medium">Join our community of students and mentors.</p>
+              <div className="flex flex-wrap gap-4">
+                {[
+                  { icon: <Facebook className="h-6 w-6" />, label: "Facebook" },
+                  { icon: <Instagram className="h-6 w-6" />, label: "Instagram" },
+                  { icon: <Twitter className="h-6 w-6" />, label: "Twitter" },
+                  { icon: <Linkedin className="h-6 w-6" />, label: "LinkedIn" }
+                ].map((social, i) => (
+                  <button 
+                    key={i} 
+                    className="h-12 w-12 rounded-2xl bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-white transition-all hover:-translate-y-1 shadow-sm"
+                    aria-label={social.label}
+                  >
+                    {social.icon}
+                  </button>
                 ))}
               </div>
             </div>
           </div>
-          <div className="text-sm text-muted-foreground font-medium pt-8 border-t text-center">
-            © 2026 CareerCompass Kenya. All rights reserved. Precision career guidance for the next generation.
+
+          {/* Bottom Bar */}
+          <div className="pt-12 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-sm text-muted-foreground font-bold text-center md:text-left">
+              © 2026 CareerCompass Kenya. All rights reserved. Precision career guidance for the next generation.
+            </p>
+            <div className="flex gap-8 text-xs font-black text-muted-foreground uppercase tracking-widest">
+              <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link>
+              <Link href="#" className="hover:text-primary transition-colors">Contact</Link>
+            </div>
           </div>
         </div>
       </footer>
