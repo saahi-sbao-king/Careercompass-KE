@@ -1,4 +1,3 @@
-
 "use client";
 
 import { NavHeader } from "@/components/nav-header";
@@ -140,18 +139,14 @@ export default function StudentDashboard() {
                   </div>
                   <div className="space-y-4">
                     {[
-                      { name: "Equity Wings to Fly", deadline: "June 15, 2024", funding: "Fully Funded" },
-                      { name: "KCB Foundation", deadline: "July 20, 2024", funding: "Partial" }
+                      { name: "Equity Wings to Fly", funding: "Fully Funded" },
+                      { name: "KCB Foundation", funding: "Partial" }
                     ].map((sch, i) => (
                       <Card key={i} className="border-none shadow-card rounded-[24px] bg-card">
                         <CardContent className="p-6 space-y-4">
                           <div className="flex justify-between items-start">
                             <h3 className="font-bold text-foreground">{sch.name}</h3>
                             <Badge className="bg-success text-white font-bold">OPEN</Badge>
-                          </div>
-                          <div className="space-y-1">
-                            <p className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Deadline</p>
-                            <p className="text-sm font-semibold">{sch.deadline}</p>
                           </div>
                           <div className="flex items-center justify-between pt-2">
                             <span className="text-sm font-bold text-primary">{sch.funding}</span>

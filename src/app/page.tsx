@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -83,9 +82,9 @@ const UNIVERSITIES = [
 ];
 
 const SCHOLARSHIPS = [
-  { name: "Equity Wings To Fly", tag: "Fully Funded", deadline: "Dec 2024", url: "https://equitygroupfoundation.com/wings-to-fly/" },
-  { name: "Mastercard Foundation", tag: "Partial", deadline: "Nov 2024", url: "https://mastercardfdn.org/en/what-we-do/our-programs/mastercard-foundation-scholars-program/" },
-  { name: "Government Bursaries", tag: "Open", deadline: "Rolling", url: "https://www.hef.co.ke/" },
+  { name: "Equity Wings To Fly", tag: "Fully Funded", url: "https://equitygroupfoundation.com/wings-to-fly/" },
+  { name: "Mastercard Foundation", tag: "Partial", url: "https://mastercardfdn.org/en/what-we-do/our-programs/mastercard-foundation-scholars-program/" },
+  { name: "Government Bursaries", tag: "Open", url: "https://www.hef.co.ke/" },
 ];
 
 export default function Home() {
@@ -319,8 +318,7 @@ export default function Home() {
                       <span className="text-sm font-black text-success uppercase tracking-widest">{sch.tag}</span>
                     </div>
                   </div>
-                  <div className="pt-4 border-t flex justify-between items-center">
-                    <p className="text-sm text-muted-foreground font-bold">Deadline: {sch.deadline}</p>
+                  <div className="pt-4 border-t flex justify-end items-center">
                     <Button variant="ghost" className="font-bold text-primary p-0 h-auto" asChild>
                       <a href={sch.url} target="_blank" rel="noopener noreferrer">Apply Now</a>
                     </Button>

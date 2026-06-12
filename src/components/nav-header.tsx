@@ -56,9 +56,9 @@ export function NavHeader() {
           <Link href="/" className="hover:text-primary transition-all">Home</Link>
           <Link href="/hub" className="hover:text-primary transition-all">Careers</Link>
           <Link href="/hub" className="hover:text-primary transition-all">Universities</Link>
-          <Link href="/hub" className="hover:text-primary transition-all">TVET</Link>
           <Link href="/hub" className="hover:text-primary transition-all">Scholarships</Link>
-          <Link href="/quiz" className="hover:text-primary transition-all">Career Test</Link>
+          <Link href="/quiz?type=PIA" className="hover:text-primary transition-all">PIA Test</Link>
+          <Link href="/quiz?type=MI" className="hover:text-primary transition-all">MI Test</Link>
           <Link href="/hub" className="hover:text-primary transition-all">Resources</Link>
         </nav>
 
@@ -77,7 +77,7 @@ export function NavHeader() {
             <Link href="/dashboard">Dashboard</Link>
           </Button>
           <Button className="hidden sm:flex bg-primary hover:bg-primary/90 rounded-full px-8 h-12 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 text-white" asChild>
-            <Link href="/quiz">Get Started</Link>
+            <Link href="/quiz?type=PIA">Get Started</Link>
           </Button>
 
           <DropdownMenu>
@@ -94,13 +94,13 @@ export function NavHeader() {
                 <Link href="/hub">Careers</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
-                <Link href="/hub">Universities</Link>
+                <Link href="/quiz?type=PIA">PIA Test</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
-                <Link href="/quiz">Career Test</Link>
+                <Link href="/quiz?type=MI">MI Test</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-xl h-10 font-bold bg-primary text-white mt-2 justify-center">
-                <Link href="/quiz">Start Now</Link>
+                <Link href="/quiz?type=PIA">Start Now</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
