@@ -1,7 +1,7 @@
+
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Authentication has been removed. All routes are now public.
 export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
