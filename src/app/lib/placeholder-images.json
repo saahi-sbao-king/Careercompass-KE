@@ -9,8 +9,8 @@
     {
       "id": "hero-students",
       "description": "Diverse Kenyan students smiling and looking towards the future",
-      "imageUrl": "https://picsum.photos/seed/kenya-students/1200/800",
-      "imageHint": "group of students"
+      "imageUrl": "https://res.cloudinary.com/dripd0ze7/image/upload/q_auto/f_auto/v1781281243/e3511579-7071-472e-be66-b7e6caed980e.png",
+      "imageHint": "kenyan students"
     },
     {
       "id": "career-discovery",

@@ -137,7 +137,7 @@ export default function Home() {
               <div className="flex-1 w-full max-w-[600px] relative hidden lg:block">
                 <div className="relative rounded-[40px] border-8 border-white/20 shadow-2xl overflow-hidden aspect-[4/3]">
                   <Image 
-                    src="https://picsum.photos/seed/kenya-students-hero/800/600" 
+                    src="https://res.cloudinary.com/dripd0ze7/image/upload/q_auto/f_auto/v1781281243/e3511579-7071-472e-be66-b7e6caed980e.png" 
                     alt="Kenyan students exploring careers" 
                     fill 
                     className="object-cover"
