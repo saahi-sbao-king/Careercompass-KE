@@ -37,3 +37,4 @@ Open [http://localhost:9002](http://localhost:9002) with your browser to see the
 Internal use only. © 2026 CareerCompass Kenya.
 # Careercompass-KE
 # Careercompass-KE
+# Careercompass-KE
