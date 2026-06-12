@@ -23,7 +23,7 @@
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 221 83% 53%;
-    --radius: 1.25rem; /* Friendly 20px radius */
+    --radius: 1.5rem; /* Friendly 24px radius */
     
     --success: 142 71% 45%; /* #22C55E */
     --warning: 24 94% 53%;
@@ -31,25 +31,25 @@
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 11%;
+    --background: 222 47% 11%; /* #111827 */
+    --foreground: 210 40% 98%; /* #F9FAFB */
+    --card: 215 28% 17%; /* #1F2937 */
     --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
+    --popover: 215 28% 17%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 222 47% 11%;
+    --primary: 214 84% 56%; /* #2F80ED */
+    --primary-foreground: 210 40% 98%;
     --secondary: 173 80% 40%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217 32% 17%;
+    --muted: 215 28% 25%;
     --muted-foreground: 215 20% 65%;
     --accent: 24 94% 53%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62% 30%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 224 76% 48%;
+    --border: 215 28% 25%;
+    --input: 215 28% 25%;
+    --ring: 214 84% 56%;
   }
 }
 
@@ -64,13 +64,13 @@
 }
 
 .hero-gradient {
-  background: linear-gradient(135deg, #2563EB 0%, #14B8A6 100%);
+  @apply bg-gradient-to-br from-[#2563EB] to-[#14B8A6];
 }
 
 .shadow-card {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
 
-.rounded-friendly {
-  border-radius: 20px;
+.dark .shadow-card {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
