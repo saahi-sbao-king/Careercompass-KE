@@ -1,25 +1,29 @@
 
-export type IntelligenceType = 
-  | 'Linguistic'
-  | 'Logical-Mathematical'
-  | 'Spatial'
-  | 'Bodily-Kinesthetic'
-  | 'Musical'
-  | 'Interpersonal'
-  | 'Intrapersonal'
-  | 'Naturalist'
-  | 'Existential';
+export type AssessmentCategory = 
+  | 'Technology'
+  | 'Medicine & Health'
+  | 'Engineering'
+  | 'Business'
+  | 'Agriculture'
+  | 'Education'
+  | 'Law'
+  | 'Arts & Media';
+
+export type AssessmentSection = 'Passions' | 'Interests' | 'Abilities';
 
 export interface Question {
   id: number;
   text: string;
-  type: IntelligenceType;
+  section: AssessmentSection;
+  subSection?: string;
 }
 
-export interface IntelligenceResult {
-  type: IntelligenceType;
+export interface CategoryResult {
+  category: AssessmentCategory;
   score: number;
+  maxScore: number;
   percentage: number;
+  matchLevel: string;
 }
 
 export type CBEPathway = 'STEM' | 'Arts & Sports' | 'Social Sciences';
@@ -28,15 +32,14 @@ export interface CareerInfo {
   title: string;
   description: string;
   avgSalary: string;
-  demandScore: number; // 1-10
+  demandLevel: 'High' | 'Medium' | 'Low';
   skills: string[];
+  subjects: string[];
+  universities: string[];
+  tvetOptions: string[];
 }
 
 export interface UserAssessment {
-  scores: Record<IntelligenceType, number>;
-  dominant: IntelligenceType;
-  coDominant: IntelligenceType;
-  pathway: CBEPathway;
-  recommendedSubjects: string[];
-  suggestedCareers: CareerInfo[];
+  rawAnswers: Record<number, number>;
+  categoryResults: CategoryResult[];
 }
