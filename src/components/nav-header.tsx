@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, Menu, User, BookOpen, BarChart3, HelpCircle } from "lucide-react";
+import { GraduationCap, Menu, BookOpen, BarChart3, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -46,9 +46,6 @@ export function NavHeader() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="sm" className="hidden sm:flex" asChild>
-            <Link href="/login">Sign In</Link>
-          </Button>
           <Button size="sm" className="hidden sm:flex" asChild>
             <Link href="/quiz">Start Quiz</Link>
           </Button>
@@ -68,9 +65,6 @@ export function NavHeader() {
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href="/hub">KUCCPS Hub</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/login">Sign In</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
