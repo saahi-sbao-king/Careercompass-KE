@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { 
   ArrowRight, 
-  Target, 
   Briefcase, 
   GraduationCap, 
   Laptop, 
@@ -19,8 +18,6 @@ import {
   Users, 
   Compass, 
   Award,
-  ChevronLeft,
-  ChevronRight,
   Plane,
   Palette,
   ChefHat,
@@ -29,7 +26,9 @@ import {
   Facebook,
   Instagram,
   Twitter,
-  Linkedin
+  Linkedin,
+  Rocket,
+  Brain
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavHeader } from "@/components/nav-header";
@@ -44,18 +43,18 @@ import {
 import placeholderData from "@/app/lib/placeholder-images.json";
 
 const CATEGORIES = [
-  { icon: <Laptop className="h-8 w-8" />, title: "Technology", color: "bg-blue-500 text-white" },
-  { icon: <Stethoscope className="h-8 w-8" />, title: "Health Sciences", color: "bg-blue-500 text-white" },
-  { icon: <Scale className="h-8 w-8" />, title: "Law", color: "bg-blue-500 text-white" },
-  { icon: <HardHat className="h-8 w-8" />, title: "Engineering", color: "bg-blue-500 text-white" },
-  { icon: <Sprout className="h-8 w-8" />, title: "Agriculture", color: "bg-blue-500 text-white" },
-  { icon: <BookOpen className="h-8 w-8" />, title: "Education", color: "bg-blue-500 text-white" },
-  { icon: <Palette className="h-8 w-8" />, title: "Arts & Design", color: "bg-blue-500 text-white" },
-  { icon: <ChefHat className="h-8 w-8" />, title: "Hospitality", color: "bg-blue-500 text-white" },
-  { icon: <Plane className="h-8 w-8" />, title: "Aviation", color: "bg-blue-500 text-white" },
-  { icon: <Mic className="h-8 w-8" />, title: "Media & Comms", color: "bg-blue-500 text-white" },
-  { icon: <Trophy className="h-8 w-8" />, title: "Sports", color: "bg-blue-500 text-white" },
-  { icon: <Users className="h-8 w-8" />, title: "Social Sciences", color: "bg-blue-500 text-white" },
+  { icon: <Laptop className="h-8 w-8" />, title: "Technology" },
+  { icon: <Stethoscope className="h-8 w-8" />, title: "Health Sciences" },
+  { icon: <Scale className="h-8 w-8" />, title: "Law" },
+  { icon: <HardHat className="h-8 w-8" />, title: "Engineering" },
+  { icon: <Sprout className="h-8 w-8" />, title: "Agriculture" },
+  { icon: <BookOpen className="h-8 w-8" />, title: "Education" },
+  { icon: <Palette className="h-8 w-8" />, title: "Arts & Design" },
+  { icon: <ChefHat className="h-8 w-8" />, title: "Hospitality" },
+  { icon: <Plane className="h-8 w-8" />, title: "Aviation" },
+  { icon: <Mic className="h-8 w-8" />, title: "Media & Comms" },
+  { icon: <Trophy className="h-8 w-8" />, title: "Sports" },
+  { icon: <Users className="h-8 w-8" />, title: "Social Sciences" },
 ];
 
 const STATS = [
@@ -116,7 +115,7 @@ export default function Home() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
                   <Button size="lg" className="h-14 px-10 text-lg font-bold bg-white text-primary hover:bg-white/90 gap-2 rounded-full shadow-lg transition-all hover:-translate-y-1" asChild>
-                    <Link href="/quiz">
+                    <Link href="/quiz?type=PIA">
                       Take Career Assessment
                     </Link>
                   </Button>
@@ -155,7 +154,7 @@ export default function Home() {
                 <Image src="https://picsum.photos/seed/discovery-img/800/600" alt="Discovery" fill className="object-cover" />
               </div>
               <Button size="lg" className="rounded-full px-10 font-bold" asChild>
-                <Link href="/quiz">Start Assessment</Link>
+                <Link href="/quiz?type=PIA">Start Assessment</Link>
               </Button>
             </div>
             <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full lg:max-w-md">
@@ -208,37 +207,59 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Assessment Section */}
+        {/* Dual Assessment Section */}
         <section className="py-24 container px-4 mx-auto">
-          <div className="flex flex-col lg:flex-row gap-16 items-center">
-            <div className="flex-1 relative w-full aspect-video lg:aspect-square rounded-[40px] overflow-hidden shadow-2xl">
-              <Image src="https://picsum.photos/seed/assessment-kenya/800/800" alt="Assessment" fill className="object-cover" />
-            </div>
-            <div className="flex-1 space-y-10">
-              <div className="space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold font-headline text-primary">Find Your Perfect Career Match</h2>
-                <p className="text-muted-foreground text-lg">Our diagnostic tool uses proven methods to align your natural talents with the Kenyan job market.</p>
-              </div>
-              <div className="space-y-6">
-                {[
-                  "Discover your unique strengths",
-                  "Match careers to your favorite subjects",
-                  "Explore TVET and University pathways",
-                  "Find scholarships and funding",
-                  "Plan your future career roadmap"
-                ].map((text, i) => (
-                  <div key={i} className="flex items-center gap-4 group">
-                    <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
-                      <Check className="h-4 w-4" />
-                    </div>
-                    <span className="text-lg font-semibold text-foreground">{text}</span>
-                  </div>
-                ))}
-              </div>
-              <Button size="lg" className="rounded-full px-12 h-14 font-bold bg-primary shadow-xl" asChild>
-                <Link href="/quiz">Take Career Assessment</Link>
-              </Button>
-            </div>
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-bold font-headline text-primary">Personalized Diagnostics</h2>
+            <p className="text-muted-foreground text-lg">Choose the assessment that fits your current exploration stage.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <Card className="border-none shadow-card rounded-[40px] bg-card overflow-hidden group hover:-translate-y-2 transition-all">
+              <CardHeader className="p-10 bg-primary/5">
+                <div className="h-16 w-16 rounded-2xl bg-primary text-white flex items-center justify-center mb-6 shadow-xl">
+                  <Rocket className="h-8 w-8" />
+                </div>
+                <CardTitle className="text-3xl font-bold font-headline text-primary">PIA Assessment</CardTitle>
+                <CardDescription className="text-lg">Passions • Interests • Abilities</CardDescription>
+              </CardHeader>
+              <CardContent className="p-10 space-y-6">
+                <p className="text-muted-foreground leading-relaxed">Our comprehensive 72-question tool that maps who you are to the Kenyan job market with high precision.</p>
+                <ul className="space-y-3">
+                  {["72 Tailored Questions", "Passion & Ability Matrix", "KCSE Subject Alignment"].map(item => (
+                    <li key={item} className="flex items-center gap-3 font-bold text-sm">
+                      <Check className="h-4 w-4 text-success" /> {item}
+                    </li>
+                  ))}
+                </ul>
+                <Button className="w-full h-14 rounded-2xl font-bold text-lg" asChild>
+                  <Link href="/quiz?type=PIA">Start PIA Test</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="border-none shadow-card rounded-[40px] bg-card overflow-hidden group hover:-translate-y-2 transition-all">
+              <CardHeader className="p-10 bg-secondary/5">
+                <div className="h-16 w-16 rounded-2xl bg-secondary text-white flex items-center justify-center mb-6 shadow-xl">
+                  <Brain className="h-8 w-8" />
+                </div>
+                <CardTitle className="text-3xl font-bold font-headline text-secondary">Career Intelligence</CardTitle>
+                <CardDescription className="text-lg">Gardner's 9 Multiple Intelligences</CardDescription>
+              </CardHeader>
+              <CardContent className="p-10 space-y-6">
+                <p className="text-muted-foreground leading-relaxed">Discover your natural intelligences and how they translate to professional success through our 45-question diagnostic.</p>
+                <ul className="space-y-3">
+                  {["45 Intelligence Items", "Strength-Based Profiles", "MI Career Mapping"].map(item => (
+                    <li key={item} className="flex items-center gap-3 font-bold text-sm">
+                      <Check className="h-4 w-4 text-success" /> {item}
+                    </li>
+                  ))}
+                </ul>
+                <Button variant="outline" className="w-full h-14 rounded-2xl font-bold text-lg border-secondary text-secondary hover:bg-secondary/5" asChild>
+                  <Link href="/quiz?type=MI">Start MI Test</Link>
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
@@ -320,10 +341,10 @@ export default function Home() {
              <div className="relative z-10 space-y-6">
                <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">Ready to Discover Your Future?</h2>
                <p className="text-xl text-white/80 max-w-2xl mx-auto font-medium">
-                 Take our career assessment and explore opportunities tailored exactly to your strengths.
+                 Take one of our specialized career assessments and explore opportunities tailored exactly to your strengths.
                </p>
                <Button size="lg" className="rounded-full px-12 h-16 text-lg font-bold bg-white text-primary hover:bg-white/90 shadow-2xl" asChild>
-                 <Link href="/quiz">Get Started Now</Link>
+                 <Link href="/quiz?type=PIA">Get Started Now</Link>
                </Button>
              </div>
              {/* Decorative Elements */}

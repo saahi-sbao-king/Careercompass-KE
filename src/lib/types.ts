@@ -1,4 +1,6 @@
 
+export type AssessmentType = 'PIA' | 'MI';
+
 export type AssessmentCategory = 
   | 'Technology'
   | 'Medicine & Health'
@@ -7,15 +9,25 @@ export type AssessmentCategory =
   | 'Agriculture'
   | 'Education'
   | 'Law'
-  | 'Arts & Media';
+  | 'Arts & Media'
+  | 'Linguistic'
+  | 'Logical-Mathematical'
+  | 'Spatial'
+  | 'Musical'
+  | 'Bodily-Kinesthetic'
+  | 'Interpersonal'
+  | 'Intrapersonal'
+  | 'Naturalistic'
+  | 'Existential';
 
-export type AssessmentSection = 'Passions' | 'Interests' | 'Abilities';
+export type AssessmentSection = 'Passions' | 'Interests' | 'Abilities' | 'MI';
 
 export interface Question {
   id: number;
   text: string;
   section: AssessmentSection;
   subSection?: string;
+  type: AssessmentType;
 }
 
 export interface CategoryResult {
@@ -39,7 +51,8 @@ export interface CareerInfo {
   tvetOptions: string[];
 }
 
-export interface UserAssessment {
-  rawAnswers: Record<number, number>;
-  categoryResults: CategoryResult[];
+export interface QuizResults {
+  type: AssessmentType;
+  answers: Record<number, number>;
+  timestamp: number;
 }

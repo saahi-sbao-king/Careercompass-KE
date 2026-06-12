@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CATEGORY_QUESTION_MAP, CAREER_MAPPING, PATHWAY_MAPPING } from "@/lib/data";
-import { AssessmentCategory, CategoryResult, CareerInfo } from "@/lib/types";
+import { AssessmentCategory, CategoryResult, CareerInfo, QuizResults } from "@/lib/types";
 import { 
   Radar, 
   RadarChart, 
@@ -16,13 +16,14 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import { Download, Share2, Briefcase, BookOpen, Rocket, Check, Loader2, Compass, Target, GraduationCap } from "lucide-react";
+import { Download, Share2, Briefcase, Rocket, Loader2, Compass, Target, GraduationCap } from "lucide-react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
 
 export default function ResultsPage() {
   const [results, setResults] = useState<CategoryResult[] | null>(null);
+  const [quizType, setQuizType] = useState<'PIA' | 'MI'>('PIA');
   const [mounted, setMounted] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const reportRef = useRef<HTMLDivElement>(null);
@@ -31,9 +32,16 @@ export default function ResultsPage() {
     setMounted(true);
     const saved = localStorage.getItem('quiz-results');
     if (saved) {
-      const answers = JSON.parse(saved) as Record<number, number>;
+      const data = JSON.parse(saved) as QuizResults;
+      const { type, answers } = data;
+      setQuizType(type);
       
-      const calculatedResults: CategoryResult[] = Object.entries(CATEGORY_QUESTION_MAP).map(([category, questionIds]) => {
+      const relevantCategories: AssessmentCategory[] = type === 'PIA' 
+        ? ['Technology', 'Medicine & Health', 'Engineering', 'Business', 'Agriculture', 'Education', 'Law', 'Arts & Media']
+        : ['Linguistic', 'Logical-Mathematical', 'Spatial', 'Musical', 'Bodily-Kinesthetic', 'Interpersonal', 'Intrapersonal', 'Naturalistic', 'Existential'];
+
+      const calculatedResults: CategoryResult[] = relevantCategories.map(category => {
+        const questionIds = CATEGORY_QUESTION_MAP[category] || [];
         let categoryRawScore = 0;
         questionIds.forEach(id => {
           categoryRawScore += answers[id] || 0;
@@ -43,13 +51,13 @@ export default function ResultsPage() {
         const percentage = Math.round((categoryRawScore / maxScore) * 100);
 
         let matchLevel = "Low Match";
-        if (percentage >= 85) matchLevel = "Excellent Match";
-        else if (percentage >= 70) matchLevel = "Strong Match";
-        else if (percentage >= 55) matchLevel = "Good Match";
-        else if (percentage >= 40) matchLevel = "Potential Match";
+        if (percentage >= 85) matchLevel = "Exceptional Strength";
+        else if (percentage >= 70) matchLevel = "Strong Strength";
+        else if (percentage >= 55) matchLevel = "Moderate Strength";
+        else if (percentage >= 40) matchLevel = "Potential Area";
 
         return {
-          category: category as AssessmentCategory,
+          category,
           score: categoryRawScore,
           maxScore,
           percentage,
@@ -81,7 +89,7 @@ export default function ResultsPage() {
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
       
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`CareerCompass_PIA_Report_${new Date().toISOString().split('T')[0]}.pdf`);
+      pdf.save(`CareerCompass_${quizType}_Report_${new Date().toISOString().split('T')[0]}.pdf`);
     } catch (error) {
       console.error("PDF generation failed:", error);
     } finally {
@@ -94,7 +102,10 @@ export default function ResultsPage() {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
         <h1 className="text-3xl font-bold font-headline mb-6">No assessment results found.</h1>
-        <Button size="lg" className="rounded-full h-16 px-10 text-xl font-bold" asChild><Link href="/quiz">Start Assessment</Link></Button>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button size="lg" className="rounded-full h-16 px-10 text-xl font-bold" asChild><Link href="/quiz?type=PIA">PIA Assessment</Link></Button>
+          <Button size="lg" variant="outline" className="rounded-full h-16 px-10 text-xl font-bold" asChild><Link href="/quiz?type=MI">Career Assessment</Link></Button>
+        </div>
       </div>
     );
   }
@@ -111,11 +122,11 @@ export default function ResultsPage() {
       <div className="hero-gradient py-24 text-white">
         <div className="container px-4 mx-auto text-center space-y-8">
           <Badge className="bg-white/20 text-white hover:bg-white/30 border-none px-8 py-2 rounded-full text-base font-bold backdrop-blur-md">
-            PIA Assessment Complete! 🚀
+            {quizType === 'PIA' ? 'PIA Assessment Complete! 🚀' : 'Career Intelligence Mapped! 🧠'}
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tight">Your Career Compass</h1>
           <p className="text-white/90 max-w-2xl mx-auto text-xl font-medium leading-relaxed">
-            We've mapped your unique passions, interests, and abilities to these top pathways.
+            We've mapped your unique {quizType === 'PIA' ? 'passions, interests, and abilities' : 'multiple intelligences'} to these top pathways.
           </p>
           <div className="flex flex-wrap gap-6 justify-center pt-8">
             <Button 
@@ -135,20 +146,19 @@ export default function ResultsPage() {
 
       <main className="container px-4 mx-auto -mt-20 space-y-16" ref={reportRef}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Main Visualizer */}
           <Card className="lg:col-span-2 shadow-card border-none bg-card rounded-[40px] overflow-hidden">
             <CardHeader className="p-12 pb-0">
               <CardTitle className="font-headline text-3xl flex items-center gap-4 text-primary">
-                <Compass className="h-8 w-8" /> Career Match Profile
+                <Compass className="h-8 w-8" /> {quizType === 'PIA' ? 'Match Profile' : 'Intelligence Profile'}
               </CardTitle>
-              <CardDescription className="text-lg">Your top matches across all 8 career categories.</CardDescription>
+              <CardDescription className="text-lg">Your top strengths and matches.</CardDescription>
             </CardHeader>
             <CardContent className="h-[500px] sm:h-[650px] p-12">
               {mounted ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart cx="50%" cy="50%" outerRadius="80%" data={results}>
                     <PolarGrid stroke="hsl(var(--muted))" strokeWidth={2} />
-                    <PolarAngleAxis dataKey="category" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12, fontWeight: 700 }} />
+                    <PolarAngleAxis dataKey="category" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10, fontWeight: 700 }} />
                     <Radar
                       name="Your Profile"
                       dataKey="percentage"
@@ -168,7 +178,6 @@ export default function ResultsPage() {
             </CardContent>
           </Card>
 
-          {/* Top Categories */}
           <div className="space-y-10">
             <Card className="border-none shadow-card bg-card rounded-[32px] overflow-hidden transform hover:scale-102 transition-transform">
               <div className="h-4 bg-primary w-full" />
@@ -178,19 +187,7 @@ export default function ResultsPage() {
                 <p className="text-4xl font-black mt-2">{dominant.percentage}%</p>
               </CardHeader>
               <CardContent className="px-10 pb-10 text-lg text-muted-foreground leading-relaxed">
-                Your primary match is in <strong>{dominant.category}</strong>. Your profile shows an exceptional alignment with the skills and passions required here.
-              </CardContent>
-            </Card>
-
-            <Card className="border-none shadow-card bg-card rounded-[32px] overflow-hidden transform hover:scale-102 transition-transform">
-              <div className="h-4 bg-secondary w-full" />
-              <CardHeader className="p-10 pb-4">
-                <Badge className="bg-secondary/10 text-secondary hover:bg-secondary/10 border-none font-bold px-4 py-1 rounded-full mb-4">{coDominant.matchLevel}</Badge>
-                <CardTitle className="font-headline text-3xl text-secondary">{coDominant.category}</CardTitle>
-                <p className="text-4xl font-black mt-2">{coDominant.percentage}%</p>
-              </CardHeader>
-              <CardContent className="px-10 pb-10 text-lg text-muted-foreground leading-relaxed">
-                A strong secondary interest in <strong>{coDominant.category}</strong> provides a versatile background for interdisciplinary roles.
+                Your primary matching area is <strong>{dominant.category}</strong>. You demonstrate exceptional alignment here.
               </CardContent>
             </Card>
 
@@ -210,11 +207,10 @@ export default function ResultsPage() {
           </div>
         </div>
 
-        {/* Career Section */}
         <div className="space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-5xl font-bold font-headline text-primary tracking-tight">Top Career Matches</h2>
-            <p className="text-muted-foreground text-2xl font-medium">Careers tailored for you in the Kenyan market.</p>
+            <p className="text-muted-foreground text-2xl font-medium">Careers tailored for your unique profile.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -244,15 +240,6 @@ export default function ResultsPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Required Subjects</p>
-                    <div className="flex flex-wrap gap-2">
-                      {career.subjects.map(s => (
-                        <Badge key={s} variant="outline" className="text-[10px] font-bold rounded-lg px-2 py-0.5">{s}</Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
                     <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Recommended Institutions</p>
                     <div className="flex flex-wrap gap-2">
                       {[...career.universities, ...career.tvetOptions].slice(0, 3).map(inst => (
@@ -270,53 +257,6 @@ export default function ResultsPage() {
               </Card>
             ))}
           </div>
-        </div>
-
-        {/* Roadmap Example Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <Card className="border-none shadow-card rounded-[40px] bg-card overflow-hidden">
-            <CardHeader className="bg-primary/5 p-12">
-              <CardTitle className="font-headline text-3xl text-primary flex items-center gap-4">
-                <Target className="h-8 w-8" /> Career Roadmap
-              </CardTitle>
-              <CardDescription className="text-lg font-bold">Steps to your future success as a {careers[0]?.title || 'Professional'}.</CardDescription>
-            </CardHeader>
-            <CardContent className="p-12">
-              <div className="relative pl-12 border-l-4 border-primary/10 space-y-16 py-4">
-                <div className="relative">
-                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-success border-8 border-background shadow-xl ring-4 ring-success/5" />
-                  <h4 className="font-bold font-headline text-2xl text-primary">Senior School Phase</h4>
-                  <p className="text-lg text-muted-foreground mt-4 leading-relaxed font-medium">Excel in <strong>{careers[0]?.subjects.slice(0, 2).join(' and ')}</strong>. Focus on developing your {dominant.category.toLowerCase()} skills through clubs.</p>
-                </div>
-                <div className="relative">
-                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-primary border-8 border-background shadow-xl ring-4 ring-primary/5" />
-                  <h4 className="font-bold font-headline text-2xl text-primary">Higher Education</h4>
-                  <p className="text-lg text-muted-foreground mt-4 leading-relaxed font-medium">Target courses at <strong>{careers[0]?.universities[0]}</strong> or <strong>{careers[0]?.tvetOptions[0]}</strong>. Apply for scholarships during your final year.</p>
-                </div>
-                <div className="relative">
-                  <div className="absolute -left-[62px] top-0 h-10 w-10 rounded-full bg-accent border-8 border-background shadow-xl ring-4 ring-accent/5" />
-                  <h4 className="font-bold font-headline text-2xl text-primary">Entry Level Role</h4>
-                  <p className="text-lg text-muted-foreground mt-4 leading-relaxed font-medium">Secure an internship at a top Kenyan firm in the {dominant.category} sector. Build a professional network early.</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-none shadow-card rounded-[40px] bg-card overflow-hidden flex flex-col justify-center items-center p-12 text-center space-y-8">
-            <Rocket className="h-24 w-24 text-accent animate-bounce" />
-            <div className="space-y-4">
-              <h3 className="text-3xl font-bold font-headline text-primary">Ready to take the next step?</h3>
-              <p className="text-muted-foreground text-lg">Visit the Hub to explore scholarships, universities, and mentorship programs matching your results.</p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 w-full">
-               <Button className="flex-1 rounded-full h-16 font-bold text-lg" asChild>
-                 <Link href="/hub">Explore Scholarships</Link>
-               </Button>
-               <Button variant="outline" className="flex-1 rounded-full h-16 font-bold text-lg" asChild>
-                 <Link href="/dashboard">Go to Dashboard</Link>
-               </Button>
-            </div>
-          </Card>
         </div>
       </main>
     </div>
