@@ -1,20 +1,54 @@
+
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Menu, LogOut, User as UserIcon, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import placeholderData from "@/app/lib/placeholder-images.json";
+import { supabase } from "@/lib/supabase";
+import { User } from "@supabase/supabase-js";
 
 export function NavHeader() {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
   const logo = placeholderData.placeholderImages.find(img => img.id === 'app-logo');
   const headerBg = placeholderData.placeholderImages.find(img => img.id === 'header-bg');
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+      setLoading(false);
+    };
+
+    checkUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChanged((_event, session) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push("/");
+    router.refresh();
+  };
 
   return (
     <header 
@@ -52,9 +86,57 @@ export function NavHeader() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <Button className="hidden sm:flex bg-primary hover:bg-primary/90 rounded-full px-8 h-12 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 text-white" asChild>
-              <Link href="/quiz?type=PIA">Get Started</Link>
-            </Button>
+            {!loading && (
+              <>
+                {user ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                        <Avatar className="h-10 w-10 border-2 border-primary/20">
+                          <AvatarImage src={user.user_metadata.avatar_url} alt={user.email || ""} />
+                          <AvatarFallback className="bg-primary text-white font-bold">
+                            {user.email?.charAt(0).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56 rounded-2xl shadow-xl mt-2 p-2" align="end">
+                      <DropdownMenuLabel className="font-headline font-bold px-3 py-2">
+                        <p className="text-sm truncate">{user.email}</p>
+                        <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Student Account</p>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild className="rounded-xl h-11 cursor-pointer">
+                        <Link href="/dashboard" className="flex items-center">
+                          <UserIcon className="mr-3 h-4 w-4 text-primary" />
+                          <span className="font-bold">Dashboard</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild className="rounded-xl h-11 cursor-pointer">
+                        <Link href="/dashboard" className="flex items-center">
+                          <Settings className="mr-3 h-4 w-4 text-primary" />
+                          <span className="font-bold">Settings</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={handleLogout} className="rounded-xl h-11 cursor-pointer text-destructive focus:text-destructive">
+                        <LogOut className="mr-3 h-4 w-4" />
+                        <span className="font-bold">Log Out</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <Link href="/login" className="hidden sm:inline-block text-sm font-bold text-muted-foreground hover:text-primary transition-colors">
+                      Log In
+                    </Link>
+                    <Button className="hidden sm:flex bg-primary hover:bg-primary/90 rounded-full px-8 h-12 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 text-white" asChild>
+                      <Link href="/signup">Sign Up</Link>
+                    </Button>
+                  </div>
+                )}
+              </>
+            )}
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -81,9 +163,14 @@ export function NavHeader() {
                 <DropdownMenuItem asChild className="rounded-xl h-10 font-medium">
                   <Link href="/admin">Analytics</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild className="rounded-xl h-10 font-bold bg-primary text-white mt-2 justify-center">
-                  <Link href="/quiz?type=PIA">Get Started</Link>
-                </DropdownMenuItem>
+                {!user && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild className="rounded-xl h-10 font-bold bg-primary text-white mt-2 justify-center">
+                      <Link href="/signup">Sign Up</Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
