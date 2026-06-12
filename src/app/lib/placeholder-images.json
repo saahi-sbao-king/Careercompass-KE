@@ -1,0 +1,23 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-student",
+      "description": "A focused Kenyan student studying with a digital tablet",
+      "imageUrl": "https://picsum.photos/seed/career-hero/1200/800",
+      "imageHint": "student learning"
+    },
+    {
+      "id": "mentor-session",
+      "description": "A group of students having a career mentorship session",
+      "imageUrl": "https://picsum.photos/seed/mentorship/800/600",
+      "imageHint": "mentorship education"
+    },
+    {
+      "id": "stem-pathway",
+      "description": "Science laboratory with students working",
+      "imageUrl": "https://picsum.photos/seed/stem/600/400",
+      "imageHint": "science laboratory"
+    }
+  ]
+}
