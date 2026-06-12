@@ -1,31 +1,31 @@
 
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { NavHeader } from "@/components/nav-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { QUESTIONS, CAREER_MAPPING, PATHWAY_MAPPING } from "@/lib/data";
-import { IntelligenceType, IntelligenceResult, CBEPathway, CareerInfo } from "@/lib/types";
+import { IntelligenceType } from "@/lib/types";
 import { 
   Radar, 
   RadarChart, 
   PolarGrid, 
   PolarAngleAxis, 
   ResponsiveContainer,
-  Bar,
-  BarChart,
-  XAxis,
-  YAxis,
   Tooltip
 } from "recharts";
-import { Download, Share2, Briefcase, BookOpen, Rocket, Lightbulb, Check } from "lucide-react";
+import { Download, Share2, Briefcase, BookOpen, Rocket, Lightbulb, Check, Loader2 } from "lucide-react";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 export default function ResultsPage() {
   const [results, setResults] = useState<Record<IntelligenceType, number> | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const reportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -49,14 +49,43 @@ export default function ResultsPage() {
       type: type as IntelligenceType,
       score,
       fullType: type,
-      percentage: (score / 25) * 100 // Max score per type is 5 questions * 5 = 25
+      percentage: (score / 25) * 100
     })).sort((a, b) => b.score - a.score);
   }, [results]);
 
   const dominant = analyzedResults[0];
   const coDominant = analyzedResults[1];
 
+  const handleDownloadPdf = async () => {
+    if (!reportRef.current) return;
+    
+    setIsDownloading(true);
+    try {
+      const element = reportRef.current;
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: "#ffffff",
+      });
+      
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`CareerCompass_Report_${new Date().toISOString().split('T')[0]}.pdf`);
+    } catch (error) {
+      console.error("PDF generation failed:", error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   if (!results) {
+    if (!mounted) return null;
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
         <h1 className="text-2xl font-bold font-headline mb-4">No results found.</h1>
@@ -82,8 +111,14 @@ export default function ResultsPage() {
             Based on your responses, we've identified your dominant intelligences and mapped them to the Kenyan CBE framework.
           </p>
           <div className="flex gap-4 justify-center pt-4">
-            <Button variant="secondary" className="gap-2">
-              <Download className="h-4 w-4" /> Download Report
+            <Button 
+              variant="secondary" 
+              className="gap-2" 
+              onClick={handleDownloadPdf}
+              disabled={isDownloading}
+            >
+              {isDownloading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+              {isDownloading ? "Generating PDF..." : "Download Report"}
             </Button>
             <Button variant="outline" className="gap-2 border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-white/10">
               <Share2 className="h-4 w-4" /> Share with Parent
@@ -92,10 +127,10 @@ export default function ResultsPage() {
         </div>
       </div>
 
-      <main className="container px-4 mx-auto -mt-8 space-y-8">
+      <main className="container px-4 mx-auto -mt-8 space-y-8" ref={reportRef}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Visualizer */}
-          <Card className="lg:col-span-2 shadow-lg border-2">
+          <Card className="lg:col-span-2 shadow-lg border-2 bg-card">
             <CardHeader>
               <CardTitle className="font-headline flex items-center gap-2">
                 <Lightbulb className="h-5 w-5 text-accent" /> Intelligence Profile
@@ -128,7 +163,7 @@ export default function ResultsPage() {
 
           {/* Top Intelligences */}
           <div className="space-y-6">
-            <Card className="border-l-4 border-l-primary shadow-md">
+            <Card className="border-l-4 border-l-primary shadow-md bg-card">
               <CardHeader className="pb-2">
                 <p className="text-xs font-bold text-primary uppercase tracking-widest">Dominant</p>
                 <CardTitle className="font-headline text-2xl">{dominant.type}</CardTitle>
@@ -140,7 +175,7 @@ export default function ResultsPage() {
               </CardContent>
             </Card>
 
-            <Card className="border-l-4 border-l-accent shadow-md">
+            <Card className="border-l-4 border-l-accent shadow-md bg-card">
               <CardHeader className="pb-2">
                 <p className="text-xs font-bold text-accent uppercase tracking-widest">Co-Dominant</p>
                 <CardTitle className="font-headline text-2xl">{coDominant.type}</CardTitle>
@@ -188,7 +223,7 @@ export default function ResultsPage() {
           <TabsContent value="careers" className="pt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {careers.map((career, idx) => (
-                <Card key={idx} className="hover:shadow-lg transition-all border-none shadow-sm ring-1 ring-border">
+                <Card key={idx} className="hover:shadow-lg transition-all border-none shadow-sm ring-1 ring-border bg-card">
                   <CardHeader>
                     <div className="flex justify-between items-start mb-2">
                       <Badge variant="secondary" className="bg-primary/10 text-primary border-none">Top Match</Badge>
@@ -221,7 +256,7 @@ export default function ResultsPage() {
           </TabsContent>
 
           <TabsContent value="subjects" className="pt-6">
-            <Card>
+            <Card className="bg-card">
               <CardHeader>
                 <CardTitle className="font-headline">CBE 11-Subject Rule Compliance</CardTitle>
                 <CardDescription>Your optimized combination for {recommendedPathway} pathway.</CardDescription>
@@ -259,7 +294,7 @@ export default function ResultsPage() {
           </TabsContent>
 
           <TabsContent value="planner" className="pt-6">
-            <Card>
+            <Card className="bg-card">
               <CardHeader>
                 <CardTitle className="font-headline">Career Development Plan</CardTitle>
                 <CardDescription>Short, Medium, and Long-term growth strategy.</CardDescription>

@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NavHeader } from "@/components/nav-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
@@ -11,14 +11,15 @@ import {
   YAxis, 
   CartesianGrid, 
   Tooltip, 
-  Legend, 
   ResponsiveContainer,
   PieChart,
   Pie,
   Cell
 } from "recharts";
-import { Users, BookOpen, GraduationCap, Download, AlertCircle } from "lucide-react";
+import { Users, BookOpen, GraduationCap, Download, AlertCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 const pathwayData = [
   { name: 'STEM', students: 145 },
@@ -42,28 +43,63 @@ const COLORS = ['#2866BD', '#14A2B9', '#4A5568', '#718096', '#A0AEC0', '#CBD5E0'
 
 export default function AdminDashboard() {
   const [mounted, setMounted] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const dashboardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  const handleExportAdminReport = async () => {
+    if (!dashboardRef.current) return;
+    
+    setIsDownloading(true);
+    try {
+      const element = dashboardRef.current;
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: "#ffffff",
+      });
+      
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`FrereTown_Analytics_${new Date().toISOString().split('T')[0]}.pdf`);
+    } catch (error) {
+      console.error("PDF generation failed:", error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <NavHeader />
-      <main className="container px-4 py-8 mx-auto space-y-8">
+      <main className="container px-4 py-8 mx-auto space-y-8" ref={dashboardRef}>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-3xl font-bold font-headline text-primary">Admin Analytics</h1>
             <p className="text-muted-foreground">School-wide Career Guidance Distribution: Frere Town Secondary</p>
           </div>
-          <Button className="gap-2">
-            <Download className="h-4 w-4" /> Export All Reports (PDF)
+          <Button 
+            className="gap-2" 
+            onClick={handleExportAdminReport}
+            disabled={isDownloading}
+          >
+            {isDownloading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+            {isDownloading ? "Exporting..." : "Export All Reports (PDF)"}
           </Button>
         </div>
 
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card>
+          <Card className="bg-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Assessments</CardTitle>
               <Users className="h-4 w-4 text-primary" />
@@ -73,7 +109,7 @@ export default function AdminDashboard() {
               <p className="text-xs text-muted-foreground">+12% from last month</p>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="bg-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">STEM Pathway Demand</CardTitle>
               <BookOpen className="h-4 w-4 text-accent" />
@@ -83,7 +119,7 @@ export default function AdminDashboard() {
               <p className="text-xs text-muted-foreground">Highest across all streams</p>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="bg-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Report Downloaded</CardTitle>
               <GraduationCap className="h-4 w-4 text-muted-foreground" />
@@ -97,7 +133,7 @@ export default function AdminDashboard() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Pathway Chart */}
-          <Card className="shadow-sm border">
+          <Card className="shadow-sm border bg-card">
             <CardHeader>
               <CardTitle className="font-headline">CBE Pathway Distribution</CardTitle>
               <CardDescription>Recommended pathways based on student diagnostic scores.</CardDescription>
@@ -123,7 +159,7 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Intelligence Chart */}
-          <Card className="shadow-sm border">
+          <Card className="shadow-sm border bg-card">
             <CardHeader>
               <CardTitle className="font-headline">Intelligence Heatmap</CardTitle>
               <CardDescription>Aggregate student profiles across the 9 MI types.</CardDescription>
