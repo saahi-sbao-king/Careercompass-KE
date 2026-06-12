@@ -19,6 +19,12 @@
       "imageHint": "kenyan students"
     },
     {
+      "id": "header-bg",
+      "description": "Custom background for the navigation header",
+      "imageUrl": "https://res.cloudinary.com/dripd0ze7/image/upload/q_auto/f_auto/v1775665994/samples/cup-on-a-table.jpg",
+      "imageHint": "desk surface"
+    },
+    {
       "id": "assessment-ui",
       "description": "User interface for the career assessment tool",
       "imageUrl": "https://picsum.photos/seed/assessment/800/600",
